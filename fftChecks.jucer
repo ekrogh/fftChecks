@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT id="OqA993" name="fftChecks" projectType="guiapp" useAppConfig="0"
-              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1">
+              addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
+              cppLanguageStandard="20">
   <MAINGROUP id="xPHzKJ" name="fftChecks">
     <GROUP id="{52CCD5B3-CACC-89FA-93C0-923BD71A466A}" name="Source">
       <FILE id="YheUl6" name="fftChecks.cpp" compile="1" resource="0" file="Source/fftChecks.cpp"/>

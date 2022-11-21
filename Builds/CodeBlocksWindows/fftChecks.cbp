@@ -47,7 +47,7 @@
           <Add option="-DJucePlugin_Build_LV2=&quot;0&quot;"/>
           <Add option="-m64"/>
           <Add option="-O0"/>
-          <Add option="-std=c++14"/>
+          <Add option="-std=c++20"/>
           <Add option="-mstackrealign"/>
           <Add option="-g"/>
           <Add directory="."/>
@@ -110,7 +110,7 @@
           <Add option="-DJucePlugin_Build_LV2=&quot;0&quot;"/>
           <Add option="-m64"/>
           <Add option="-O3"/>
-          <Add option="-std=c++14"/>
+          <Add option="-std=c++20"/>
           <Add option="-mstackrealign"/>
           <Add directory="."/>
           <Add directory="../../JuceLibraryCode"/>

@@ -46,7 +46,7 @@
           <Add option="-DJucePlugin_Build_LV2=&quot;0&quot;"/>
           <Add option="-m64"/>
           <Add option="-O0"/>
-          <Add option="-std=c++14"/>
+          <Add option="-std=c++20"/>
           <Add option="-mstackrealign"/>
           <Add option="-g"/>
           <Add option="&#96;pkg-config --cflags freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0&#96;"/>
@@ -102,7 +102,7 @@
           <Add option="-DJucePlugin_Build_LV2=&quot;0&quot;"/>
           <Add option="-m64"/>
           <Add option="-O3"/>
-          <Add option="-std=c++14"/>
+          <Add option="-std=c++20"/>
           <Add option="-mstackrealign"/>
           <Add option="&#96;pkg-config --cflags freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0&#96;"/>
           <Add option="-pthread"/>
