@@ -46,7 +46,7 @@ fftChecks::fftChecks()
 	addAndMakeVisible(m_plot);
 
 	// Plot some values.
-	m_plot.plot({ fftvctr });
+	m_plot.plot({ y_vals });
 	//m_plot.plot({ {1, 3, 7, 9, 13} });
 
 	//m_plot.setXTicks({ 1.7f, 2.0f, 3.23f, 4.0f, 5.3f });

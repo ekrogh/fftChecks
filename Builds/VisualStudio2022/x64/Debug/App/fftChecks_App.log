@@ -1,5 +1,2 @@
 ﻿  fftChecks.cpp
-  Main.cpp
-D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(24,42): warning C4100: 'commandLine': unreferenced formal parameter
-D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(46,54): warning C4100: 'commandLine': unreferenced formal parameter
   fftChecks_App.vcxproj -> D:\Users\eigil\projects\juceProjs\fftChecks\Builds\VisualStudio2022\x64\Debug\App\fftChecks.exe

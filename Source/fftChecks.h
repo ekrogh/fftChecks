@@ -35,48 +35,58 @@ using namespace std;
 
 //==============================================================================
 /**
-                                                                    //[Comments]
+																	//[Comments]
 	An auto-generated component, created by the Projucer.
 
 	Describe your class and how it works here!
-                                                                    //[/Comments]
+																	//[/Comments]
 */
-class fftChecks  : public juce::Component
+class fftChecks : public juce::Component
 {
 public:
-    //==============================================================================
-    fftChecks ();
-    ~fftChecks() override;
+	//==============================================================================
+	fftChecks();
+	~fftChecks() override;
 
-    //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
-    enum
-    {
-        fftOrderAtStart = 11
-    };
-    //[/UserMethods]
+	//==============================================================================
+	//[UserMethods]     -- You can add your own custom methods in this section.
+	//[/UserMethods]
 
-    void paint (juce::Graphics& g) override;
-    void resized() override;
+	void paint(juce::Graphics& g) override;
+	void resized() override;
 
 
 
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
+	//[UserVariables]   -- You can add your own custom variables in this section.
+
+	enum
+	{
+		  fftOrderAtStart = 11
+		, noSampels = 2048 // = pow(2, fftOrderAtStart)
+	};
+
+	float Fs = 44100.0f;
+	float Ts = 1.0f / Fs;
+
+	std::unique_ptr<juce::dsp::FFT> forwardFFT = std::make_unique<juce::dsp::FFT>(fftOrderAtStart);
+
 	// Declare plot object.
 	cmp::Plot m_plot;
 
-    std::unique_ptr<juce::dsp::FFT> forwardFFT = std::make_unique<juce::dsp::FFT>(fftOrderAtStart);
+	vector<float> y_vals = *(new vector<float>(noSampels, 0.0));
+	float* fftbfr = y_vals.data();
 
-    vector<float> fftvctr = *(new vector<float>(2048, 0.0));
-    float* fftbfr = fftvctr.data();
-    //[/UserVariables]
+	vector<float> x_vals;
 
-    //==============================================================================
+	//[/UserVariables]
 
 
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (fftChecks)
+	//==============================================================================
+
+
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(fftChecks)
 };
 
 //[EndFile] You can add extra defines here...
