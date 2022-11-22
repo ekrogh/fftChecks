@@ -1,0 +1,236 @@
+﻿  Building Custom Rule D:/Users/eigil/projects/juceProjs/CustomMatPlot/CMakeLists.txt
+  cmp_plot.cpp
+  cmp_graph_line.cpp
+  cmp_grid.cpp
+  cmp_label.cpp
+  cmp_frame.cpp
+  cmp_legend.cpp
+  cmp_trace.cpp
+  cmp_zoom.cpp
+  cmp_lookandfeel.cpp
+  cmp_downsampler.cpp
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\source\cmp_downsampler.cpp(15,72): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\source\cmp_downsampler.cpp(127,1): message : see reference to function template instantiation 'auto cmp::computeXStartIdx<ValueType,std::vector<float,std::allocator<float>>>(const _T0,const _T1 &)' being compiled
+          with
+          [
+              ValueType=float,
+              _T0=float,
+              _T1=std::vector<float,std::allocator<float>>
+          ]
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\source\cmp_downsampler.cpp(112,48): message : while compiling class template member function 'void cmp::Downsampler<float>::calculateXBasedDSIdxs(const cmp::CommonPlotParameterView,const std::vector<float,std::allocator<float>> &,std::vector<size_t,std::allocator<size_t>> &)'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\source\cmp_downsampler.cpp(233,34): message : see reference to class template instantiation 'cmp::Downsampler<float>' being compiled
+  juce_gui_basics.cpp
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.h(249,82): error C2270: 'hasMouseMovedSignificantlySincePressed': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.h(249,83): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.h(249,83): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.h(132,94): error C2270: 'getDisplayContaining': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.h(132,95): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.h(132,95): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.h(398,55): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.h(398,55): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(421,40): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(421,40): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(422,53): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(422,53): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(423,60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(423,5): error C2535: 'int juce::ComboBox::JUCE_DEPRECATED(void (__cdecl *)(int,bool))': member function already defined or declared
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(422,5): message : see declaration of 'juce::ComboBox::JUCE_DEPRECATED'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(423,60): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(424,57): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(424,57): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.h(319,74): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.h(319,74): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.h(94,30): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.h(104,30): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.h(155,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_TextPropertyComponent.h(85,28): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_TextPropertyComponent.h(184,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_MultiChoicePropertyComponent.h(78,35): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_MultiChoicePropertyComponent.h(124,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.cpp(656,24): error C2039: 'hasMouseMovedSignificantlySincePressed': is not a member of 'juce::MouseInputSource'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.h(51,17): message : see declaration of 'juce::MouseInputSource'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.cpp(656,81): error C2270: 'hasMouseMovedSignificantlySincePressed': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\mouse/juce_MouseInputSource.cpp(656,90): error C2065: 'pimpl': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(197,36): error C2039: 'getDisplayContaining': is not a member of 'juce::Displays'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.h(35,17): message : see declaration of 'juce::Displays'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(198,1): error C2270: 'getDisplayContaining': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(200,25): error C2065: 'displays': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(203,20): error C2065: 'displays': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(203,5): error C2530: 'd': references must be initialized
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(203,5): error C3531: 'd': a symbol whose type contains 'auto' must have an initializer
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(203,18): error C2143: syntax error: missing ';' before ':'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(203,28): error C2143: syntax error: missing ';' before ')'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(207,18): error C3536: 'best': cannot be used before it is initialized
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(207,20): error C2440: '=': cannot convert from 'int *' to 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(207,20): message : There is no context in which this conversion is possible
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(213,12): error C3536: 'distance': cannot be used before it is initialized
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(216,20): error C2440: '=': cannot convert from 'int *' to 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(216,20): message : There is no context in which this conversion is possible
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\desktop/juce_Displays.cpp(220,12): error C2100: illegal indirection
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.cpp(194,14): error C2511: 'void juce::Button::setToggleState(bool,bool)': overloaded member function not found in 'juce::Button'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.h(41,17): message : see declaration of 'juce::Button'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.cpp(196,5): error C2352: 'juce::Button::setToggleState': a call of a non-static member function requires an object
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\buttons/juce_Button.cpp(144,14): message : see declaration of 'juce::Button::setToggleState'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\drawables/juce_SVGParser.cpp(465,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\drawables/juce_SVGParser.cpp(833,13): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\drawables/juce_SVGParser.cpp(1084,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.cpp(75,37): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.cpp(123,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.cpp(163,51): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_ChoicePropertyComponent.cpp(187,51): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_PropertyPanel.cpp(355,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_TextPropertyComponent.cpp(126,37): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_TextPropertyComponent.cpp(151,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_TextPropertyComponent.cpp(175,47): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_MultiChoicePropertyComponent.cpp(114,43): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_MultiChoicePropertyComponent.cpp(197,19): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\properties/juce_MultiChoicePropertyComponent.cpp(265,61): warning C4996: 'juce::ValueWithDefault': This class has been renamed to better describe what is does. This declaration is here for backwards compatibility and new code should use the new class name.
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(639,16): error C2511: 'void juce::ComboBox::clear(const bool)': overloaded member function not found in 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(45,17): message : see declaration of 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(639,84): error C2352: 'juce::ComboBox::clear': a call of a non-static member function requires an object
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(137,16): message : see declaration of 'juce::ComboBox::clear'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(640,16): error C2511: 'void juce::ComboBox::setSelectedItemIndex(const int,const bool)': overloaded member function not found in 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(45,17): message : see declaration of 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(640,84): error C2352: 'juce::ComboBox::setSelectedItemIndex': a call of a non-static member function requires an object
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(241,16): message : see declaration of 'juce::ComboBox::setSelectedItemIndex'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(641,16): error C2511: 'void juce::ComboBox::setSelectedId(const int,const bool)': overloaded member function not found in 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(45,17): message : see declaration of 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(641,84): error C2352: 'juce::ComboBox::setSelectedId': a call of a non-static member function requires an object
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(255,16): message : see declaration of 'juce::ComboBox::setSelectedId'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(642,16): error C2511: 'void juce::ComboBox::setText(const juce::String &,const bool)': overloaded member function not found in 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.h(45,17): message : see declaration of 'juce::ComboBox'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(642,84): error C2352: 'juce::ComboBox::setText': a call of a non-static member function requires an object
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_ComboBox.cpp(307,16): message : see declaration of 'juce::ComboBox::setText'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_TableHeaderComponent.cpp(442,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_TreeView.cpp(649,13): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\widgets/juce_TreeView.cpp(1837,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(147,23): error C2039: 'setContentComponent': is not a member of 'juce::ResizableWindow'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.h(51,17): message : see declaration of 'juce::ResizableWindow'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(151,32): error C2065: 'contentComponent': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(155,13): error C2065: 'contentComponent': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(159,35): error C2065: 'contentComponent': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(159,13): error C3861: 'removeChildComponent': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(160,13): error C2065: 'contentComponent': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\windows/juce_ResizableWindow.cpp(164,5): error C3861: 'setContent': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_gui_basics\commands/juce_KeyPressMappingSet.cpp(230,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+  juce_graphics.cpp
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(282,59): error C2270: 'getScaleFactor': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(282,60): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(282,60): warning C4183: 'JUCE_DEPRECATED': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(287,58): error C2143: syntax error: missing ')' before ';'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(287,58): warning C4042: 'identity': has bad storage class
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(287,58): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(287,58): warning C4183: 'JUCE_DEPRECATED_STATIC': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_AffineTransform.h(287,67): error C2059: syntax error: ')'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,1): error C2270: 'transformed': modifiers not allowed on nonmember functions
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(983,2): message : see reference to class template instantiation 'juce::Rectangle<ValueType>' being compiled
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,97): error C2059: syntax error: '{'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,1): error C2143: syntax error: missing ')' before ';'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,1): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,1): warning C4183: 'JUCE_DEPRECATED_WITH_BODY': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(53,9): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(54,9): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(54,20): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(60,9): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(60,20): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(71,28): error C2187: syntax error: ')' was unexpected here
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(71,30): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(71,35): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(72,28): error C2187: syntax error: ')' was unexpected here
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(72,30): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(72,35): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(93,78): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(93,98): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(93,78): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(93,98): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,111): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,132): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,111): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(96,132): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(99,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(99,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(102,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(102,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(105,78): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(105,78): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(108,78): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(108,78): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(111,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(111,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(111,86): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(111,86): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(114,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(114,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(114,86): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(114,86): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(117,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(117,86): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(117,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(117,86): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(120,78): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(120,86): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(120,78): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(120,86): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(123,80): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(123,88): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(124,80): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(124,88): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(123,80): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(123,88): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(124,80): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(124,88): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,128): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,128): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,132): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,136): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,136): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,140): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,132): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(129,140): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(133,110): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(133,110): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(136,103): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(136,103): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(139,103): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(139,103): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(142,110): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(142,110): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,112): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,112): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,120): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,123): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,120): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(145,123): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,112): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,119): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,119): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,127): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,112): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(148,127): error C2065: 'h': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,112): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,112): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,120): error C3861: 'w': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,123): error C2065: 'pos': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,123): error C3861: 'pos': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,131): error C3861: 'h': identifier not found
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(151,120): error C2065: 'w': undeclared identifier
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_graphics\geometry/juce_Rectangle.h(961,125): fatal  error C1003: error count exceeds 100; stopping compilation
+  juce_events.cpp
+  juce_core.cpp
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_core\juce_core.cpp(114): warning : "Please re-save your project with the latest Projucer version to avoid this warning"
+  juce_data_structures.cpp
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(612,52): error C2143: syntax error: missing ')' before ';'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(612,52): warning C4042: 'invalid': has bad storage class
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(612,52): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(612,52): warning C4183: 'JUCE_DEPRECATED_STATIC': missing return type; assumed to be a member function returning 'int'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(612,60): error C2059: syntax error: ')'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.cpp(582,60): error C2039: 'invalid': is not a member of 'juce::ValueTree'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.h(71,17): message : see declaration of 'juce::ValueTree'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.cpp(582,49): error C2143: syntax error: missing ')' before ';'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.cpp(582,49): error C4430: missing type specifier - int assumed. Note: C++ does not support default-int
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.cpp(582,68): error C2059: syntax error: ')'
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\values/juce_ValueTree.cpp(1006,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+D:\Users\eigil\projects\juceProjs\CustomMatPlot\externals\JUCE\modules\juce_data_structures\app_properties/juce_PropertiesFile.cpp(190,9): warning C4996: 'juce::XmlElement::macroBasedForLoop': was declared deprecated
+  Generating Code...

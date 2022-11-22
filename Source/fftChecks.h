@@ -21,43 +21,47 @@
 
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
+#include "cmp_plot.h"
 //[/Headers]
 
 
 
 //==============================================================================
 /**
-                                                                    //[Comments]
-    An auto-generated component, created by the Projucer.
+																	//[Comments]
+	An auto-generated component, created by the Projucer.
 
-    Describe your class and how it works here!
-                                                                    //[/Comments]
+	Describe your class and how it works here!
+																	//[/Comments]
 */
-class fftChecks  : public juce::Component
+class fftChecks : public juce::Component
 {
+	// Declare plot object.
+	cmp::Plot m_plot;
+
 public:
-    //==============================================================================
-    fftChecks ();
-    ~fftChecks() override;
+	//==============================================================================
+	fftChecks();
+	~fftChecks() override;
 
-    //==============================================================================
-    //[UserMethods]     -- You can add your own custom methods in this section.
-    //[/UserMethods]
+	//==============================================================================
+	//[UserMethods]     -- You can add your own custom methods in this section.
+	//[/UserMethods]
 
-    void paint (juce::Graphics& g) override;
-    void resized() override;
+	void paint(juce::Graphics& g) override;
+	void resized() override;
 
 
 
 private:
-    //[UserVariables]   -- You can add your own custom variables in this section.
-    //[/UserVariables]
+	//[UserVariables]   -- You can add your own custom variables in this section.
+	//[/UserVariables]
 
-    //==============================================================================
+	//==============================================================================
 
 
-    //==============================================================================
-    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (fftChecks)
+	//==============================================================================
+	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(fftChecks)
 };
 
 //[EndFile] You can add extra defines here...

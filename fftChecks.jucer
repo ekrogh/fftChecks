@@ -5,6 +5,39 @@
               cppLanguageStandard="20">
   <MAINGROUP id="xPHzKJ" name="fftChecks">
     <GROUP id="{52CCD5B3-CACC-89FA-93C0-923BD71A466A}" name="Source">
+      <FILE id="zoBX9y" name="cmp_datamodels.h" compile="0" resource="0"
+            file="Source/cmp_datamodels.h"/>
+      <FILE id="uT329t" name="cmp_downsampler.cpp" compile="1" resource="0"
+            file="Source/cmp_downsampler.cpp"/>
+      <FILE id="QAGy6E" name="cmp_downsampler.h" compile="0" resource="0"
+            file="Source/cmp_downsampler.h"/>
+      <FILE id="GnbdIs" name="cmp_frame.cpp" compile="1" resource="0" file="Source/cmp_frame.cpp"/>
+      <FILE id="l7Lx5u" name="cmp_frame.h" compile="0" resource="0" file="Source/cmp_frame.h"/>
+      <FILE id="EFD1Xt" name="cmp_graph_line.cpp" compile="1" resource="0"
+            file="Source/cmp_graph_line.cpp"/>
+      <FILE id="uPRoOk" name="cmp_graph_line.h" compile="0" resource="0"
+            file="Source/cmp_graph_line.h"/>
+      <FILE id="S9OJSX" name="cmp_grid.cpp" compile="1" resource="0" file="Source/cmp_grid.cpp"/>
+      <FILE id="xAqQZl" name="cmp_grid.h" compile="0" resource="0" file="Source/cmp_grid.h"/>
+      <FILE id="jizM2X" name="cmp_label.cpp" compile="1" resource="0" file="Source/cmp_label.cpp"/>
+      <FILE id="wCqFKq" name="cmp_label.h" compile="0" resource="0" file="Source/cmp_label.h"/>
+      <FILE id="Gy8Lry" name="cmp_legend.cpp" compile="1" resource="0" file="Source/cmp_legend.cpp"/>
+      <FILE id="iglx6e" name="cmp_legend.h" compile="0" resource="0" file="Source/cmp_legend.h"/>
+      <FILE id="Z7LxkL" name="cmp_lookandfeel.cpp" compile="1" resource="0"
+            file="Source/cmp_lookandfeel.cpp"/>
+      <FILE id="xiq4oy" name="cmp_lookandfeel.h" compile="0" resource="0"
+            file="Source/cmp_lookandfeel.h"/>
+      <FILE id="ikuRl3" name="cmp_plot.cpp" compile="1" resource="0" file="Source/cmp_plot.cpp"/>
+      <FILE id="q9ZTN6" name="cmp_plot.h" compile="0" resource="0" file="Source/cmp_plot.h"/>
+      <FILE id="CTVWx5" name="cmp_trace.cpp" compile="1" resource="0" file="Source/cmp_trace.cpp"/>
+      <FILE id="X7kGYg" name="cmp_trace.h" compile="0" resource="0" file="Source/cmp_trace.h"/>
+      <FILE id="ZevfJo" name="cmp_utils.h" compile="0" resource="0" file="Source/cmp_utils.h"/>
+      <FILE id="x6o2iu" name="cmp_version.h" compile="0" resource="0" file="Source/cmp_version.h"/>
+      <FILE id="dVJRml" name="cmp_version.h.in" compile="0" resource="1"
+            file="Source/cmp_version.h.in"/>
+      <FILE id="ZCIhYX" name="cmp_zoom.cpp" compile="1" resource="0" file="Source/cmp_zoom.cpp"/>
+      <FILE id="iDVX3j" name="cmp_zoom.h" compile="0" resource="0" file="Source/cmp_zoom.h"/>
+      <FILE id="hrJgDw" name="package.h" compile="0" resource="0" file="Source/package.h"/>
       <FILE id="YheUl6" name="fftChecks.cpp" compile="1" resource="0" file="Source/fftChecks.cpp"/>
       <FILE id="S1xTBR" name="fftChecks.h" compile="0" resource="0" file="Source/fftChecks.h"/>
       <FILE id="ZETAcs" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>

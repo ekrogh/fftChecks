@@ -1,0 +1,80 @@
+﻿  cmp_downsampler.cpp
+  cmp_frame.cpp
+  cmp_graph_line.cpp
+  cmp_grid.cpp
+  cmp_label.cpp
+  cmp_legend.cpp
+  cmp_lookandfeel.cpp
+  cmp_plot.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(162,56): warning C4100: 'grid': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(695,16): warning C4189: 'lnf': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_label.cpp(69,39): warning C4100: 'g': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_graph_line.cpp(51,53): warning C4100: 'check_only_distance_from_x': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_grid.cpp(118,24): warning C4100: 'scale_factor': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(15,72): warning C4267: '=': conversion from 'size_t' to 'int', possible loss of data
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(127,1): message : see reference to function template instantiation 'auto cmp::computeXStartIdx<ValueType,std::vector<float,std::allocator<float>>>(const _T0,const _T1 &)' being compiled
+          with
+          [
+              ValueType=float,
+              _T0=float,
+              _T1=std::vector<float,std::allocator<float>>
+          ]
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(112,48): message : while compiling class template member function 'void cmp::Downsampler<float>::calculateXBasedDSIdxs(const cmp::CommonPlotParameterView,const std::vector<float,std::allocator<float>> &,std::vector<size_t,std::allocator<size_t>> &)'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(233,34): message : see reference to class template instantiation 'cmp::Downsampler<float>' being compiled
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(118,15): warning C4189: 'max_x_index': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(115,15): warning C4189: 'bounds': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(143,35): warning C4100: 'common_params': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_downsampler.cpp(146,49): message : while compiling class template member function 'void cmp::Downsampler<float>::calculateXYBasedDSIdxs(const cmp::CommonPlotParameterView,const std::vector<size_t,std::allocator<size_t>> &,const std::vector<float,std::allocator<float>> &,std::vector<size_t,std::allocator<size_t>> &)'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(202,26): warning C4100: 'graph_bounds': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(202,55): message : while compiling class template member function 'std::pair<juce::Rectangle<int>,juce::Rectangle<int>> cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>::getTraceAndZoomButtonBounds(juce::Rectangle<int>) noexcept const'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.h(179,70): message : see reference to class template instantiation 'cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>' being compiled (compiling source file ..\..\Source\cmp_lookandfeel.cpp)
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(796,14): warning C4189: 'height': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(790,75): message : while compiling class template member function 'void cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>::updateVerticalGridLineTicksAuto(const juce::Rectangle<int> &,const bool,const cmp::Lim_f,std::vector<float,std::allocator<float>> &) noexcept'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(843,14): warning C4189: 'width': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(838,77): message : while compiling class template member function 'void cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>::updateHorizontalGridLineTicksAuto(const juce::Rectangle<int> &,const bool,const cmp::Lim_f,std::vector<float,std::allocator<float>> &) noexcept'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(1082,14): warning C4189: 'y_mid_point_bottom': local variable is initialized but not referenced
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(1046,53): message : while compiling class template member function 'void cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>::updateXYTitleLabels(const juce::Rectangle<int> &,const juce::Rectangle<int> &,juce::Label &,juce::Label &,juce::Label &)'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(1049,14): warning C4189: 'x_margin': local variable is initialized but not referenced
+  cmp_trace.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_utils.h(257,14): warning C4189: 'exp_diff': local variable is initialized but not referenced (compiling source file ..\..\Source\cmp_lookandfeel.cpp)
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(1005,1): message : see reference to function template instantiation 'std::pair<std::string,std::string> cmp::valueToString<float>(const ValueType,const cmp::CommonPlotParameterView,const bool,const size_t)' being compiled
+          with
+          [
+              ValueType=float
+          ]
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(924,37): message : while compiling class template member function 'void cmp::PlotLookAndFeelDefault<cmp::Scaling::linear,cmp::Scaling::linear>::updateGridLabels(const cmp::CommonPlotParameterView,const std::vector<cmp::GridLine,std::allocator<cmp::GridLine>> &,cmp::StringVector &,cmp::StringVector &,cmp::LabelVector &,cmp::LabelVector &)'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(23,32): warning C4505: 'cmp::findMinMaxValuesInGraphLines': unreferenced function with internal linkage has been removed
+  cmp_zoom.cpp
+  fftChecks.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(539): warning C4706: assignment within conditional expression
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(541): warning C4706: assignment within conditional expression
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(543): warning C4706: assignment within conditional expression
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(545): warning C4706: assignment within conditional expression
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_plot.cpp(106): warning C4702: unreachable code
+  Main.cpp
+  BinaryData.cpp
+  include_juce_audio_basics.cpp
+  include_juce_audio_formats.cpp
+  include_juce_core.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(538): warning C4702: unreachable code
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(538): warning C4702: unreachable code
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(538): warning C4702: unreachable code
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_lookandfeel.cpp(538): warning C4702: unreachable code
+  include_juce_data_structures.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_utils.h(257,14): warning C4189: 'exp_diff': local variable is initialized but not referenced (compiling source file ..\..\Source\cmp_trace.cpp)
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_trace.cpp(60,1): message : see reference to function template instantiation 'std::pair<std::string,std::string> cmp::valueToString<ValueType>(const ValueType,const cmp::CommonPlotParameterView,const bool,const size_t)' being compiled
+          with
+          [
+              ValueType=float
+          ]
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_trace.cpp(54,55): message : while compiling class template member function 'void cmp::TraceLabel<float>::setGraphLabelFrom(const juce::Point<float> &,const cmp::CommonPlotParameterView)'
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_trace.cpp(271,40): message : see reference to function template instantiation 'void cmp::TraceLabel<float>::setGraphLabelFrom(const juce::Point<float> &,const cmp::CommonPlotParameterView)' being compiled
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\cmp_trace.cpp(155,57): message : see reference to class template instantiation 'cmp::TraceLabel<float>' being compiled
+  include_juce_dsp.cpp
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(24,42): warning C4100: 'commandLine': unreferenced formal parameter
+D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(46,54): warning C4100: 'commandLine': unreferenced formal parameter
+  include_juce_events.cpp
+  include_juce_graphics.cpp
+  include_juce_gui_extra.cpp
+  include_juce_gui_basics.cpp
+  fftChecks_App.vcxproj -> D:\Users\eigil\projects\juceProjs\fftChecks\Builds\VisualStudio2022\x64\Debug\App\fftChecks.exe
