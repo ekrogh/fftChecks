@@ -19,7 +19,6 @@
 
 //[Headers] You can add your own extra header files here...
 #include <algorithm>
-#include <numbers>
 //[/Headers]
 
 #include "fftChecks.h"
@@ -51,7 +50,7 @@ fftChecks::fftChecks()
 	addAndMakeVisible(m_plot);
 
 	// Plot some values.
-	m_plot.plot({ y_data});
+	m_plot.plot({ y_data });
 	//m_plot.plot({  y_data, x_data });
 
 	//[/Constructor]
@@ -86,7 +85,7 @@ void fftChecks::resized()
 	//[/UserPreResize]
 
 	//[UserResized] Add your own custom resize handling here..
-	
+
 	// Set the bounds of the plot to fill the whole window.
 	m_plot.setBounds(getBounds());
 
@@ -104,17 +103,16 @@ void fftChecks::fillX()
 
 void fftChecks::fillYSin()
 {
-
 	constexpr double sinFreq = (Fs / 4);
 	constexpr double deltaRad = sinFreq * twoPi;
 	int n = 0;
 	std::ranges::generate
-		(
-			y_data
-			, [&n, deltaRad, this]
-			() 
-			{ return  (float)sin(fmod((deltaRad * Ts * n++), twoPi));  }
-		);
+	(
+		y_data
+		, [&n, deltaRad, this]
+		()
+		{ return  (float)sin(fmod((deltaRad * Ts * n++), twoPi));  }
+	);
 }
 //[/MiscUserCode]
 
