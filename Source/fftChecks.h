@@ -24,9 +24,6 @@
 
 #include "cmp_plot.h"
 
-#include<iostream>
-#include<vector>
-
 using namespace std;
 
 //[/Headers]
@@ -60,24 +57,30 @@ public:
 private:
 	//[UserVariables]   -- You can add your own custom variables in this section.
 
+	void fillX();
+	void fillYSin();
+
+	static constexpr double twoPi = 2.0f * numbers::pi;
+
 	enum
 	{
-		  fftOrderAtStart = 11
-		, noSampels = 2048 // = pow(2, fftOrderAtStart)
+		fftOrderAtStart = 11
+		, N = 2048 // = pow(2, fftOrderAtStart)
 	};
 
-	float Fs = 44100.0f;
-	float Ts = 1.0f / Fs;
+	static constexpr double Fs = 44100.0f;
+	static constexpr double Ts = 1.0f / Fs;
+	static constexpr double deltaFreq = Fs / (N - 1);
 
 	std::unique_ptr<juce::dsp::FFT> forwardFFT = std::make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
 	cmp::Plot m_plot;
 
-	vector<float> y_vals = *(new vector<float>(noSampels, 0.0));
-	float* fftbfr = y_vals.data();
+	vector<float> y_data = *(new vector<float>(N));
+	float* fftbfr = y_data.data();
 
-	vector<float> x_vals;
+	std::vector<float> x_data = *(new vector<float>(N));
 
 	//[/UserVariables]
 

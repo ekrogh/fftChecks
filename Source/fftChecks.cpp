@@ -18,6 +18,8 @@
 */
 
 //[Headers] You can add your own extra header files here...
+#include <algorithm>
+#include <numbers>
 //[/Headers]
 
 #include "fftChecks.h"
@@ -28,7 +30,6 @@
 
 //==============================================================================
 fftChecks::fftChecks()
-	: m_plot{ cmp::Plot() }
 {
 	//[Constructor_pre] You can add your own custom stuff here..
 	//[/Constructor_pre]
@@ -42,14 +43,16 @@ fftChecks::fftChecks()
 
 	//[Constructor] You can add your own custom stuff here..
 
+	// Fill the X-axis values
+	fillX();
+	fillYSin();
+
 	// Add the plot object as a child component.
 	addAndMakeVisible(m_plot);
 
 	// Plot some values.
-	m_plot.plot({ y_vals });
-	//m_plot.plot({ {1, 3, 7, 9, 13} });
-
-	//m_plot.setXTicks({ 1.7f, 2.0f, 3.23f, 4.0f, 5.3f });
+	m_plot.plot({ y_data});
+	//m_plot.plot({  y_data, x_data });
 
 	//[/Constructor]
 }
@@ -93,6 +96,26 @@ void fftChecks::resized()
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+void fftChecks::fillX()
+{
+	int n = 0;
+	std::ranges::generate(x_data, [&n, this]() { return deltaFreq * n++;  });
+}
+
+void fftChecks::fillYSin()
+{
+
+	constexpr double sinFreq = (Fs / 4);
+	constexpr double deltaRad = sinFreq * twoPi;
+	int n = 0;
+	std::ranges::generate
+		(
+			y_data
+			, [&n, deltaRad, this]
+			() 
+			{ return  (float)sin(fmod((deltaRad * Ts * n++), twoPi));  }
+		);
+}
 //[/MiscUserCode]
 
 
