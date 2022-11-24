@@ -70,7 +70,7 @@ private:
 		, N = 2048 // = pow(2, fftOrderAtStart)
 	};
 
-	static constexpr double Fs = 44100.0f;
+	static constexpr double Fs = 48000.0f;
 	static constexpr double Ts = 1.0f / Fs;
 	static constexpr double deltaFreq = Fs / (N - 1);
 

@@ -1,15 +1,12 @@
 ﻿  fftChecks.cpp
-  Main.cpp
-D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(24,42): warning C4100: 'commandLine': unreferenced formal parameter
-D:\Users\eigil\projects\juceProjs\fftChecks\Source\Main.cpp(46,54): warning C4100: 'commandLine': unreferenced formal parameter
-D:\Program_Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32019\include\algorithm(3647,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data (compiling source file ..\..\Source\fftChecks.cpp)
+D:\Program_Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32019\include\algorithm(3647,31): warning C4244: '=': conversion from 'double' to 'float', possible loss of data
 D:\Program_Files\Microsoft Visual Studio\2022\Preview\VC\Tools\MSVC\14.35.32019\include\algorithm(3630,1): message : see reference to function template instantiation '_Out *std::ranges::_Generate_fn::_Generate_unchecked<float*,float*,std::_Ref_fn<_Fn>>(_Out,const _Se,std::_Ref_fn<_Fn>)' being compiled
           with
           [
               _Out=float *,
               _Fn=fftChecks::fillX::<lambda_1>,
               _Se=float *
-          ] (compiling source file ..\..\Source\fftChecks.cpp)
+          ]
 D:\Users\eigil\projects\juceProjs\fftChecks\Source\fftChecks.cpp(101,73): message : see reference to function template instantiation 'std::_Vector_iterator<std::_Vector_val<std::_Simple_types<_Ty>>> std::ranges::_Generate_fn::operator ()<std::vector<_Ty,std::allocator<_Ty>>&,fftChecks::fillX::<lambda_1>>(_Rng,_Fn) const' being compiled
           with
           [

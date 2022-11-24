@@ -103,15 +103,14 @@ void fftChecks::fillX()
 
 void fftChecks::fillYSin()
 {
-	constexpr double sinFreq = (Fs / 4);
-	constexpr double deltaRad = sinFreq * twoPi;
+	constexpr double sinFreq = (Fs / 200);
+	constexpr double deltaRad = sinFreq * twoPi * Ts;
 	int n = 0;
 	std::ranges::generate
 	(
 		y_data
-		, [&n, deltaRad, this]
-		()
-		{ return  (float)sin(fmod((deltaRad * Ts * n++), twoPi));  }
+		, [&n, &deltaRad, this] ()
+		{ return  (float)sin(fmod((deltaRad * n++), twoPi));  }
 	);
 }
 //[/MiscUserCode]
