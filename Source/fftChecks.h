@@ -34,32 +34,36 @@ using namespace std;
 
 //==============================================================================
 /**
-																	//[Comments]
+                                                                    //[Comments]
 	An auto-generated component, created by the Projucer.
 
 	Describe your class and how it works here!
-																	//[/Comments]
+                                                                    //[/Comments]
 */
-class fftChecks : public juce::Component
+class fftChecks  : public juce::Component
 {
 public:
-	//==============================================================================
-	fftChecks();
-	~fftChecks() override;
+    //==============================================================================
+    fftChecks ();
+    ~fftChecks() override;
 
-	//==============================================================================
-	//[UserMethods]     -- You can add your own custom methods in this section.
-	//[/UserMethods]
+    //==============================================================================
+    //[UserMethods]     -- You can add your own custom methods in this section.
+    //[/UserMethods]
 
-	void paint(juce::Graphics& g) override;
-	void resized() override;
+    void paint (juce::Graphics& g) override;
+    void resized() override;
 
 
 
 private:
-	//[UserVariables]   -- You can add your own custom variables in this section.
+    //[UserVariables]   -- You can add your own custom variables in this section.
 
-	void fillX();
+	void makePlots();
+	
+	void doSine();
+
+	void fillXTime();
 	void fillYSin();
 
 	static constexpr double twoPi = 2.0f * numbers::pi;
@@ -67,14 +71,14 @@ private:
 	enum
 	{
 		fftOrderAtStart = 11
-		, N = 2048 // = pow(2, fftOrderAtStart)
+		, Fs = 48000
 	};
 
-	static constexpr double Fs = 48000.0f;
+	int N = 0;
 	static constexpr double Ts = 1.0f / Fs;
-	static constexpr double deltaFreq = Fs / (N - 1);
+	double deltaFreq = 0;
 
-	std::unique_ptr<juce::dsp::FFT> forwardFFT = std::make_unique<juce::dsp::FFT>(fftOrderAtStart);
+	unique_ptr<juce::dsp::FFT> forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
 	cmp::Plot m_plot;
@@ -82,16 +86,15 @@ private:
 	vector<float> y_data = *(new vector<float>(N));
 	float* fftbfr = y_data.data();
 
-	vector<float> x_data = *(new vector<float>(N));
+	vector<float> x_ticks = *(new vector<float>(N));
 
-	//[/UserVariables]
+    //[/UserVariables]
+
+    //==============================================================================
 
 
-	//==============================================================================
-
-
-	//==============================================================================
-	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(fftChecks)
+    //==============================================================================
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (fftChecks)
 };
 
 //[EndFile] You can add extra defines here...

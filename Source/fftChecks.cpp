@@ -28,85 +28,104 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-fftChecks::fftChecks()
+fftChecks::fftChecks ()
+    : N((int)pow((float)2, (float)fftOrderAtStart)),
+      deltaFreq(Fs / (N - 1))
 {
-	//[Constructor_pre] You can add your own custom stuff here..
-	//[/Constructor_pre]
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
 
 
-	//[UserPreSize]
-	//[/UserPreSize]
+    //[UserPreSize]
+    //[/UserPreSize]
 
-	setSize(1200, 800);
+    setSize (1200, 800);
 
 
-	//[Constructor] You can add your own custom stuff here..
+    //[Constructor] You can add your own custom stuff here..
 
-	// Fill the X-axis values
-	fillX();
-	fillYSin();
+    // Add the plot object as a child component.
+    addAndMakeVisible(m_plot);
 
-	// Add the plot object as a child component.
-	addAndMakeVisible(m_plot);
+    // Do the calculations and plots
+    makePlots();
 
-	// Plot some values.
-	m_plot.plot({ y_data });
-	//m_plot.plot({  y_data, x_data });
-
-	//[/Constructor]
+    //[/Constructor]
 }
 
 fftChecks::~fftChecks()
 {
-	//[Destructor_pre]. You can add your own custom destruction code here..
-	//[/Destructor_pre]
+    //[Destructor_pre]. You can add your own custom destruction code here..
+    forwardFFT.reset();
+    fftbfr = nullptr;
+    x_ticks = vector<float>();
+    y_data = vector<float>();
+    //x_ticks.clear();
+    //y_data.clear();
+    //[/Destructor_pre]
 
 
 
-	//[Destructor]. You can add your own custom destruction code here..
-	//[/Destructor]
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
-void fftChecks::paint(juce::Graphics& g)
+void fftChecks::paint (juce::Graphics& g)
 {
-	//[UserPrePaint] Add your own custom painting code here..
-	//[/UserPrePaint]
+    //[UserPrePaint] Add your own custom painting code here..
+    //[/UserPrePaint]
 
-	g.fillAll(juce::Colour(0xff505050));
+    g.fillAll (juce::Colour (0xff505050));
 
-	//[UserPaint] Add your own custom painting code here..
-	//[/UserPaint]
+    //[UserPaint] Add your own custom painting code here..
+    //[/UserPaint]
 }
 
 void fftChecks::resized()
 {
-	//[UserPreResize] Add your own custom resize code here..
-	//[/UserPreResize]
+    //[UserPreResize] Add your own custom resize code here..
+    //[/UserPreResize]
 
-	//[UserResized] Add your own custom resize handling here..
+    //[UserResized] Add your own custom resize handling here..
 
 	// Set the bounds of the plot to fill the whole window.
 	m_plot.setBounds(getBounds());
 
-	//[/UserResized]
+    //[/UserResized]
 }
 
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void fftChecks::fillX()
+void fftChecks::makePlots()
+{
+    doSine();
+}
+
+void fftChecks::doSine()
+{
+    // Fill the X-axis values
+    fillXTime();
+    fillYSin();
+
+    // Plot some values.
+    m_plot.plot({ y_data }, { x_ticks });
+}
+
+void fftChecks::fillXTime()
 {
 	int n = 0;
-	std::ranges::generate(x_data, [&n, this]() { return deltaFreq * n++;  });
+	ranges::generate(x_ticks, [&n, this]() { return (float)(Ts * n++);  });
 }
 
 void fftChecks::fillYSin()
 {
-	constexpr double sinFreq = (Fs / 200);
+    //constexpr double sinFreq = 4;
+    constexpr double sinFreq = (Fs / 4);
 	constexpr double deltaRad = sinFreq * twoPi * Ts;
 	int n = 0;
-	std::ranges::generate
+	ranges::generate
 	(
 		y_data
 		, [&n, &deltaRad, this] ()
@@ -120,15 +139,15 @@ void fftChecks::fillYSin()
 #if 0
 /*  -- Projucer information section --
 
-	This is where the Projucer stores the metadata that describe this GUI layout, so
-	make changes in here at your peril!
+    This is where the Projucer stores the metadata that describe this GUI layout, so
+    make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-				 parentClasses="public juce::Component" constructorParams="" variableInitialisers="m_plot{ cmp::Plot() }"
-				 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-				 fixedSize="0" initialWidth="1200" initialHeight="800">
+                 parentClasses="public juce::Component" constructorParams="" variableInitialisers="N(pow(2, fftOrderAtStart))&#10;deltaFreq(Fs / (N - 1))"
+                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 fixedSize="0" initialWidth="1200" initialHeight="800">
   <BACKGROUND backgroundColour="ff505050"/>
 </JUCER_COMPONENT>
 
