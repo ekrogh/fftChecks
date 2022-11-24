@@ -82,7 +82,7 @@ private:
 	vector<float> y_data = *(new vector<float>(N));
 	float* fftbfr = y_data.data();
 
-	std::vector<float> x_data = *(new vector<float>(N));
+	vector<float> x_data = *(new vector<float>(N));
 
 	//[/UserVariables]
 
