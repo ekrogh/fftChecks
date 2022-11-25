@@ -30,7 +30,8 @@
 //==============================================================================
 fftChecks::fftChecks ()
     : N((int)pow((float)2, (float)fftOrderAtStart)),
-      deltaFreq(Fs / (N - 1))
+      deltaFreq((double)Fs / ((double)N - (double)1)),
+      m_plot{ cmp::Plot() }
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -44,11 +45,17 @@ fftChecks::fftChecks ()
 
     //[Constructor] You can add your own custom stuff here..
 
-    // Add the plot object as a child component.
-    addAndMakeVisible(m_plot);
+	// Add the plot object as a child component.
+	addAndMakeVisible(m_plot);
 
-    // Do the calculations and plots
-    makePlots();
+	// Inits
+	forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
+	y_data = *(new vector<float>(N));
+	fftbfr = y_data.data(); 
+	x_ticks = *(new vector<float>(N));
+
+	// Do the calculations and plots
+	makePlots();
 
     //[/Constructor]
 }
@@ -56,12 +63,10 @@ fftChecks::fftChecks ()
 fftChecks::~fftChecks()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-    forwardFFT.reset();
-    fftbfr = nullptr;
-    x_ticks = vector<float>();
-    y_data = vector<float>();
-    //x_ticks.clear();
-    //y_data.clear();
+	//forwardFFT = nullptr;
+	//x_ticks = *(new vector<float>());
+	//y_data = *(new vector<float>());
+	//fftbfr = nullptr;
     //[/Destructor_pre]
 
 
@@ -100,17 +105,26 @@ void fftChecks::resized()
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void fftChecks::makePlots()
 {
-    doSine();
+	doSine();
 }
 
 void fftChecks::doSine()
 {
-    // Fill the X-axis values
-    fillXTime();
-    fillYSin();
+	// Fill the X-axis values
+	fillXTime();
+	fillYSin();
 
-    // Plot some values.
-    m_plot.plot({ y_data }, { x_ticks });
+	// make FFT
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr);
+
+	// Plot some values.
+	m_plot.plot({ y_data }, { x_ticks });
+}
+
+void fftChecks::fillXFrequency()
+{
+	int n = 0;
+	ranges::generate(x_ticks, [&n, this]() { return (float)(deltaFreq * n++);  });
 }
 
 void fftChecks::fillXTime()
@@ -121,14 +135,14 @@ void fftChecks::fillXTime()
 
 void fftChecks::fillYSin()
 {
-    //constexpr double sinFreq = 4;
-    constexpr double sinFreq = (Fs / 4);
+	//constexpr double sinFreq = 4;
+	constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
 	constexpr double deltaRad = sinFreq * twoPi * Ts;
 	int n = 0;
 	ranges::generate
 	(
 		y_data
-		, [&n, &deltaRad, this] ()
+		, [&n, &deltaRad, this]()
 		{ return  (float)sin(fmod((deltaRad * n++), twoPi));  }
 	);
 }
@@ -145,7 +159,7 @@ void fftChecks::fillYSin()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-                 parentClasses="public juce::Component" constructorParams="" variableInitialisers="N(pow(2, fftOrderAtStart))&#10;deltaFreq(Fs / (N - 1))"
+                 parentClasses="public juce::Component" constructorParams="" variableInitialisers="N((int)pow((float)2, (float)fftOrderAtStart))&#10;deltaFreq(Fs / (N - 1))&#10;m_plot{ cmp::Plot() }"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="1200" initialHeight="800">
   <BACKGROUND backgroundColour="ff505050"/>

@@ -60,33 +60,35 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
 	void makePlots();
-	
+
 	void doSine();
 
+	void fillXFrequency();
 	void fillXTime();
+
 	void fillYSin();
 
 	static constexpr double twoPi = 2.0f * numbers::pi;
 
 	enum
 	{
-		fftOrderAtStart = 11
+		fftOrderAtStart = 10
 		, Fs = 48000
 	};
 
 	int N = 0;
-	static constexpr double Ts = 1.0f / Fs;
+	static constexpr double Ts = 1.0f / (double)Fs;
 	double deltaFreq = 0;
 
-	unique_ptr<juce::dsp::FFT> forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
+	unique_ptr<juce::dsp::FFT> forwardFFT;
 
 	// Declare plot object.
 	cmp::Plot m_plot;
 
-	vector<float> y_data = *(new vector<float>(N));
-	float* fftbfr = y_data.data();
+	vector<float> y_data;
+	float* fftbfr;
 
-	vector<float> x_ticks = *(new vector<float>(N));
+	vector<float> x_ticks;
 
     //[/UserVariables]
 

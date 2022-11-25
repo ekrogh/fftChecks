@@ -1,3 +1,2 @@
 ﻿  fftChecks.cpp
-D:\Users\eigil\projects\juceProjs\fftChecks\Source\fftChecks.h(78,36): warning C5055: operator '/': deprecated between enumerations and floating-point types
   fftChecks_App.vcxproj -> D:\Users\eigil\projects\juceProjs\fftChecks\Builds\VisualStudio2022\x64\Debug\App\fftChecks.exe
