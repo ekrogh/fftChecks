@@ -76,12 +76,7 @@ void fftChecks::doSine()
 	//forwardFFT->performFrequencyOnlyForwardTransform(fftbfr);
 
 	// Plot some values.
-	m_plot.plot
-	(
-		{ vector<float>(fftbfr, fftbfr + N) }
-		, { x_ticks }
-	);
-	//m_plot.plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
+	m_plot.plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
 }
 
 void fftChecks::fillXFrequency()
@@ -98,9 +93,6 @@ void fftChecks::fillXTime()
 
 void fftChecks::fillYSin()
 {
-	constexpr double sinFreq = 40;
-	//constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
-	constexpr double deltaRad = sinFreq * twoPi * Ts;
 	double curPhase = 0.0f;
 
 	for (int i = 0; i < N; i++)
@@ -108,14 +100,6 @@ void fftChecks::fillYSin()
 		fftbfr[i] = (float)sin(curPhase);
 		curPhase = fmod((curPhase + deltaRad), twoPi);
 	}
-
-	//int n = 0;
-	//ranges::generate
-	//(
-	//	y_data
-	//	, [&n, &deltaRad, this]()
-	//	{ return  (float)sin(fmod((deltaRad * n++), twoPi));  }
-	//);
 }
 //[/MiscUserCode]
 

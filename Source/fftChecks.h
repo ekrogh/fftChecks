@@ -87,8 +87,10 @@ private:
 	double deltaFreq = 0;
 
 	float* fftbfr;
-
 	vector<float> x_ticks;
+
+	static constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
+	static constexpr double deltaRad = sinFreq * twoPi * Ts;
 
     //[/UserVariables]
 
