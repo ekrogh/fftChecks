@@ -94,8 +94,6 @@ private:
 	static constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
 	static constexpr double deltaRad = sinFreq * twoPi * Ts;
 
-	juce::WaitableEvent weContButtonClicked;
-
     //[/UserVariables]
 
     //==============================================================================
