@@ -68,11 +68,17 @@ private:
 
 	void fillYSin();
 
+
+	unique_ptr<juce::dsp::FFT> forwardFFT;
+
+	// Declare plot object.
+	cmp::Plot m_plot;
+
 	static constexpr double twoPi = 2.0f * numbers::pi;
 
 	enum
 	{
-		fftOrderAtStart = 10
+		fftOrderAtStart = 11
 		, Fs = 48000
 	};
 
@@ -80,12 +86,6 @@ private:
 	static constexpr double Ts = 1.0f / (double)Fs;
 	double deltaFreq = 0;
 
-	unique_ptr<juce::dsp::FFT> forwardFFT;
-
-	// Declare plot object.
-	cmp::Plot m_plot;
-
-	vector<float> y_data;
 	float* fftbfr;
 
 	vector<float> x_ticks;

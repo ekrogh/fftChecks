@@ -28,78 +28,36 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-fftChecks::fftChecks ()
-    : N((int)pow((float)2, (float)fftOrderAtStart)),
-      deltaFreq((double)Fs / ((double)N - (double)1)),
-      m_plot{ cmp::Plot() }
+fftChecks::fftChecks()
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
+	//[Constructor_pre] You can add your own custom stuff here..
+	//[/Constructor_pre]
 
 
-    //[UserPreSize]
-    //[/UserPreSize]
+	//[UserPreSize]
+	//[/UserPreSize]
 
-    setSize (1200, 800);
+	setSize(1200, 800);
 
 
-    //[Constructor] You can add your own custom stuff here..
+	//[Constructor] You can add your own custom stuff here..
 
 	// Add the plot object as a child component.
 	addAndMakeVisible(m_plot);
 
 	// Inits
 	forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
-	y_data = *(new vector<float>(N));
-	fftbfr = y_data.data(); 
-	x_ticks = *(new vector<float>(N));
+
+	N = forwardFFT->getSize(); // No of points in fft
+	deltaFreq = ((double)Fs / ((double)N - (double)1));
+	fftbfr = (float*)std::calloc(N * 2, sizeof(float));
+	x_ticks = vector<float>(N);
 
 	// Do the calculations and plots
 	makePlots();
 
-    //[/Constructor]
+	//[/Constructor]
 }
-
-fftChecks::~fftChecks()
-{
-    //[Destructor_pre]. You can add your own custom destruction code here..
-	//forwardFFT = nullptr;
-	//x_ticks = *(new vector<float>());
-	//y_data = *(new vector<float>());
-	//fftbfr = nullptr;
-    //[/Destructor_pre]
-
-
-
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
-}
-
-//==============================================================================
-void fftChecks::paint (juce::Graphics& g)
-{
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
-
-    g.fillAll (juce::Colour (0xff505050));
-
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
-}
-
-void fftChecks::resized()
-{
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
-
-    //[UserResized] Add your own custom resize handling here..
-
-	// Set the bounds of the plot to fill the whole window.
-	m_plot.setBounds(getBounds());
-
-    //[/UserResized]
-}
-
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
@@ -115,10 +73,15 @@ void fftChecks::doSine()
 	fillYSin();
 
 	// make FFT
-	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr);
+	//forwardFFT->performFrequencyOnlyForwardTransform(fftbfr);
 
 	// Plot some values.
-	m_plot.plot({ y_data }, { x_ticks });
+	m_plot.plot
+	(
+		{ vector<float>(fftbfr, fftbfr + N) }
+		, { x_ticks }
+	);
+	//m_plot.plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
 }
 
 void fftChecks::fillXFrequency()
@@ -135,33 +98,81 @@ void fftChecks::fillXTime()
 
 void fftChecks::fillYSin()
 {
-	//constexpr double sinFreq = 4;
-	constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
+	constexpr double sinFreq = 40;
+	//constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
 	constexpr double deltaRad = sinFreq * twoPi * Ts;
-	int n = 0;
-	ranges::generate
-	(
-		y_data
-		, [&n, &deltaRad, this]()
-		{ return  (float)sin(fmod((deltaRad * n++), twoPi));  }
-	);
+	double curPhase = 0.0f;
+
+	for (int i = 0; i < N; i++)
+	{
+		fftbfr[i] = (float)sin(curPhase);
+		curPhase = fmod((curPhase + deltaRad), twoPi);
+	}
+
+	//int n = 0;
+	//ranges::generate
+	//(
+	//	y_data
+	//	, [&n, &deltaRad, this]()
+	//	{ return  (float)sin(fmod((deltaRad * n++), twoPi));  }
+	//);
 }
 //[/MiscUserCode]
+
+fftChecks::~fftChecks()
+{
+	//[Destructor_pre]. You can add your own custom destruction code here..
+	//forwardFFT = nullptr;
+	//x_ticks = *(new vector<float>());
+	//y_data = *(new vector<float>());
+	std::free(fftbfr);
+	//[/Destructor_pre]
+
+
+
+	//[Destructor]. You can add your own custom destruction code here..
+	//[/Destructor]
+}
+
+//==============================================================================
+void fftChecks::paint(juce::Graphics& g)
+{
+	//[UserPrePaint] Add your own custom painting code here..
+	//[/UserPrePaint]
+
+	g.fillAll(juce::Colour(0xff505050));
+
+	//[UserPaint] Add your own custom painting code here..
+	//[/UserPaint]
+}
+
+void fftChecks::resized()
+{
+	//[UserPreResize] Add your own custom resize code here..
+	//[/UserPreResize]
+
+	//[UserResized] Add your own custom resize handling here..
+
+	// Set the bounds of the plot to fill the whole window.
+	m_plot.setBounds(getBounds());
+
+	//[/UserResized]
+}
 
 
 //==============================================================================
 #if 0
 /*  -- Projucer information section --
 
-    This is where the Projucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
+	This is where the Projucer stores the metadata that describe this GUI layout, so
+	make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-                 parentClasses="public juce::Component" constructorParams="" variableInitialisers="N((int)pow((float)2, (float)fftOrderAtStart))&#10;deltaFreq(Fs / (N - 1))&#10;m_plot{ cmp::Plot() }"
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="1200" initialHeight="800">
+				 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
+				 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+				 fixedSize="0" initialWidth="1200" initialHeight="800">
   <BACKGROUND backgroundColour="ff505050"/>
 </JUCER_COMPONENT>
 
