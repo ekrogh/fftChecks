@@ -40,7 +40,8 @@ using namespace std;
 	Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class fftChecks  : public juce::Component
+class fftChecks  : public juce::Component,
+                   public juce::Button::Listener
 {
 public:
     //==============================================================================
@@ -53,6 +54,7 @@ public:
 
     void paint (juce::Graphics& g) override;
     void resized() override;
+    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
@@ -92,9 +94,12 @@ private:
 	static constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
 	static constexpr double deltaRad = sinFreq * twoPi * Ts;
 
+	juce::WaitableEvent weContButtonClicked;
+
     //[/UserVariables]
 
     //==============================================================================
+    std::unique_ptr<juce::TextButton> contButton;
 
 
     //==============================================================================
