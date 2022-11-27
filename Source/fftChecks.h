@@ -69,12 +69,13 @@ private:
 	void fillXTime();
 
 	void fillYSin();
+	void fillYFM();
 
 
-	unique_ptr<juce::dsp::FFT> forwardFFT;
+	unique_ptr<juce::dsp::FFT> forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
-	cmp::Plot m_plot;
+	unique_ptr<cmp::Plot> m_plot = make_unique<cmp::Plot>();
 
 	static constexpr double twoPi = 2.0f * numbers::pi;
 
@@ -84,15 +85,18 @@ private:
 		, Fs = 48000
 	};
 
-	int N = 0;
+	int N = forwardFFT->getSize(); // No of points in fft
 	static constexpr double Ts = 1.0f / (double)Fs;
-	double deltaFreq = 0;
+	double deltaFreq = ((double)Fs / ((double)N - (double)1));
 
-	float* fftbfr;
-	vector<float> x_ticks;
+	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
+	vector<float> x_ticks = vector<float>(N);
 
-	static constexpr double sinFreq = (static_cast<double>(Fs) / static_cast<double>(4));
-	static constexpr double deltaRad = sinFreq * twoPi * Ts;
+	static constexpr double carrierSinFreq =
+		(static_cast<double>(Fs) / static_cast<double>(2));
+	static constexpr double carrierSinFreqDeltaRad = carrierSinFreq * twoPi * Ts;
+
+	juce::WaitableEvent weDoNextPlot;
 
     //[/UserVariables]
 

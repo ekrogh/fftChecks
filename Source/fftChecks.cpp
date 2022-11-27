@@ -32,7 +32,7 @@ fftChecks::fftChecks()
 {
 	//[Constructor_pre] You can add your own custom stuff here..
 	// Add the plot object as a child component.
-	addAndMakeVisible(m_plot);
+	addAndMakeVisible(m_plot.get());
 	//[/Constructor_pre]
 
 	contButton.reset(new juce::TextButton("contButton"));
@@ -50,15 +50,6 @@ fftChecks::fftChecks()
 
 
 	//[Constructor] You can add your own custom stuff here..
-
-	// Inits
-	forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
-
-	N = forwardFFT->getSize(); // No of points in fft
-	deltaFreq = ((double)Fs / ((double)N - (double)1));
-	fftbfr = (float*)std::calloc(N * 2, sizeof(float));
-	x_ticks = vector<float>(N);
-
 
 	// Do the calculations and plots
 	makePlots();
@@ -101,7 +92,7 @@ void fftChecks::resized()
 	// Set the bounds of the plot to fill the whole window.
 	auto bnds = getBounds();
 	bnds.setHeight(contButton->getY());
-	m_plot.setBounds(bnds);
+	m_plot->setBounds(bnds);
 
 	//[/UserResized]
 }
@@ -114,8 +105,7 @@ void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
 	if (buttonThatWasClicked == contButton.get())
 	{
 		//[UserButtonCode_contButton] -- add your button handler code here..
-		// Plot FFT
-		m_plot.plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
+		weDoNextPlot.signal();
 		//[/UserButtonCode_contButton]
 	}
 
@@ -133,15 +123,18 @@ void fftChecks::makePlots()
 
 void fftChecks::doSine()
 {
-	// Fill the X-axis values
-	fillXTime();
-	fillYSin();
-
-	// Plot
-	m_plot.plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
-
 	// make FFT
-	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr);
+	fillYSin();
+	fillXFrequency();
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
+
+	// Plot FFT
+	vector<float> y_data(fftbfr, fftbfr + N);
+	auto minY = ranges::min_element(y_data);
+	auto maxY = ranges::max_element(y_data);
+	//m_plot->yLim(y_data(minY), const float max);
+	m_plot->plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
+	m_plot->gridON(true, true);
 }
 
 
@@ -164,10 +157,20 @@ void fftChecks::fillYSin()
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] = (float)sin(curPhase);
-		curPhase = fmod((curPhase + deltaRad), twoPi);
+		curPhase = fmod((curPhase + carrierSinFreqDeltaRad), twoPi);
 	}
 }
 
+void fftChecks::fillYFM()
+{
+	double curPhase = 0.0f;
+
+	for (int i = 0; i < N; i++)
+	{
+		fftbfr[i] = (float)sin(curPhase);
+		curPhase = fmod((curPhase + carrierSinFreqDeltaRad), twoPi);
+	}
+}
 //[/MiscUserCode]
 
 
