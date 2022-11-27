@@ -70,7 +70,7 @@ private:
 
 	void fillYSin();
 	void fillYFM();
-
+	void makeYTickLabels();
 
 	unique_ptr<juce::dsp::FFT> forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
@@ -90,10 +90,12 @@ private:
 	double deltaFreq = ((double)Fs / ((double)N - (double)1));
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
+	vector<float> y_data;
+	vector<string> yTickLabels;
 	vector<float> x_ticks = vector<float>(N);
 
 	static constexpr double carrierSinFreq =
-		(static_cast<double>(Fs) / static_cast<double>(2));
+		(static_cast<double>(Fs) / static_cast<double>(3));
 	static constexpr double carrierSinFreqDeltaRad = carrierSinFreq * twoPi * Ts;
 
 	juce::WaitableEvent weDoNextPlot;

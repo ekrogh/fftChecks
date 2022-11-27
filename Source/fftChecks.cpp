@@ -129,12 +129,13 @@ void fftChecks::doSine()
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
 	// Plot FFT
-	vector<float> y_data(fftbfr, fftbfr + N);
-	auto minY = ranges::min_element(y_data);
-	auto maxY = ranges::max_element(y_data);
-	//m_plot->yLim(y_data(minY), const float max);
-	m_plot->plot({ vector<float>(fftbfr, fftbfr + N) }, { x_ticks });
-	m_plot->gridON(true, true);
+	y_data = vector<float>(fftbfr, fftbfr + N);
+	auto [minY, maxY] = ranges::minmax_element(y_data);
+	m_plot->yLim(*minY, *maxY);
+	m_plot->plot({ y_data }, { x_ticks });
+	m_plot->gridON(true, false);
+	//makeYTickLabels();
+	//m_plot->setYTickLabels(yTickLabels);
 }
 
 
@@ -148,6 +149,18 @@ void fftChecks::fillXTime()
 {
 	int n = 0;
 	ranges::generate(x_ticks, [&n, this]() { return (float)(Ts * n++); });
+}
+
+void fftChecks::makeYTickLabels()
+{
+	auto [minY, maxY] = ranges::minmax_element(y_data);
+
+	auto tickStep = (*maxY - *minY) / 10.0f;
+
+	for (int i = 0; i <= 10; i++)
+	{
+		yTickLabels.push_back(to_string((float)i * tickStep));
+	}
 }
 
 void fftChecks::fillYSin()
