@@ -41,6 +41,7 @@ using namespace std;
                                                                     //[/Comments]
 */
 class fftChecks  : public juce::Component,
+                   private juce::Thread,
                    public juce::Button::Listener
 {
 public:
@@ -50,7 +51,8 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
-    //[/UserMethods]
+	void run() override; // Called from Thread
+	//[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
@@ -73,11 +75,14 @@ private:
 	void fillYFM();
 	void makeYTickLabels();
 
+	void initNewPlot();
+	void resizePlotWindow();
+
 	unique_ptr<juce::dsp::FFT> forwardFFT =
 		make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
-	unique_ptr<cmp::Plot> m_plot = make_unique<cmp::Plot>();
+	unique_ptr<cmp::Plot> m_plot;
 
 	static constexpr double twoPi = (double)2.0f * (double)(numbers::pi);
 
