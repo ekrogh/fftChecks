@@ -49,7 +49,7 @@ fftChecks::fftChecks()
 
 
 	//[Constructor] You can add your own custom stuff here..
-	startThread(1); // priority 1
+	startThread(10); // priority 10
 	//[/Constructor]
 }
 
@@ -57,6 +57,7 @@ fftChecks::~fftChecks()
 {
 	//[Destructor_pre]. You can add your own custom destruction code here..
 	std::free(fftbfr);
+
 	weDoNextPlot.signal();
 	stopThread(-10);
 	//[/Destructor_pre]
