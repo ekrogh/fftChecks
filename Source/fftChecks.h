@@ -64,6 +64,7 @@ private:
 	void makePlots();
 
 	void doSine();
+	void doFM();
 
 	void fillXFrequency();
 	void fillXTime();
@@ -72,12 +73,13 @@ private:
 	void fillYFM();
 	void makeYTickLabels();
 
-	unique_ptr<juce::dsp::FFT> forwardFFT = make_unique<juce::dsp::FFT>(fftOrderAtStart);
+	unique_ptr<juce::dsp::FFT> forwardFFT =
+		make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
 	unique_ptr<cmp::Plot> m_plot = make_unique<cmp::Plot>();
 
-	static constexpr double twoPi = 2.0f * numbers::pi;
+	static constexpr double twoPi = (double)2.0f * (double)(numbers::pi);
 
 	enum
 	{
@@ -86,7 +88,7 @@ private:
 	};
 
 	int N = forwardFFT->getSize(); // No of points in fft
-	static constexpr double Ts = 1.0f / (double)Fs;
+	static constexpr double Ts = (double)1.0f / (double)Fs;
 	double deltaFreq = ((double)Fs / ((double)N - (double)1));
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
@@ -94,9 +96,15 @@ private:
 	vector<string> yTickLabels;
 	vector<float> x_ticks = vector<float>(N);
 
+	// Carrier
 	static constexpr double carrierSinFreq =
 		(static_cast<double>(Fs) / static_cast<double>(3));
-	static constexpr double carrierSinFreqDeltaRad = carrierSinFreq * twoPi * Ts;
+	static constexpr double carrierSinFreqDeltaRad =
+		carrierSinFreq * twoPi * Ts;
+	// Signal
+	static constexpr double signalSinFreq = 400.0f;
+	static constexpr double signalSinFreqDeltaRad =
+		signalSinFreq * twoPi * Ts;
 
 	juce::WaitableEvent weDoNextPlot;
 

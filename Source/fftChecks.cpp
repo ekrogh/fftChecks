@@ -118,7 +118,36 @@ void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
 void fftChecks::makePlots()
 {
-	doSine();
+	doFM();
+	//doSine();
+}
+
+void fftChecks::doFM()
+{
+	// FM signal
+	fillYFM();
+	fillXTime();
+
+	// Plot signal
+	y_data = vector<float>(fftbfr, fftbfr + N);
+	auto minYmaxY = ranges::minmax_element(y_data);
+	m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plot->plot({ y_data }, { x_ticks });
+	m_plot->gridON(true, false);
+
+	int n;
+	cin >> n;
+
+	//FFT
+	fillXFrequency();
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
+
+	// Plot FFT
+	y_data = vector<float>(fftbfr, fftbfr + N);
+	minYmaxY = ranges::minmax_element(y_data);
+	m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plot->plot({ y_data }, { x_ticks });
+	m_plot->gridON(true, false);
 }
 
 void fftChecks::doSine()
@@ -134,8 +163,6 @@ void fftChecks::doSine()
 	m_plot->yLim(*minY, *maxY);
 	m_plot->plot({ y_data }, { x_ticks });
 	m_plot->gridON(true, false);
-	//makeYTickLabels();
-	//m_plot->setYTickLabels(yTickLabels);
 }
 
 
@@ -165,23 +192,28 @@ void fftChecks::makeYTickLabels()
 
 void fftChecks::fillYSin()
 {
-	double curPhase = 0.0f;
+	double curPhaseCarrierSin = 0.0f;
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] = (float)sin(curPhase);
-		curPhase = fmod((curPhase + carrierSinFreqDeltaRad), twoPi);
+		fftbfr[i] = (float)sin(curPhaseCarrierSin);
+		curPhaseCarrierSin =
+			fmod((curPhaseCarrierSin + carrierSinFreqDeltaRad), twoPi);
 	}
 }
 
 void fftChecks::fillYFM()
 {
-	double curPhase = 0.0f;
+	double curSignalSin = 0.0f;
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] = (float)sin(curPhase);
-		curPhase = fmod((curPhase + carrierSinFreqDeltaRad), twoPi);
+		curSignalSin =
+			sin(fmod((signalSinFreqDeltaRad * (double)i), twoPi));
+
+		fftbfr[i] =
+			(float)sin(fmod((carrierSinFreqDeltaRad * (double)i * curSignalSin), twoPi));
+
 	}
 }
 //[/MiscUserCode]
