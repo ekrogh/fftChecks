@@ -20,7 +20,7 @@
           <Add option="-D_DEBUG=&quot;1&quot;"/>
           <Add option="-DJUCE_DISPLAY_SPLASH_SCREEN=&quot;1&quot;"/>
           <Add option="-DJUCE_USE_DARK_SPLASH_SCREEN=&quot;1&quot;"/>
-          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70002&quot;"/>
+          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70003&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_basics=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_formats=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_core=&quot;1&quot;"/>
@@ -76,7 +76,7 @@
           <Add option="-DNDEBUG=&quot;1&quot;"/>
           <Add option="-DJUCE_DISPLAY_SPLASH_SCREEN=&quot;1&quot;"/>
           <Add option="-DJUCE_USE_DARK_SPLASH_SCREEN=&quot;1&quot;"/>
-          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70002&quot;"/>
+          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70003&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_basics=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_formats=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_core=&quot;1&quot;"/>
@@ -2577,6 +2577,12 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_mac_Threads.mm">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_core/native/juce_native_ThreadPriorities.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
@@ -6782,6 +6788,12 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/native/juce_mac_PerScreenDisplayLinks.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/native/juce_mac_Windowing.mm">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
@@ -7281,6 +7293,18 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/windows/juce_TopLevelWindow.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/windows/juce_VBlankAttachement.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/windows/juce_VBlankAttachement.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>

@@ -23,80 +23,83 @@
 namespace juce
 {
 
-ChangeBroadcaster::ChangeBroadcaster() noexcept
-{
-    broadcastCallback.owner = this;
-}
+	ChangeBroadcaster::ChangeBroadcaster() noexcept
+	{
+		broadcastCallback.owner = this;
+	}
 
-ChangeBroadcaster::~ChangeBroadcaster()
-{
-}
+	ChangeBroadcaster::~ChangeBroadcaster()
+	{}
 
-void ChangeBroadcaster::addChangeListener (ChangeListener* const listener)
-{
-    // Listeners can only be safely added when the event thread is locked
-    // You can  use a MessageManagerLock if you need to call this from another thread.
-    JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
+	void ChangeBroadcaster::addChangeListener(ChangeListener* const listener)
+	{
+		// Listeners can only be safely added when the event thread is locked
+		// You can  use a MessageManagerLock if you need to call this from another thread.
+		JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
 
-    changeListeners.add (listener);
-    anyListeners = true;
-}
+			changeListeners.add(listener);
+		anyListeners = true;
+	}
 
-void ChangeBroadcaster::removeChangeListener (ChangeListener* const listener)
-{
-    // Listeners can only be safely removed when the event thread is locked
-    // You can  use a MessageManagerLock if you need to call this from another thread.
-    JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
+	void ChangeBroadcaster::removeChangeListener(ChangeListener* const listener)
+	{
+		// Listeners can only be safely removed when the event thread is locked
+		// You can  use a MessageManagerLock if you need to call this from another thread.
+		JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
 
-    changeListeners.remove (listener);
-    anyListeners = changeListeners.size() > 0;
-}
+		// eks 3. dec. 2022: Check size before remove (to prevent crash at shutdown)
+		anyListeners = changeListeners.size() > 0;
+		if (anyListeners)
+		{
+			changeListeners.remove(listener);
+			anyListeners = changeListeners.size() > 0;
+		}
+	}
 
-void ChangeBroadcaster::removeAllChangeListeners()
-{
-    // Listeners can only be safely removed when the event thread is locked
-    // You can  use a MessageManagerLock if you need to call this from another thread.
-    JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
+	void ChangeBroadcaster::removeAllChangeListeners()
+	{
+		// Listeners can only be safely removed when the event thread is locked
+		// You can  use a MessageManagerLock if you need to call this from another thread.
+		JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
 
-    changeListeners.clear();
-    anyListeners = false;
-}
+			changeListeners.clear();
+		anyListeners = false;
+	}
 
-void ChangeBroadcaster::sendChangeMessage()
-{
-    if (anyListeners)
-        broadcastCallback.triggerAsyncUpdate();
-}
+	void ChangeBroadcaster::sendChangeMessage()
+	{
+		if (anyListeners)
+			broadcastCallback.triggerAsyncUpdate();
+	}
 
-void ChangeBroadcaster::sendSynchronousChangeMessage()
-{
-    // This can only be called by the event thread.
-    JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
+	void ChangeBroadcaster::sendSynchronousChangeMessage()
+	{
+		// This can only be called by the event thread.
+		JUCE_ASSERT_MESSAGE_MANAGER_IS_LOCKED
 
-    broadcastCallback.cancelPendingUpdate();
-    callListeners();
-}
+			broadcastCallback.cancelPendingUpdate();
+		callListeners();
+	}
 
-void ChangeBroadcaster::dispatchPendingMessages()
-{
-    broadcastCallback.handleUpdateNowIfNeeded();
-}
+	void ChangeBroadcaster::dispatchPendingMessages()
+	{
+		broadcastCallback.handleUpdateNowIfNeeded();
+	}
 
-void ChangeBroadcaster::callListeners()
-{
-    changeListeners.call ([this] (ChangeListener& l) { l.changeListenerCallback (this); });
-}
+	void ChangeBroadcaster::callListeners()
+	{
+		changeListeners.call([this](ChangeListener& l) { l.changeListenerCallback(this); });
+	}
 
-//==============================================================================
-ChangeBroadcaster::ChangeBroadcasterCallback::ChangeBroadcasterCallback()
-    : owner (nullptr)
-{
-}
+	//==============================================================================
+	ChangeBroadcaster::ChangeBroadcasterCallback::ChangeBroadcasterCallback()
+		: owner(nullptr)
+	{}
 
-void ChangeBroadcaster::ChangeBroadcasterCallback::handleAsyncUpdate()
-{
-    jassert (owner != nullptr);
-    owner->callListeners();
-}
+	void ChangeBroadcaster::ChangeBroadcasterCallback::handleAsyncUpdate()
+	{
+		jassert(owner != nullptr);
+		owner->callListeners();
+	}
 
 } // namespace juce

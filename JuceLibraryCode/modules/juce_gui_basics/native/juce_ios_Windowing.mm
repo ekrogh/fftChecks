@@ -852,8 +852,11 @@ static BorderSize<int> getSafeAreaInsets (float masterScale)
 void Displays::findDisplays (float masterScale)
 {
     JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wundeclared-selector")
-    static const auto keyboardShownSelector = @selector (keyboardShown:);
-    static const auto keyboardHiddenSelector = @selector (keyboardHidden:);
+    // eks 3. dec. 2022 changed
+    // keyboardShown:  to  keyboardShown
+    // keyboardHidden: to  keyboardHidden
+    static const auto keyboardShownSelector = @selector (keyboardShown);
+    static const auto keyboardHiddenSelector = @selector (keyboardHidden);
     JUCE_END_IGNORE_WARNINGS_GCC_LIKE
 
     class OnScreenKeyboardChangeDetectorImpl
