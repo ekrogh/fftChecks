@@ -150,7 +150,11 @@ namespace cmp
 
 	Plot::~Plot()
 	{
-		removeMouseListener(this);
+		if (auto parent = getParentComponent())
+		{
+			parent->removeMouseListener(this);
+		}
+
 		resetLookAndFeelChildrens();
 	}
 
