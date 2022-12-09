@@ -29,7 +29,6 @@
 
 //==============================================================================
 fftChecks::fftChecks()
-	: Thread("fftCheck")
 {
 	//[Constructor_pre] You can add your own custom stuff here..
 	//[/Constructor_pre]
@@ -49,7 +48,7 @@ fftChecks::fftChecks()
 
 
 	//[Constructor] You can add your own custom stuff here..
-	startThread(10); // priority 10
+	initNewPlot();
 	//[/Constructor]
 }
 
@@ -57,9 +56,6 @@ fftChecks::~fftChecks()
 {
 	//[Destructor_pre]. You can add your own custom destruction code here..
 	std::free(fftbfr);
-
-	weDoNextPlot.signal();
-	stopThread(-10);
 	//[/Destructor_pre]
 
 	contButton = nullptr;
@@ -98,7 +94,24 @@ void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
 	if (buttonThatWasClicked == contButton.get())
 	{
 		//[UserButtonCode_contButton] -- add your button handler code here..
-		weDoNextPlot.signal();
+		try
+		{
+			if (gen)
+			{
+				gen();
+			}
+
+			//for (int j = 0; gen; j++)
+			//	std::cout << "fib(" << j << ")=" << gen() << '\n';
+		}
+		catch (const std::exception& ex)
+		{
+			std::cerr << "Exception: " << ex.what() << '\n';
+		}
+		catch (...)
+		{
+			std::cerr << "Unknown exception.\n";
+		}
 		//[/UserButtonCode_contButton]
 	}
 
@@ -109,131 +122,111 @@ void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
-void fftChecks::run()
-{
-	// Do the calculations and plots
-	makePlots();
-}
 
-void fftChecks::makePlots()
+Generator<uint64_t>
+fftChecks::plotCoRoutine()
 {
 	doSine();
+	co_yield 2;
 
-	if (!threadShouldExit())
-	{
-		doFM();
-	}
-}
+	doFM();
+	co_yield 4;
 
-void fftChecks::doFM()
-{
-	{
-		juce::MessageManagerLock mml;
+	deletePlot();
 
-		initNewPlot();
-
-		// FM signal
-		fillYFM();
-		fillXTime();
-
-		// Plot signal
-		y_data = vector<float>(fftbfr, fftbfr + N);
-		auto minYmaxY = ranges::minmax_element(y_data);
-		m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
-		m_plot->setTitle("FM Time domain");
-		m_plot->plot({ y_data }, { x_ticks });
-		m_plot->gridON(true, false);
-	}
-
-	// Wait for cont button to be clicked...
-	weDoNextPlot.wait();
-
-	if (!threadShouldExit())
-	{
-		juce::MessageManagerLock mml;
-
-		initNewPlot();
-
-		//FFT
-		fillXFrequency();
-		forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
-
-		// Plot FFT
-		y_data = vector<float>(fftbfr, fftbfr + N);
-		auto minYmaxY = ranges::minmax_element(y_data);
-		m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
-		m_plot->setTitle("FM Freq domain");
-		m_plot->plot({ y_data }, { x_ticks });
-		m_plot->gridON(true, false);
-	}
-
-	if (!threadShouldExit())
-	{
-		// Wait for cont button to be clicked...
-		weDoNextPlot.wait();
-	}
 }
 
 void fftChecks::doSine()
 {
-	{
-		juce::MessageManagerLock mml;
+	doSineTime();
+	doSineFFT();
+}
 
-		// plot signal
-		initNewPlot();
+void fftChecks::doFM()
+{
+	doFMTime();
+	doFMFFT();
+}
 
-		fillYSin();
-		fillXTime();
+void fftChecks::doFMTime()
+{
+	juce::MessageManagerLock mml;
 
-		y_data = vector<float>(fftbfr, fftbfr + N);
-		auto minYmaxY = ranges::minmax_element(y_data);
-		m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
-		m_plot->setTitle("Sin Time domain");
-		m_plot->plot({ y_data }, { x_ticks });
-		m_plot->gridON(true, false);
-	}
+	// FM signal
+	fillYFM();
+	fillXTime();
 
+	// Plot signal
+	y_data = vector<float>(fftbfr, fftbfr + N);
+	auto minYmaxY = ranges::minmax_element(y_data);
+	m_plotTime->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plotTime->setTitle("FM Time domain");
+	m_plotTime->plot({ y_data }, { x_ticksTime });
+	m_plotTime->gridON(true, false);
+}
+
+void fftChecks::doFMFFT()
+{
 	// Wait for cont button to be clicked...
-	weDoNextPlot.wait();
+	juce::MessageManagerLock mml;
 
-	if (!threadShouldExit())
-	{
-		juce::MessageManagerLock mml;
+	//FFT
+	fillYFM();
+	fillXFrequency();
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
-		// Plot FFT
-		initNewPlot();
+	// Plot FFT
+	y_data = vector<float>(fftbfr, fftbfr + (N >> 1));
+	auto minYmaxY = ranges::minmax_element(y_data);
+	m_plotFFT->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plotFFT->setTitle("FM Freq domain");
+	m_plotFFT->plot({ y_data }, { x_ticksFFT });
+	m_plotFFT->gridON(true, false);
+}
 
-		fillYSin();
-		fillXFrequency();
-		forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
+void fftChecks::doSineTime()
+{
+	juce::MessageManagerLock mml;
 
-		// Plot FFT
-		y_data = vector<float>(fftbfr, fftbfr + N);
-		auto minYmaxY = ranges::minmax_element(y_data);
-		m_plot->yLim(*minYmaxY.min, *minYmaxY.max);
-		m_plot->setTitle("Sin Freq domain");
-		m_plot->plot({ y_data }, { x_ticks });
-		m_plot->gridON(true, false);
-	}
+	fillYSin();
+	fillXTime();
 
-	if (!threadShouldExit())
-	{
-		// Wait for cont button to be clicked...
-		weDoNextPlot.wait();
-	}
+	y_data = vector<float>(fftbfr, fftbfr + N);
+	auto minYmaxY = ranges::minmax_element(y_data);
+	m_plotTime->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plotTime->setTitle("Sin Time domain");
+	m_plotTime->plot({ y_data }, { x_ticksTime });
+	m_plotTime->gridON(true, false);
+}
+
+void fftChecks::doSineFFT()
+{
+	juce::MessageManagerLock mml;
+
+	fillYSin();
+	fillXFrequency();
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
+
+	// Plot FFT
+	y_data = vector<float>(fftbfr, fftbfr + (N >> 1));
+	auto minYmaxY = ranges::minmax_element(y_data);
+	m_plotFFT->yLim(*minYmaxY.min, *minYmaxY.max);
+	m_plotFFT->setTitle("Sin Freq domain");
+	m_plotFFT->plot({ y_data }, { x_ticksFFT });
+	m_plotFFT->gridON(true, false);
 }
 
 
 void fftChecks::fillXFrequency()
 {
 	int n = 0;
-	ranges::generate(x_ticks, [&n, this]() { return (float)(deltaFreq * n++); });
+	ranges::generate(x_ticksFFT, [&n, this]() { return (float)(deltaFreq * n++); });
 }
 
 void fftChecks::fillXTime()
 {
 	int n = 0;
-	ranges::generate(x_ticks, [&n, this]() { return (float)(Ts * n++); });
+	ranges::generate(x_ticksTime, [&n, this]() { return (float)(Ts * n++); });
 }
 
 void fftChecks::makeYTickLabels()
@@ -278,12 +271,14 @@ void fftChecks::fillYFM()
 void fftChecks::initNewPlot()
 {
 	// Remove evt. old plot
-	juce::MessageManagerLock mml;
-	//removeChildComponent(m_plot.get());
-	m_plot.reset();
-	// Init plot
-	m_plot = make_unique<cmp::Plot>();
-	addAndMakeVisible(m_plot.get());
+	//juce::MessageManagerLock mml;
+	//removeChildComponent(m_plotTime.get());
+	m_plotTime = make_unique< cmp::Plot>();
+	addAndMakeVisible(m_plotTime.get());
+
+	m_plotFFT = make_unique< cmp::Plot>();
+	addAndMakeVisible(m_plotFFT.get());
+
 	resizePlotWindow();
 }
 
@@ -294,14 +289,26 @@ void fftChecks::resizePlotWindow()
 
 	//[UserResized] Add your own custom resize handling here..
 
-	// Set the bounds of the plot to fill the whole window.
-	auto bnds = getBounds();
-	bnds.setHeight(contButton->getY());
-	m_plot->setBounds(bnds);
+	auto heightForPlots = contButton->getY();
+	auto heightForOnePlot = heightForPlots / 2;
+
+	auto plotTimeBnds = getBounds();
+	plotTimeBnds.setHeight(heightForOnePlot);
+	plotTimeBnds.setY(0);
+	m_plotTime->setBounds(plotTimeBnds);
+
+	auto plotFFTBnds = getBounds();
+	plotFFTBnds.setHeight(heightForOnePlot);
+	plotFFTBnds.setY(heightForOnePlot);
+	m_plotFFT->setBounds(plotFFTBnds);
 
 	//[/UserResized]
 }
 
+void fftChecks::deletePlot()
+{
+	removeAllChildren();
+}
 //[/MiscUserCode]
 
 
