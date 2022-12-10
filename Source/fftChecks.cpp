@@ -38,7 +38,7 @@ fftChecks::fftChecks ()
     contButton->setButtonText (TRANS("Continue"));
     contButton->addListener (this);
 
-    contButton->setBounds (437, 940, 150, 24);
+    contButton->setBounds (437, 843, 150, 24);
 
     _2i2_toggleButton.reset (new juce::ToggleButton ("2i2_toggleButton"));
     addAndMakeVisible (_2i2_toggleButton.get());
@@ -46,11 +46,11 @@ fftChecks::fftChecks ()
     _2i2_toggleButton->addListener (this);
     _2i2_toggleButton->setToggleState (true, juce::dontSendNotification);
 
-    _2i2_toggleButton->setBounds (357, 940, 74, 24);
+    _2i2_toggleButton->setBounds (357, 843, 74, 24);
 
     maxTimeTextEditor.reset (new juce::TextEditor ("maxTimeTextEditor"));
     addAndMakeVisible (maxTimeTextEditor.get());
-    maxTimeTextEditor->setTooltip (TRANS("mmax time"));
+    maxTimeTextEditor->setTooltip (TRANS("max time"));
     maxTimeTextEditor->setMultiLine (false);
     maxTimeTextEditor->setReturnKeyStartsNewLine (false);
     maxTimeTextEditor->setReadOnly (false);
@@ -59,7 +59,7 @@ fftChecks::fftChecks ()
     maxTimeTextEditor->setPopupMenuEnabled (true);
     maxTimeTextEditor->setText (TRANS("max time"));
 
-    maxTimeTextEditor->setBounds (18, 940, 150, 24);
+    maxTimeTextEditor->setBounds (18, 843, 150, 24);
 
     maxFreqTextEditor.reset (new juce::TextEditor ("maxFreqTextEditor"));
     addAndMakeVisible (maxFreqTextEditor.get());
@@ -72,18 +72,18 @@ fftChecks::fftChecks ()
     maxFreqTextEditor->setPopupMenuEnabled (true);
     maxFreqTextEditor->setText (TRANS("max freq"));
 
-    maxFreqTextEditor->setBounds (189, 940, 150, 24);
+    maxFreqTextEditor->setBounds (189, 843, 150, 24);
 
-    macFreqLabel.reset (new juce::Label ("macFreqLabel",
+    maxFreqLabel.reset (new juce::Label ("maxFreqLabel",
                                          TRANS("max freq")));
-    addAndMakeVisible (macFreqLabel.get());
-    macFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
-    macFreqLabel->setJustificationType (juce::Justification::centredLeft);
-    macFreqLabel->setEditable (false, false, false);
-    macFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
-    macFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+    addAndMakeVisible (maxFreqLabel.get());
+    maxFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    maxFreqLabel->setJustificationType (juce::Justification::centredLeft);
+    maxFreqLabel->setEditable (false, false, false);
+    maxFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    maxFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    macFreqLabel->setBounds (189, 916, 150, 24);
+    maxFreqLabel->setBounds (189, 819, 150, 24);
 
     maxTimeLabel.reset (new juce::Label ("maxTimeLabel",
                                          TRANS("max time")));
@@ -94,7 +94,7 @@ fftChecks::fftChecks ()
     maxTimeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     maxTimeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    maxTimeLabel->setBounds (18, 916, 150, 24);
+    maxTimeLabel->setBounds (18, 819, 150, 24);
 
 
     //[UserPreSize]
@@ -104,6 +104,8 @@ fftChecks::fftChecks ()
 
 
     //[Constructor] You can add your own custom stuff here..
+	maxTimeTextEditor->addListener(this);
+	maxFreqTextEditor->addListener(this);
 	maxTimeTextEditor->setText(to_string(maxTime));
 	maxFreqTextEditor->setText(to_string(maxFreq));
     //[/Constructor]
@@ -119,7 +121,7 @@ fftChecks::~fftChecks()
     _2i2_toggleButton = nullptr;
     maxTimeTextEditor = nullptr;
     maxFreqTextEditor = nullptr;
-    macFreqLabel = nullptr;
+    maxFreqLabel = nullptr;
     maxTimeLabel = nullptr;
 
 
@@ -189,6 +191,18 @@ void fftChecks::buttonClicked (juce::Button* buttonThatWasClicked)
 
 
 //[MiscUserCode] You can add your own definitions of your custom methods or any other code here...
+	/** Called when the user presses the return key. */
+void fftChecks::textEditorReturnKeyPressed(juce::TextEditor& textEditorWithReturn)
+{
+	if (&textEditorWithReturn == maxTimeTextEditor.get())
+	{
+		maxTime = std::stod((maxTimeTextEditor->getText()).toStdString());
+	}
+	else if (&textEditorWithReturn == maxFreqTextEditor.get())
+	{
+		maxFreq = std::stod((maxFreqTextEditor->getText()).toStdString());
+	}
+}
 
 fftChecks::Generator<uint64_t>
 fftChecks::plotCoRoutine()
@@ -392,31 +406,32 @@ void fftChecks::deletePlot()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-                 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="1200" initialHeight="1000">
+                 parentClasses="public juce::Component, public juce::TextEditor::Listener"
+                 constructorParams="" variableInitialisers="" snapPixels="8" snapActive="1"
+                 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="1200"
+                 initialHeight="1000">
   <BACKGROUND backgroundColour="ff505050"/>
   <TEXTBUTTON name="contButton" id="6bbdd155c2eb5000" memberName="contButton"
-              virtualName="" explicitFocusOrder="0" pos="437 940 150 24" buttonText="Continue"
+              virtualName="" explicitFocusOrder="0" pos="437 843 150 24" buttonText="Continue"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TOGGLEBUTTON name="2i2_toggleButton" id="686966a11665c450" memberName="_2i2_toggleButton"
-                virtualName="" explicitFocusOrder="0" pos="357 940 74 24" buttonText="2 i 1"
+                virtualName="" explicitFocusOrder="0" pos="357 843 74 24" buttonText="2 i 1"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
   <TEXTEDITOR name="maxTimeTextEditor" id="6e6d4251a2a6d380" memberName="maxTimeTextEditor"
-              virtualName="" explicitFocusOrder="0" pos="18 940 150 24" tooltip="mmax time"
+              virtualName="" explicitFocusOrder="0" pos="18 843 150 24" tooltip="max time"
               initialText="max time" multiline="0" retKeyStartsLine="0" readonly="0"
               scrollbars="1" caret="1" popupmenu="1"/>
   <TEXTEDITOR name="maxFreqTextEditor" id="7662909642b17a58" memberName="maxFreqTextEditor"
-              virtualName="" explicitFocusOrder="0" pos="189 940 150 24" tooltip="mac freq"
+              virtualName="" explicitFocusOrder="0" pos="189 843 150 24" tooltip="mac freq"
               initialText="max freq" multiline="0" retKeyStartsLine="0" readonly="0"
               scrollbars="1" caret="1" popupmenu="1"/>
-  <LABEL name="macFreqLabel" id="47e631ed27d9284e" memberName="macFreqLabel"
-         virtualName="" explicitFocusOrder="0" pos="189 916 150 24" edTextCol="ff000000"
+  <LABEL name="maxFreqLabel" id="47e631ed27d9284e" memberName="maxFreqLabel"
+         virtualName="" explicitFocusOrder="0" pos="189 819 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="max freq" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="maxTimeLabel" id="8b211e6878ea108a" memberName="maxTimeLabel"
-         virtualName="" explicitFocusOrder="0" pos="18 916 150 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="18 819 150 24" edTextCol="ff000000"
          edBkgCol="0" labelText="max time" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>

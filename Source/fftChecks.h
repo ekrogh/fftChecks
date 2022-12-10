@@ -22,6 +22,8 @@
 //[Headers]     -- You can add your own extra header files here --
 #include <JuceHeader.h>
 
+#include <string>
+
 #include <numbers>
 
 #include <coroutine>
@@ -47,6 +49,7 @@ using namespace std;
                                                                     //[/Comments]
 */
 class fftChecks  : public juce::Component,
+                   public juce::TextEditor::Listener,
                    public juce::Button::Listener
 {
 public:
@@ -132,6 +135,11 @@ public:
 			}
 		}
 	};
+
+
+	/** Called when the user presses the return key. */
+	void textEditorReturnKeyPressed(juce::TextEditor&) override;
+
     //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -183,16 +191,18 @@ private:
 	int N = forwardFFT->getSize(); // No of points in fft
 	static constexpr double Ts = (double)1.0f / (double)Fs;
 	double maxTime = (double)N * Ts;
+	int NTime = (int)(maxTime / Ts);
 
 	double deltaFreq = ((double)Fs / ((double)N - (double)1));
 	double maxFreq = (double)(Fs >> 1);
+	int NFreq = (int)(maxFreq / deltaFreq);
 
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
 	vector<float> y_data;
 	vector<string> yTickLabels;
-	vector<float> x_ticksTime = vector<float>(N);
-	vector<float> x_ticksFFT = vector<float>(N >> 1);
+	vector<float> x_ticksTime = vector<float>(NTime);
+	vector<float> x_ticksFFT = vector<float>(NFreq);
 
 	// Carrier
 	static constexpr double carrierSinFreq =
@@ -211,7 +221,7 @@ private:
     std::unique_ptr<juce::ToggleButton> _2i2_toggleButton;
     std::unique_ptr<juce::TextEditor> maxTimeTextEditor;
     std::unique_ptr<juce::TextEditor> maxFreqTextEditor;
-    std::unique_ptr<juce::Label> macFreqLabel;
+    std::unique_ptr<juce::Label> maxFreqLabel;
     std::unique_ptr<juce::Label> maxTimeLabel;
 
 
