@@ -139,6 +139,8 @@ public:
 
 	/** Called when the user presses the return key. */
 	void textEditorReturnKeyPressed(juce::TextEditor&) override;
+	void updateTimeValues();
+	void updateFreqValues();
 
     //[/UserMethods]
 
@@ -223,6 +225,10 @@ private:
     std::unique_ptr<juce::TextEditor> maxFreqTextEditor;
     std::unique_ptr<juce::Label> maxFreqLabel;
     std::unique_ptr<juce::Label> maxTimeLabel;
+    std::unique_ptr<juce::Label> NFreqLabel;
+    std::unique_ptr<juce::Label> NFreqValueLabel;
+    std::unique_ptr<juce::Label> NTimeLabel;
+    std::unique_ptr<juce::Label> NTimeValueLabel;
 
 
     //==============================================================================
