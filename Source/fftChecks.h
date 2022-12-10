@@ -141,6 +141,8 @@ public:
 	void textEditorReturnKeyPressed(juce::TextEditor&) override;
 	void updateTimeValues();
 	void updateFreqValues();
+	void updateCarrierFreqValues();
+	void updateSignalFreqValues();
 
     //[/UserMethods]
 
@@ -207,13 +209,13 @@ private:
 	vector<float> x_ticksFFT = vector<float>(NFreq);
 
 	// Carrier
-	static constexpr double carrierSinFreq =
+	double carrierSinFreq =
 		(static_cast<double>(Fs) / static_cast<double>(3));
-	static constexpr double carrierSinFreqDeltaRad =
+	double carrierSinFreqDeltaRad =
 		carrierSinFreq * twoPi * Ts;
 	// Signal
-	static constexpr double signalSinFreq = 400.0f;
-	static constexpr double signalSinFreqDeltaRad =
+	double signalSinFreq = 400.0f;
+	double signalSinFreqDeltaRad =
 		signalSinFreq * twoPi * Ts;
 
     //[/UserVariables]
@@ -229,6 +231,11 @@ private:
     std::unique_ptr<juce::Label> NFreqValueLabel;
     std::unique_ptr<juce::Label> NTimeLabel;
     std::unique_ptr<juce::Label> NTimeValueLabel;
+    std::unique_ptr<juce::TextButton> defaultsTextButton;
+    std::unique_ptr<juce::Label> signalFreqLabel;
+    std::unique_ptr<juce::TextEditor> signalFreqTextEditor;
+    std::unique_ptr<juce::Label> carrierFreqLabel;
+    std::unique_ptr<juce::TextEditor> carrierFreqTextEditor;
 
 
     //==============================================================================

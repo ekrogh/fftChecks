@@ -28,186 +28,250 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-fftChecks::fftChecks()
+fftChecks::fftChecks ()
 {
-	//[Constructor_pre] You can add your own custom stuff here..
-	//[/Constructor_pre]
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
 
-	contButton.reset(new juce::TextButton("contButton"));
-	addAndMakeVisible(contButton.get());
-	contButton->setButtonText(TRANS("Continue"));
-	contButton->addListener(this);
+    contButton.reset (new juce::TextButton ("contButton"));
+    addAndMakeVisible (contButton.get());
+    contButton->setButtonText (TRANS("Continue"));
+    contButton->addListener (this);
 
-	contButton->setBounds(437, 843, 150, 24);
+    contButton->setBounds (564, 970, 72, 24);
 
-	_2i2_toggleButton.reset(new juce::ToggleButton("2i2_toggleButton"));
-	addAndMakeVisible(_2i2_toggleButton.get());
-	_2i2_toggleButton->setButtonText(TRANS("2 i 1"));
-	_2i2_toggleButton->addListener(this);
-	_2i2_toggleButton->setToggleState(true, juce::dontSendNotification);
+    _2i2_toggleButton.reset (new juce::ToggleButton ("2i2_toggleButton"));
+    addAndMakeVisible (_2i2_toggleButton.get());
+    _2i2_toggleButton->setButtonText (TRANS("2 i 1"));
+    _2i2_toggleButton->addListener (this);
+    _2i2_toggleButton->setToggleState (true, juce::dontSendNotification);
 
-	_2i2_toggleButton->setBounds(357, 843, 74, 24);
+    _2i2_toggleButton->setBounds (646, 970, 59, 24);
 
-	maxTimeTextEditor.reset(new juce::TextEditor("maxTimeTextEditor"));
-	addAndMakeVisible(maxTimeTextEditor.get());
-	maxTimeTextEditor->setTooltip(TRANS("max time"));
-	maxTimeTextEditor->setMultiLine(false);
-	maxTimeTextEditor->setReturnKeyStartsNewLine(false);
-	maxTimeTextEditor->setReadOnly(false);
-	maxTimeTextEditor->setScrollbarsShown(true);
-	maxTimeTextEditor->setCaretVisible(true);
-	maxTimeTextEditor->setPopupMenuEnabled(true);
-	maxTimeTextEditor->setText(TRANS("max time"));
+    maxTimeTextEditor.reset (new juce::TextEditor ("maxTimeTextEditor"));
+    addAndMakeVisible (maxTimeTextEditor.get());
+    maxTimeTextEditor->setTooltip (TRANS("max time"));
+    maxTimeTextEditor->setMultiLine (false);
+    maxTimeTextEditor->setReturnKeyStartsNewLine (false);
+    maxTimeTextEditor->setReadOnly (false);
+    maxTimeTextEditor->setScrollbarsShown (true);
+    maxTimeTextEditor->setCaretVisible (true);
+    maxTimeTextEditor->setPopupMenuEnabled (true);
+    maxTimeTextEditor->setText (TRANS("max time"));
 
-	maxTimeTextEditor->setBounds(18, 843, 150, 24);
+    maxTimeTextEditor->setBounds (92, 970, 107, 24);
 
-	maxFreqTextEditor.reset(new juce::TextEditor("maxFreqTextEditor"));
-	addAndMakeVisible(maxFreqTextEditor.get());
-	maxFreqTextEditor->setTooltip(TRANS("mac freq"));
-	maxFreqTextEditor->setMultiLine(false);
-	maxFreqTextEditor->setReturnKeyStartsNewLine(false);
-	maxFreqTextEditor->setReadOnly(false);
-	maxFreqTextEditor->setScrollbarsShown(true);
-	maxFreqTextEditor->setCaretVisible(true);
-	maxFreqTextEditor->setPopupMenuEnabled(true);
-	maxFreqTextEditor->setText(TRANS("max freq"));
+    maxFreqTextEditor.reset (new juce::TextEditor ("maxFreqTextEditor"));
+    addAndMakeVisible (maxFreqTextEditor.get());
+    maxFreqTextEditor->setTooltip (TRANS("mac freq"));
+    maxFreqTextEditor->setMultiLine (false);
+    maxFreqTextEditor->setReturnKeyStartsNewLine (false);
+    maxFreqTextEditor->setReadOnly (false);
+    maxFreqTextEditor->setScrollbarsShown (true);
+    maxFreqTextEditor->setCaretVisible (true);
+    maxFreqTextEditor->setPopupMenuEnabled (true);
+    maxFreqTextEditor->setText (TRANS("max freq"));
 
-	maxFreqTextEditor->setBounds(189, 843, 150, 24);
+    maxFreqTextEditor->setBounds (261, 970, 119, 24);
 
-	maxFreqLabel.reset(new juce::Label("maxFreqLabel",
-		TRANS("max freq")));
-	addAndMakeVisible(maxFreqLabel.get());
-	maxFreqLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	maxFreqLabel->setJustificationType(juce::Justification::centredLeft);
-	maxFreqLabel->setEditable(false, false, false);
-	maxFreqLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	maxFreqLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    maxFreqLabel.reset (new juce::Label ("maxFreqLabel",
+                                         TRANS("max freq")));
+    addAndMakeVisible (maxFreqLabel.get());
+    maxFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    maxFreqLabel->setJustificationType (juce::Justification::centredLeft);
+    maxFreqLabel->setEditable (false, false, false);
+    maxFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    maxFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	maxFreqLabel->setBounds(189, 815, 67, 24);
+    maxFreqLabel->setBounds (205, 970, 53, 24);
 
-	maxTimeLabel.reset(new juce::Label("maxTimeLabel",
-		TRANS("max time")));
-	addAndMakeVisible(maxTimeLabel.get());
-	maxTimeLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	maxTimeLabel->setJustificationType(juce::Justification::centredLeft);
-	maxTimeLabel->setEditable(false, false, false);
-	maxTimeLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	maxTimeLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    maxTimeLabel.reset (new juce::Label ("maxTimeLabel",
+                                         TRANS("max time")));
+    addAndMakeVisible (maxTimeLabel.get());
+    maxTimeLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    maxTimeLabel->setJustificationType (juce::Justification::centredLeft);
+    maxTimeLabel->setEditable (false, false, false);
+    maxTimeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    maxTimeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	maxTimeLabel->setBounds(18, 819, 150, 24);
+    maxTimeLabel->setBounds (36, 970, 53, 24);
 
-	NFreqLabel.reset(new juce::Label("NFreqLabel",
-		TRANS("NFreq:")));
-	addAndMakeVisible(NFreqLabel.get());
-	NFreqLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	NFreqLabel->setJustificationType(juce::Justification::centredLeft);
-	NFreqLabel->setEditable(false, false, false);
-	NFreqLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	NFreqLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    NFreqLabel.reset (new juce::Label ("NFreqLabel",
+                                       TRANS("NFreq:")));
+    addAndMakeVisible (NFreqLabel.get());
+    NFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    NFreqLabel->setJustificationType (juce::Justification::centredLeft);
+    NFreqLabel->setEditable (false, false, false);
+    NFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    NFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	NFreqLabel->setBounds(449, 815, 51, 24);
+    NFreqLabel->setBounds (205, 942, 51, 24);
 
-	NFreqValueLabel.reset(new juce::Label("NFreqValueLabel",
-		TRANS("NFreq val\n")));
-	addAndMakeVisible(NFreqValueLabel.get());
-	NFreqValueLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	NFreqValueLabel->setJustificationType(juce::Justification::centredLeft);
-	NFreqValueLabel->setEditable(false, false, false);
-	NFreqValueLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	NFreqValueLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    NFreqValueLabel.reset (new juce::Label ("NFreqValueLabel",
+                                            TRANS("NFreq val\n")));
+    addAndMakeVisible (NFreqValueLabel.get());
+    NFreqValueLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    NFreqValueLabel->setJustificationType (juce::Justification::centredLeft);
+    NFreqValueLabel->setEditable (false, false, false);
+    NFreqValueLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    NFreqValueLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	NFreqValueLabel->setBounds(508, 815, 80, 24);
+    NFreqValueLabel->setBounds (264, 942, 80, 24);
 
-	NTimeLabel.reset(new juce::Label("NTimeLabel",
-		TRANS("NTime:")));
-	addAndMakeVisible(NTimeLabel.get());
-	NTimeLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	NTimeLabel->setJustificationType(juce::Justification::centredLeft);
-	NTimeLabel->setEditable(false, false, false);
-	NTimeLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	NTimeLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    NTimeLabel.reset (new juce::Label ("NTimeLabel",
+                                       TRANS("NTime:")));
+    addAndMakeVisible (NTimeLabel.get());
+    NTimeLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    NTimeLabel->setJustificationType (juce::Justification::centredLeft);
+    NTimeLabel->setEditable (false, false, false);
+    NTimeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    NTimeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	NTimeLabel->setBounds(314, 815, 51, 24);
+    NTimeLabel->setBounds (36, 942, 51, 24);
 
-	NTimeValueLabel.reset(new juce::Label("NTimeValueLabel",
-		TRANS("NTime val\n")));
-	addAndMakeVisible(NTimeValueLabel.get());
-	NTimeValueLabel->setFont(juce::Font(15.00f, juce::Font::plain).withTypefaceStyle("Regular"));
-	NTimeValueLabel->setJustificationType(juce::Justification::centredLeft);
-	NTimeValueLabel->setEditable(false, false, false);
-	NTimeValueLabel->setColour(juce::TextEditor::textColourId, juce::Colours::black);
-	NTimeValueLabel->setColour(juce::TextEditor::backgroundColourId, juce::Colour(0x00000000));
+    NTimeValueLabel.reset (new juce::Label ("NTimeValueLabel",
+                                            TRANS("NTime val\n")));
+    addAndMakeVisible (NTimeValueLabel.get());
+    NTimeValueLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    NTimeValueLabel->setJustificationType (juce::Justification::centredLeft);
+    NTimeValueLabel->setEditable (false, false, false);
+    NTimeValueLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    NTimeValueLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-	NTimeValueLabel->setBounds(368, 815, 80, 24);
+    NTimeValueLabel->setBounds (90, 942, 80, 24);
+
+    defaultsTextButton.reset (new juce::TextButton ("defaultsTextButton"));
+    addAndMakeVisible (defaultsTextButton.get());
+    defaultsTextButton->setButtonText (TRANS("Defaults"));
+    defaultsTextButton->addListener (this);
+
+    defaultsTextButton->setBounds (564, 942, 72, 24);
+
+    signalFreqLabel.reset (new juce::Label ("signalFreqLabel",
+                                            TRANS("signal freq")));
+    addAndMakeVisible (signalFreqLabel.get());
+    signalFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    signalFreqLabel->setJustificationType (juce::Justification::centredLeft);
+    signalFreqLabel->setEditable (false, false, false);
+    signalFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    signalFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    signalFreqLabel->setBounds (385, 970, 70, 24);
+
+    signalFreqTextEditor.reset (new juce::TextEditor ("signalFreqTextEditor"));
+    addAndMakeVisible (signalFreqTextEditor.get());
+    signalFreqTextEditor->setTooltip (TRANS("signal freq"));
+    signalFreqTextEditor->setMultiLine (false);
+    signalFreqTextEditor->setReturnKeyStartsNewLine (false);
+    signalFreqTextEditor->setReadOnly (false);
+    signalFreqTextEditor->setScrollbarsShown (true);
+    signalFreqTextEditor->setCaretVisible (true);
+    signalFreqTextEditor->setPopupMenuEnabled (true);
+    signalFreqTextEditor->setText (TRANS("signal freq"));
+
+    signalFreqTextEditor->setBounds (454, 970, 102, 24);
+
+    carrierFreqLabel.reset (new juce::Label ("carrierFreqLabel",
+                                             TRANS("carrier freq")));
+    addAndMakeVisible (carrierFreqLabel.get());
+    carrierFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    carrierFreqLabel->setJustificationType (juce::Justification::centredLeft);
+    carrierFreqLabel->setEditable (false, false, false);
+    carrierFreqLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    carrierFreqLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    carrierFreqLabel->setBounds (385, 942, 70, 24);
+
+    carrierFreqTextEditor.reset (new juce::TextEditor ("carrierFreqTextEditor"));
+    addAndMakeVisible (carrierFreqTextEditor.get());
+    carrierFreqTextEditor->setTooltip (TRANS("carrier freq"));
+    carrierFreqTextEditor->setMultiLine (false);
+    carrierFreqTextEditor->setReturnKeyStartsNewLine (false);
+    carrierFreqTextEditor->setReadOnly (false);
+    carrierFreqTextEditor->setScrollbarsShown (true);
+    carrierFreqTextEditor->setCaretVisible (true);
+    carrierFreqTextEditor->setPopupMenuEnabled (true);
+    carrierFreqTextEditor->setText (TRANS("carrier freq"));
+
+    carrierFreqTextEditor->setBounds (454, 942, 102, 24);
 
 
-	//[UserPreSize]
-	//[/UserPreSize]
+    //[UserPreSize]
+    //[/UserPreSize]
 
-	setSize(1200, 1000);
+    setSize (1200, 1000);
 
 
-	//[Constructor] You can add your own custom stuff here..
+    //[Constructor] You can add your own custom stuff here..
 	maxTimeTextEditor->addListener(this);
-	maxFreqTextEditor->addListener(this);
+    maxFreqTextEditor->addListener(this);
+    signalFreqTextEditor->addListener(this);
+    carrierFreqTextEditor->addListener(this);
 	maxTimeTextEditor->setText(to_string(maxTime));
 	maxFreqTextEditor->setText(to_string(maxFreq));
-	NFreqValueLabel->setText(to_string(NFreq), juce::NotificationType::dontSendNotification);
+    signalFreqTextEditor->setText(to_string(signalSinFreq));
+    carrierFreqTextEditor->setText(to_string(carrierSinFreq));
+    NFreqValueLabel->setText(to_string(NFreq), juce::NotificationType::dontSendNotification);
 	NTimeValueLabel->setText(to_string(NTime), juce::NotificationType::dontSendNotification);
-	//[/Constructor]
+    //[/Constructor]
 }
 
 fftChecks::~fftChecks()
 {
-	//[Destructor_pre]. You can add your own custom destruction code here..
+    //[Destructor_pre]. You can add your own custom destruction code here..
 	std::free(fftbfr);
-	//[/Destructor_pre]
+    //[/Destructor_pre]
 
-	contButton = nullptr;
-	_2i2_toggleButton = nullptr;
-	maxTimeTextEditor = nullptr;
-	maxFreqTextEditor = nullptr;
-	maxFreqLabel = nullptr;
-	maxTimeLabel = nullptr;
-	NFreqLabel = nullptr;
-	NFreqValueLabel = nullptr;
-	NTimeLabel = nullptr;
-	NTimeValueLabel = nullptr;
+    contButton = nullptr;
+    _2i2_toggleButton = nullptr;
+    maxTimeTextEditor = nullptr;
+    maxFreqTextEditor = nullptr;
+    maxFreqLabel = nullptr;
+    maxTimeLabel = nullptr;
+    NFreqLabel = nullptr;
+    NFreqValueLabel = nullptr;
+    NTimeLabel = nullptr;
+    NTimeValueLabel = nullptr;
+    defaultsTextButton = nullptr;
+    signalFreqLabel = nullptr;
+    signalFreqTextEditor = nullptr;
+    carrierFreqLabel = nullptr;
+    carrierFreqTextEditor = nullptr;
 
 
-	//[Destructor]. You can add your own custom destruction code here..
-	//[/Destructor]
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
-void fftChecks::paint(juce::Graphics& g)
+void fftChecks::paint (juce::Graphics& g)
 {
-	//[UserPrePaint] Add your own custom painting code here..
-	//[/UserPrePaint]
+    //[UserPrePaint] Add your own custom painting code here..
+    //[/UserPrePaint]
 
-	g.fillAll(juce::Colour(0xff505050));
+    g.fillAll (juce::Colour (0xff505050));
 
-	//[UserPaint] Add your own custom painting code here..
-	//[/UserPaint]
+    //[UserPaint] Add your own custom painting code here..
+    //[/UserPaint]
 }
 
 void fftChecks::resized()
 {
-	//[UserPreResize] Add your own custom resize code here..
-	//[/UserPreResize]
+    //[UserPreResize] Add your own custom resize code here..
+    //[/UserPreResize]
 
-	//[UserResized] Add your own custom resize handling here..
-	//[/UserResized]
+    //[UserResized] Add your own custom resize handling here..
+    //[/UserResized]
 }
 
-void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
+void fftChecks::buttonClicked (juce::Button* buttonThatWasClicked)
 {
-	//[UserbuttonClicked_Pre]
-	//[/UserbuttonClicked_Pre]
+    //[UserbuttonClicked_Pre]
+    //[/UserbuttonClicked_Pre]
 
-	if (buttonThatWasClicked == contButton.get())
-	{
-		//[UserButtonCode_contButton] -- add your button handler code here..
+    if (buttonThatWasClicked == contButton.get())
+    {
+        //[UserButtonCode_contButton] -- add your button handler code here..
 		try
 		{
 			if (gen)
@@ -226,16 +290,21 @@ void fftChecks::buttonClicked(juce::Button* buttonThatWasClicked)
 		{
 			std::cerr << "Unknown exception.\n";
 		}
-		//[/UserButtonCode_contButton]
-	}
-	else if (buttonThatWasClicked == _2i2_toggleButton.get())
-	{
-		//[UserButtonCode__2i2_toggleButton] -- add your button handler code here..
-		//[/UserButtonCode__2i2_toggleButton]
-	}
+        //[/UserButtonCode_contButton]
+    }
+    else if (buttonThatWasClicked == _2i2_toggleButton.get())
+    {
+        //[UserButtonCode__2i2_toggleButton] -- add your button handler code here..
+        //[/UserButtonCode__2i2_toggleButton]
+    }
+    else if (buttonThatWasClicked == defaultsTextButton.get())
+    {
+        //[UserButtonCode_defaultsTextButton] -- add your button handler code here..
+        //[/UserButtonCode_defaultsTextButton]
+    }
 
-	//[UserbuttonClicked_Post]
-	//[/UserbuttonClicked_Post]
+    //[UserbuttonClicked_Post]
+    //[/UserbuttonClicked_Post]
 }
 
 
@@ -254,6 +323,16 @@ void fftChecks::textEditorReturnKeyPressed(juce::TextEditor& textEditorWithRetur
 		maxFreq = std::stod((maxFreqTextEditor->getText()).toStdString());
 		updateFreqValues();
 	}
+    else if (&textEditorWithReturn == signalFreqTextEditor.get())
+    {
+        signalSinFreq = std::stod((signalFreqTextEditor->getText()).toStdString());
+        updateSignalFreqValues();
+    }
+    else if (&textEditorWithReturn == carrierFreqTextEditor.get())
+    {
+        carrierSinFreq = std::stod((carrierFreqTextEditor->getText()).toStdString());
+        updateCarrierFreqValues();
+    }
 }
 
 void fftChecks::updateTimeValues()
@@ -268,6 +347,16 @@ void fftChecks::updateFreqValues()
 	NFreq = (int)(maxFreq / deltaFreq);
 	x_ticksFFT = vector<float>(NFreq);
 	NFreqValueLabel->setText(to_string(NFreq), juce::NotificationType::dontSendNotification);
+}
+
+void fftChecks::updateSignalFreqValues()
+{
+    signalSinFreqDeltaRad = signalSinFreq * twoPi * Ts;
+}
+
+void fftChecks::updateCarrierFreqValues()
+{
+    carrierSinFreqDeltaRad = carrierSinFreq * twoPi * Ts;
 }
 
 fftChecks::Generator<uint64_t>
@@ -466,61 +555,82 @@ void fftChecks::deletePlot()
 #if 0
 /*  -- Projucer information section --
 
-	This is where the Projucer stores the metadata that describe this GUI layout, so
-	make changes in here at your peril!
+    This is where the Projucer stores the metadata that describe this GUI layout, so
+    make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-				 parentClasses="public juce::Component, public juce::TextEditor::Listener"
-				 constructorParams="" variableInitialisers="" snapPixels="8" snapActive="1"
-				 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="1200"
-				 initialHeight="1000">
+                 parentClasses="public juce::Component, public juce::TextEditor::Listener"
+                 constructorParams="" variableInitialisers="" snapPixels="8" snapActive="1"
+                 snapShown="1" overlayOpacity="0.330" fixedSize="0" initialWidth="1200"
+                 initialHeight="1000">
   <BACKGROUND backgroundColour="ff505050"/>
   <TEXTBUTTON name="contButton" id="6bbdd155c2eb5000" memberName="contButton"
-			  virtualName="" explicitFocusOrder="0" pos="437 843 150 24" buttonText="Continue"
-			  connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+              virtualName="" explicitFocusOrder="0" pos="564 970 72 24" buttonText="Continue"
+              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TOGGLEBUTTON name="2i2_toggleButton" id="686966a11665c450" memberName="_2i2_toggleButton"
-				virtualName="" explicitFocusOrder="0" pos="357 843 74 24" buttonText="2 i 1"
-				connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
+                virtualName="" explicitFocusOrder="0" pos="646 970 59 24" buttonText="2 i 1"
+                connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
   <TEXTEDITOR name="maxTimeTextEditor" id="6e6d4251a2a6d380" memberName="maxTimeTextEditor"
-			  virtualName="" explicitFocusOrder="0" pos="18 843 150 24" tooltip="max time"
-			  initialText="max time" multiline="0" retKeyStartsLine="0" readonly="0"
-			  scrollbars="1" caret="1" popupmenu="1"/>
+              virtualName="" explicitFocusOrder="0" pos="92 970 107 24" tooltip="max time"
+              initialText="max time" multiline="0" retKeyStartsLine="0" readonly="0"
+              scrollbars="1" caret="1" popupmenu="1"/>
   <TEXTEDITOR name="maxFreqTextEditor" id="7662909642b17a58" memberName="maxFreqTextEditor"
-			  virtualName="" explicitFocusOrder="0" pos="189 843 150 24" tooltip="mac freq"
-			  initialText="max freq" multiline="0" retKeyStartsLine="0" readonly="0"
-			  scrollbars="1" caret="1" popupmenu="1"/>
+              virtualName="" explicitFocusOrder="0" pos="261 970 119 24" tooltip="mac freq"
+              initialText="max freq" multiline="0" retKeyStartsLine="0" readonly="0"
+              scrollbars="1" caret="1" popupmenu="1"/>
   <LABEL name="maxFreqLabel" id="47e631ed27d9284e" memberName="maxFreqLabel"
-		 virtualName="" explicitFocusOrder="0" pos="189 815 67 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="max freq" editableSingleClick="0" editableDoubleClick="0"
-		 focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-		 kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="205 970 53 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="max freq" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="maxTimeLabel" id="8b211e6878ea108a" memberName="maxTimeLabel"
-		 virtualName="" explicitFocusOrder="0" pos="18 819 150 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="max time" editableSingleClick="0" editableDoubleClick="0"
-		 focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-		 kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="36 970 53 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="max time" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqLabel" id="8269d5268144c2c3" memberName="NFreqLabel"
-		 virtualName="" explicitFocusOrder="0" pos="449 815 51 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="NFreq:" editableSingleClick="0" editableDoubleClick="0"
-		 focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-		 kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="205 942 51 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="NFreq:" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqValueLabel" id="87041ef7e2c8a83f" memberName="NFreqValueLabel"
-		 virtualName="" explicitFocusOrder="0" pos="508 815 80 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="NFreq val&#10;" editableSingleClick="0"
-		 editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-		 fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="264 942 80 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="NFreq val&#10;" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeLabel" id="9344a5060b2bb5ab" memberName="NTimeLabel"
-		 virtualName="" explicitFocusOrder="0" pos="314 815 51 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="NTime:" editableSingleClick="0" editableDoubleClick="0"
-		 focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-		 kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="36 942 51 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="NTime:" editableSingleClick="0" editableDoubleClick="0"
+         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
+         kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeValueLabel" id="108bfc80744eb74a" memberName="NTimeValueLabel"
-		 virtualName="" explicitFocusOrder="0" pos="368 815 80 24" edTextCol="ff000000"
-		 edBkgCol="0" labelText="NTime val&#10;" editableSingleClick="0"
-		 editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
-		 fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+         virtualName="" explicitFocusOrder="0" pos="90 942 80 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="NTime val&#10;" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+  <TEXTBUTTON name="defaultsTextButton" id="e1fa1deda629935b" memberName="defaultsTextButton"
+              virtualName="" explicitFocusOrder="0" pos="564 942 72 24" buttonText="Defaults"
+              connectedEdges="0" needsCallback="1" radioGroupId="0"/>
+  <LABEL name="signalFreqLabel" id="668450732d3c0888" memberName="signalFreqLabel"
+         virtualName="" explicitFocusOrder="0" pos="385 970 70 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="signal freq" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+  <TEXTEDITOR name="signalFreqTextEditor" id="2fdcec6ac9445576" memberName="signalFreqTextEditor"
+              virtualName="" explicitFocusOrder="0" pos="454 970 102 24" tooltip="signal freq"
+              initialText="signal freq" multiline="0" retKeyStartsLine="0"
+              readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
+  <LABEL name="carrierFreqLabel" id="c12ced105cda4573" memberName="carrierFreqLabel"
+         virtualName="" explicitFocusOrder="0" pos="385 942 70 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="carrier freq" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
+  <TEXTEDITOR name="carrierFreqTextEditor" id="e57cfdfa22e82311" memberName="carrierFreqTextEditor"
+              virtualName="" explicitFocusOrder="0" pos="454 942 102 24" tooltip="carrier freq"
+              initialText="carrier freq" multiline="0" retKeyStartsLine="0"
+              readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
