@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.2
+  Created with Projucer version: 7.0.3
 
   ------------------------------------------------------------------------------
 
@@ -132,7 +132,7 @@ public:
 			}
 		}
 	};
-	//[/UserMethods]
+    //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
@@ -182,7 +182,11 @@ private:
 
 	int N = forwardFFT->getSize(); // No of points in fft
 	static constexpr double Ts = (double)1.0f / (double)Fs;
+	double maxTime = (double)N * Ts;
+
 	double deltaFreq = ((double)Fs / ((double)N - (double)1));
+	double maxFreq = (double)(Fs >> 1);
+
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
 	vector<float> y_data;
@@ -204,6 +208,11 @@ private:
 
     //==============================================================================
     std::unique_ptr<juce::TextButton> contButton;
+    std::unique_ptr<juce::ToggleButton> _2i2_toggleButton;
+    std::unique_ptr<juce::TextEditor> maxTimeTextEditor;
+    std::unique_ptr<juce::TextEditor> maxFreqTextEditor;
+    std::unique_ptr<juce::Label> macFreqLabel;
+    std::unique_ptr<juce::Label> maxTimeLabel;
 
 
     //==============================================================================
