@@ -170,25 +170,40 @@ private:
 	void doSineTime();
 	void doSineFFT();
 	void doFM();
+	void doFMSignalTime();
+	void doFMCarrierTime();
 	void doFMTime();
 	void doFMFFT();
 
 	void fillXFrequency();
 	void fillXTime();
 
-	void fillYSin();
+	void fillYSignalSin();
+	void fillYCarrierSin();
 	void fillYFM();
 	void makeYTickLabels();
 
-	void initNewPlot();
+
+	enum plotType
+	{
+		plotTimeSignal
+		, plotTimeCarrier
+		, plotTimeFM
+		, plotFFT
+	};
+	void initNewPlot(plotType toDo);
 	void resizePlotWindow();
-	void deletePlot();
+	void deletePlots();
 
 	unique_ptr<juce::dsp::FFT> forwardFFT =
 		make_unique<juce::dsp::FFT>(fftOrderAtStart);
 
 	// Declare plot object.
-	unique_ptr<cmp::Plot> m_plot;
+	shared_ptr<cmp::Plot> m_plotTimeSignal;
+	shared_ptr<cmp::Plot> m_plotTimeCarrier;
+	shared_ptr<cmp::Plot> m_plotTimeFM;
+	shared_ptr<cmp::Plot> m_plotFFT;
+	vector< shared_ptr<cmp::Plot> > allPlots;
 
 	static constexpr double twoPi = (double)2.0f * (double)(numbers::pi);
 
@@ -211,8 +226,8 @@ private:
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
 	vector<float> y_data;
 	vector<string> yTickLabels;
-	vector<float> x_ticksTime = vector<float>(NTime);
-	vector<float> x_ticksFFT = vector<float>(NFreq);
+	vector<float> x_ticksTime;
+	vector<float> x_ticksFFT;
 
 	// Carrier
 	double carrierSinFreq =
