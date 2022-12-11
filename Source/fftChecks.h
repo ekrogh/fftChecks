@@ -20,6 +20,7 @@
 #pragma once
 
 //[Headers]     -- You can add your own extra header files here --
+
 #include <JuceHeader.h>
 
 #include <string>
@@ -180,6 +181,7 @@ private:
 
 	void fillYSignalSin();
 	void fillYCarrierSin();
+	void fillYFMSignalSin();
 	void fillYFM();
 	void makeYTickLabels();
 
