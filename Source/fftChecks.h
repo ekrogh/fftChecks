@@ -139,10 +139,8 @@ public:
 
 	/** Called when the user presses the return key. */
 	void textEditorReturnKeyPressed(juce::TextEditor&) override;
-	void updateTimeValues();
-	void updateFreqValues();
-	void updateCarrierFreqValues();
-	void updateSignalFreqValues();
+	/** Called when the text editor loses focus. */
+	void textEditorFocusLost(juce::TextEditor&) override;
 
     //[/UserMethods]
 
@@ -155,6 +153,14 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
+	void handleTextEditorKeyChgs(juce::TextEditor& textEditorWithReturn);
+
+	void updateTimeValues();
+	void updateFreqValues();
+	void updateCarrierFreqValues();
+	void updateSignalFreqValues();
+	void setDefaults();
+	void displayDefaults();
 
 	Generator<uint64_t> plotCoRoutine();
 
@@ -236,6 +242,14 @@ private:
     std::unique_ptr<juce::TextEditor> signalFreqTextEditor;
     std::unique_ptr<juce::Label> carrierFreqLabel;
     std::unique_ptr<juce::TextEditor> carrierFreqTextEditor;
+    std::unique_ptr<juce::Label> NLabel;
+    std::unique_ptr<juce::Label> NValueLabel;
+    std::unique_ptr<juce::Label> TsLabel;
+    std::unique_ptr<juce::Label> TsValueLabel;
+    std::unique_ptr<juce::Label> FsLabel;
+    std::unique_ptr<juce::Label> FsValueLabel;
+    std::unique_ptr<juce::Label> FFTOrderLabel;
+    std::unique_ptr<juce::Label> FFTOrderValueLabel;
 
 
     //==============================================================================
