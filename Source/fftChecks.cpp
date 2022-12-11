@@ -773,10 +773,11 @@ void fftChecks::fillYFM()
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
 		curSignalSin =
-			sin(curPhaseSignalSinFreq) + 1.0f;
+			(sin(curPhaseSignalSinFreq) / (double)2.0f) + (double)0.5f;
 
 		curPhaseCarrierSinFreq =
-			fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
+			curPhaseCarrierSinFreq + carrierSinFreqDeltaRad;
+		//fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
 		//curCarrierSin =
 		//	sin(curPhaseCarrierSinFreq);
 
@@ -791,7 +792,7 @@ void fftChecks::fillYFM()
 			sin(curPhaseHannWin);
 
 		curWinndFM =
-			curFM * curHannWinSin;
+			(float)(curFM * curHannWinSin);
 	}
 }
 
