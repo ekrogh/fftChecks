@@ -5,6 +5,8 @@
               cppLanguageStandard="20">
   <MAINGROUP id="xPHzKJ" name="fftChecks">
     <GROUP id="{52CCD5B3-CACC-89FA-93C0-923BD71A466A}" name="Source">
+      <FILE id="VGP6Pb" name="fftChekGlobalEnums.h" compile="0" resource="0"
+            file="Source/fftChekGlobalEnums.h"/>
       <FILE id="TS2mc0" name="controlPanelDocWin.cpp" compile="1" resource="0"
             file="Source/controlPanelDocWin.cpp"/>
       <FILE id="rYRl0v" name="controlPanelDocWin.h" compile="0" resource="0"

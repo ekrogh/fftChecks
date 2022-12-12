@@ -34,6 +34,7 @@
 #include "cmp_plot.h"
 
 #include "controlPanelDocWin.h"
+#include "fftChekGlobalEnums.h"
 
 using namespace std;
 
@@ -204,6 +205,10 @@ public:
 	{
 		allIn1ToggleButtonToggleState = allIn1ToggleButtonToggleStateVal;
 	};
+
+	int get_sourceType() { return sourceType; };
+	void set_sourceType(int sourceTypeVal) { sourceType = sourceTypeVal; };
+	
 	//[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -232,14 +237,6 @@ private:
 	void fillYFM();
 	void makeYTickLabels();
 
-
-	enum plotType
-	{
-		plotTimeSignal
-		, plotTimeCarrier
-		, plotTimeFM
-		, plotFFT
-	};
 	void initNewPlot(plotType toDo);
 	void resizePlotWindow();
 	void deletePlots();
@@ -289,7 +286,7 @@ private:
 	bool allIn1ToggleButtonToggleState = true;
 
 
-
+	int sourceType = sinSource;
 
     //[/UserVariables]
 

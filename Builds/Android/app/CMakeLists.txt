@@ -32,6 +32,7 @@ add_library( ${BINARY_NAME}
 
     SHARED
 
+    "../../../Source/fftChekGlobalEnums.h"
     "../../../Source/controlPanelDocWin.cpp"
     "../../../Source/controlPanelDocWin.h"
     "../../../Source/controlPanel.cpp"
@@ -1317,6 +1318,7 @@ add_library( ${BINARY_NAME}
 )
 
 set_source_files_properties(
+    "../../../Source/fftChekGlobalEnums.h"
     "../../../Source/controlPanelDocWin.h"
     "../../../Source/controlPanel.h"
     "../../../Source/cmp_datamodels.h"

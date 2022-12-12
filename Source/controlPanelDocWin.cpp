@@ -32,8 +32,6 @@ controlPanelDocWin::controlPanelDocWin (juce::String name, shared_ptr<fftChecks>
 {
     //[Constructor_pre] You can add your own custom stuff here..
     setUsingNativeTitleBar(true);
-    //p_controlPanel = make_shared<controlPanel>(pFFTChks);
-    //setContentOwned(new controlPanel(pFFTChks), true);
     p_controlPanel = make_shared<controlPanel>(pFFTChks);
     setContentOwned(p_controlPanel.get(), true);
     //[/Constructor_pre]

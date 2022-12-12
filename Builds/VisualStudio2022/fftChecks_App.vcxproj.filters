@@ -2142,6 +2142,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\fftChekGlobalEnums.h">
+      <Filter>fftChecks\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\controlPanelDocWin.h">
       <Filter>fftChecks\Source</Filter>
     </ClInclude>

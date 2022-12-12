@@ -19,7 +19,6 @@
 
 //[Headers] You can add your own extra header files here...
 #include "fftChecks.h"
-
 //[/Headers]
 
 #include "controlPanel.h"
@@ -341,6 +340,12 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     FsTextEditor->addListener(this);
     FsTextEditor->setSelectAllWhenFocused(true);
 
+    sourceTypeComboBox->addItem("sin", sinSource);
+    sourceTypeComboBox->addItem("FM", FMSource);
+    sourceTypeComboBox->addItem("AM", AMSource);
+    sourceTypeComboBox->setSelectedId(sinSource);
+    pFFTChecks->set_sourceType(sourceTypeComboBox->getSelectedId());
+
     displayAll();
 
     toFront(true);
@@ -456,6 +461,7 @@ void controlPanel::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
     if (comboBoxThatHasChanged == sourceTypeComboBox.get())
     {
         //[UserComboBoxCode_sourceTypeComboBox] -- add your combo box handling code here..
+        pFFTChecks->set_sourceType(sourceTypeComboBox->getSelectedId());
         //[/UserComboBoxCode_sourceTypeComboBox]
     }
 

@@ -30,54 +30,54 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-fftChecks::fftChecks ()
+fftChecks::fftChecks()
 {
-    //[Constructor_pre] You can add your own custom stuff here..
-    //[/Constructor_pre]
+	//[Constructor_pre] You can add your own custom stuff here..
+	//[/Constructor_pre]
 
 
-    //[UserPreSize]
-    //[/UserPreSize]
+	//[UserPreSize]
+	//[/UserPreSize]
 
-    setSize (1200, 1000);
+	setSize(1200, 1000);
 
 
-    //[Constructor] You can add your own custom stuff here..
+	//[Constructor] You can add your own custom stuff here..
 	toFront(true);
 	//[/Constructor]
 }
 
 fftChecks::~fftChecks()
 {
-    //[Destructor_pre]. You can add your own custom destruction code here..
+	//[Destructor_pre]. You can add your own custom destruction code here..
 	std::free(fftbfr);
-    //[/Destructor_pre]
+	//[/Destructor_pre]
 
 
 
-    //[Destructor]. You can add your own custom destruction code here..
-    //[/Destructor]
+	//[Destructor]. You can add your own custom destruction code here..
+	//[/Destructor]
 }
 
 //==============================================================================
-void fftChecks::paint (juce::Graphics& g)
+void fftChecks::paint(juce::Graphics& g)
 {
-    //[UserPrePaint] Add your own custom painting code here..
-    //[/UserPrePaint]
+	//[UserPrePaint] Add your own custom painting code here..
+	//[/UserPrePaint]
 
-    g.fillAll (juce::Colour (0xff505050));
+	g.fillAll(juce::Colour(0xff505050));
 
-    //[UserPaint] Add your own custom painting code here..
-    //[/UserPaint]
+	//[UserPaint] Add your own custom painting code here..
+	//[/UserPaint]
 }
 
 void fftChecks::resized()
 {
-    //[UserPreResize] Add your own custom resize code here..
-    //[/UserPreResize]
+	//[UserPreResize] Add your own custom resize code here..
+	//[/UserPreResize]
 
-    //[UserResized] Add your own custom resize handling here..
-    //[/UserResized]
+	//[UserResized] Add your own custom resize handling here..
+	//[/UserResized]
 }
 
 
@@ -92,32 +92,66 @@ fftChecks::plotCoRoutine()
 	{
 		if (allIn1ToggleButtonToggleState)
 		{
-			doSine();
-			co_yield 1;
+			switch (sourceType)
+			{
+				case sinSource:
+					{
+						doSine();
+						co_yield 1;
+						break;
+					}
+				case FMSource:
+					{
+						doFM();
+						co_yield 2;
+						break;
+					}
+				case AMSource:
+					{
+						break;
+					}
+				default:
+					break;
+			}
 
-			doFM();
-			co_yield 2;
 		}
 		else
 		{
-			doSineTime();
-			co_yield 3;
+			switch (sourceType)
+			{
+				case sinSource:
+					{
+						doSineTime();
+						co_yield 3;
 
-			doSineFFT();
-			co_yield 4;
+						doSineFFT();
+						co_yield 4;
 
-			doFMSignalTime();
-			co_yield 5;
+						break;
+					}
+				case FMSource:
+					{
+						doFMSignalTime();
+						co_yield 5;
 
-			doFMCarrierTime();
-			co_yield 6;
+						doFMCarrierTime();
+						co_yield 6;
 
-			doFMTime();
-			co_yield 7;
+						doFMTime();
+						co_yield 7;
 
-			doFMFFT();
-			co_yield 8;
+						doFMFFT();
+						co_yield 8;
 
+						break;
+					}
+				case AMSource:
+					{
+						break;
+					}
+				default:
+					break;
+			}
 		}
 
 		deletePlots();
@@ -388,28 +422,28 @@ void fftChecks::initNewPlot(plotType toDo)
 
 	switch (toDo)
 	{
-		case fftChecks::plotTimeSignal:
+		case plotTimeSignal:
 			{
 				m_plotTimeSignal = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotTimeSignal);
 				addAndMakeVisible(m_plotTimeSignal.get());
 				break;
 			}
-		case fftChecks::plotTimeCarrier:
+		case plotTimeCarrier:
 			{
 				m_plotTimeCarrier = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotTimeCarrier);
 				addAndMakeVisible(m_plotTimeCarrier.get());
 				break;
 			}
-		case fftChecks::plotTimeFM:
+		case plotTimeFM:
 			{
 				m_plotTimeFM = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotTimeFM);
 				addAndMakeVisible(m_plotTimeFM.get());
 				break;
 			}
-		case fftChecks::plotFFT:
+		case plotFFT:
 			{
 				m_plotFFT = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotFFT);
@@ -490,15 +524,15 @@ void fftChecks::updateFsValues()
 #if 0
 /*  -- Projucer information section --
 
-    This is where the Projucer stores the metadata that describe this GUI layout, so
-    make changes in here at your peril!
+	This is where the Projucer stores the metadata that describe this GUI layout, so
+	make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-                 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
-                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="1200" initialHeight="1000">
+				 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
+				 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+				 fixedSize="0" initialWidth="1200" initialHeight="1000">
   <BACKGROUND backgroundColour="ff505050"/>
 </JUCER_COMPONENT>
 
