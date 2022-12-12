@@ -322,6 +322,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
 
     displayAll();
 
+    toFront(true);
     //[/Constructor]
 }
 

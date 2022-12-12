@@ -31,7 +31,6 @@
 
 //==============================================================================
 fftChecks::fftChecks ()
-
 {
     //[Constructor_pre] You can add your own custom stuff here..
     //[/Constructor_pre]
@@ -44,13 +43,13 @@ fftChecks::fftChecks ()
 
 
     //[Constructor] You can add your own custom stuff here..
-    //[/Constructor]
+	toFront(true);
+	//[/Constructor]
 }
 
 fftChecks::~fftChecks()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
-	//p_controlPanelDocWin.reset();
 	std::free(fftbfr);
     //[/Destructor_pre]
 

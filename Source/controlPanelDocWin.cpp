@@ -43,7 +43,6 @@ controlPanelDocWin::controlPanelDocWin (juce::String name, shared_ptr<fftChecks>
 #if JUCE_IOS || JUCE_ANDROID
     setFullScreen(true);
 #else
-    setResizable(true, true);
     //[/UserPreSize]
 
     setSize (350, 225);
