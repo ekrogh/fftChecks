@@ -32,6 +32,10 @@ add_library( ${BINARY_NAME}
 
     SHARED
 
+    "../../../Source/controlPanelDocWin.cpp"
+    "../../../Source/controlPanelDocWin.h"
+    "../../../Source/controlPanel.cpp"
+    "../../../Source/controlPanel.h"
     "../../../Source/cmp_datamodels.h"
     "../../../Source/cmp_downsampler.cpp"
     "../../../Source/cmp_downsampler.h"
@@ -1313,6 +1317,8 @@ add_library( ${BINARY_NAME}
 )
 
 set_source_files_properties(
+    "../../../Source/controlPanelDocWin.h"
+    "../../../Source/controlPanel.h"
     "../../../Source/cmp_datamodels.h"
     "../../../Source/cmp_downsampler.h"
     "../../../Source/cmp_frame.h"

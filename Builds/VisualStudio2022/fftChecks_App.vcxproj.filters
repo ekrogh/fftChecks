@@ -337,6 +337,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\controlPanelDocWin.cpp">
+      <Filter>fftChecks\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\controlPanel.cpp">
+      <Filter>fftChecks\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\cmp_downsampler.cpp">
       <Filter>fftChecks\Source</Filter>
     </ClCompile>
@@ -2136,6 +2142,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\controlPanelDocWin.h">
+      <Filter>fftChecks\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\controlPanel.h">
+      <Filter>fftChecks\Source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\cmp_datamodels.h">
       <Filter>fftChecks\Source</Filter>
     </ClInclude>

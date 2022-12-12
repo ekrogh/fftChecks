@@ -24,8 +24,10 @@
 		5C784B7E75E5A3D880137694 /* cmp_plot.cpp */ = {isa = PBXBuildFile; fileRef = 912824FF522E7A0DC618A3D4; };
 		5D70F665135CDAC87222585C /* cmp_label.cpp */ = {isa = PBXBuildFile; fileRef = 071AD805753B6B47C843328C; };
 		803F302744E645C2CA4952E7 /* include_juce_gui_basics.mm */ = {isa = PBXBuildFile; fileRef = 0901F228505B5D836E0215A6; };
+		866D3CBEB5016D2F78C64AAA /* controlPanel.cpp */ = {isa = PBXBuildFile; fileRef = 7056A838787BD039E8CD3170; };
 		8C86AB428A503B18BC998854 /* include_juce_data_structures.mm */ = {isa = PBXBuildFile; fileRef = 34E2AD27139C47F2B1559182; };
 		8FEE16674760211BC1A4AD61 /* App */ = {isa = PBXBuildFile; fileRef = 4B0C44D409404E2104F44865; };
+		9137B070508E46D5C9599607 /* controlPanelDocWin.cpp */ = {isa = PBXBuildFile; fileRef = 2F174CC11A3486FB00C59D93; };
 		981ADC14DACAA8D26FBCD857 /* include_juce_gui_extra.mm */ = {isa = PBXBuildFile; fileRef = 3B2979F658FBE5F231A15C04; };
 		A11AB801D5BB026A76984A03 /* Foundation.framework */ = {isa = PBXBuildFile; fileRef = B7F9A234557AB00863ACD713; };
 		A659D315F16C186E4D99DD2B /* CoreServices.framework */ = {isa = PBXBuildFile; fileRef = BAD6D8B375A02BADF806A186; };
@@ -58,6 +60,7 @@
 		2A4F69AFE27681B45D1AC7F3 /* fftChecks.h */ /* fftChecks.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = fftChecks.h; path = ../../Source/fftChecks.h; sourceTree = SOURCE_ROOT; };
 		2B3804BA676E42A342B3F481 /* cmp_utils.h */ /* cmp_utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cmp_utils.h; path = ../../Source/cmp_utils.h; sourceTree = SOURCE_ROOT; };
 		2B686C81C8C2215C4E9D91F7 /* CoreText.framework */ /* CoreText.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreText.framework; path = System/Library/Frameworks/CoreText.framework; sourceTree = SDKROOT; };
+		2F174CC11A3486FB00C59D93 /* controlPanelDocWin.cpp */ /* controlPanelDocWin.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = controlPanelDocWin.cpp; path = ../../Source/controlPanelDocWin.cpp; sourceTree = SOURCE_ROOT; };
 		2FD5E2D6E792BF1E7AC40224 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = ../../JuceLibraryCode/modules/juce_events; sourceTree = SOURCE_ROOT; };
 		30A68E304E3A02A8A428F736 /* CoreImage.framework */ /* CoreImage.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreImage.framework; path = System/Library/Frameworks/CoreImage.framework; sourceTree = SDKROOT; };
 		34E2AD27139C47F2B1559182 /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
@@ -75,18 +78,21 @@
 		6075A32A09A829DC58211AB1 /* juce_data_structures */ /* juce_data_structures */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_data_structures; path = ../../JuceLibraryCode/modules/juce_data_structures; sourceTree = SOURCE_ROOT; };
 		631B5645C0B0E5786F7C5E7B /* Accelerate.framework */ /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
 		69AD94B92ABDFD657E748587 /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = ../../JuceLibraryCode/modules/juce_graphics; sourceTree = SOURCE_ROOT; };
+		7056A838787BD039E8CD3170 /* controlPanel.cpp */ /* controlPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = controlPanel.cpp; path = ../../Source/controlPanel.cpp; sourceTree = SOURCE_ROOT; };
 		7799CDB0AE71EEFBEF956232 /* BinaryData.cpp */ /* BinaryData.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = SOURCE_ROOT; };
 		7C9BC717E1349AD6F51BBAC1 /* CoreGraphics.framework */ /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
 		8210B42F011C089AB61D2002 /* AudioToolbox.framework */ /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		87A21AE1935545C7873FA27A /* cmp_downsampler.cpp */ /* cmp_downsampler.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmp_downsampler.cpp; path = ../../Source/cmp_downsampler.cpp; sourceTree = SOURCE_ROOT; };
 		8F1A899250C527A725898186 /* cmp_graph_line.cpp */ /* cmp_graph_line.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmp_graph_line.cpp; path = ../../Source/cmp_graph_line.cpp; sourceTree = SOURCE_ROOT; };
 		912824FF522E7A0DC618A3D4 /* cmp_plot.cpp */ /* cmp_plot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmp_plot.cpp; path = ../../Source/cmp_plot.cpp; sourceTree = SOURCE_ROOT; };
+		9861F29D6CB189F0EB103D4C /* controlPanelDocWin.h */ /* controlPanelDocWin.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = controlPanelDocWin.h; path = ../../Source/controlPanelDocWin.h; sourceTree = SOURCE_ROOT; };
 		990A7E08CD482C14356DF214 /* cmp_label.h */ /* cmp_label.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cmp_label.h; path = ../../Source/cmp_label.h; sourceTree = SOURCE_ROOT; };
 		9F54F689FABB645F8A0D567C /* juce_dsp */ /* juce_dsp */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_dsp; path = ../../JuceLibraryCode/modules/juce_dsp; sourceTree = SOURCE_ROOT; };
 		A2D92539EE98A48841CD294D /* cmp_trace.cpp */ /* cmp_trace.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cmp_trace.cpp; path = ../../Source/cmp_trace.cpp; sourceTree = SOURCE_ROOT; };
 		A545F74CEA8F0F5C06EEE409 /* Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		A6061A67474C0DB71EC0F85C /* cmp_version.h */ /* cmp_version.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cmp_version.h; path = ../../Source/cmp_version.h; sourceTree = SOURCE_ROOT; };
 		A7F2E7DFB0658AC74ED45222 /* cmp_version.h.in */ /* cmp_version.h.in */ = {isa = PBXFileReference; lastKnownFileType = file.in; name = cmp_version.h.in; path = ../../Source/cmp_version.h.in; sourceTree = SOURCE_ROOT; };
+		AC331BC87049B59F2D519E09 /* controlPanel.h */ /* controlPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = controlPanel.h; path = ../../Source/controlPanel.h; sourceTree = SOURCE_ROOT; };
 		AE0999B9A124619A3FFCF898 /* cmp_zoom.h */ /* cmp_zoom.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cmp_zoom.h; path = ../../Source/cmp_zoom.h; sourceTree = SOURCE_ROOT; };
 		AF7CCDF589E99AE463556A3E /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		B216C6BED0EA87C7608B586D /* cmp_downsampler.h */ /* cmp_downsampler.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = cmp_downsampler.h; path = ../../Source/cmp_downsampler.h; sourceTree = SOURCE_ROOT; };
@@ -161,6 +167,10 @@
 		64331F17CBAEB20B8B16B63C /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				2F174CC11A3486FB00C59D93,
+				9861F29D6CB189F0EB103D4C,
+				7056A838787BD039E8CD3170,
+				AC331BC87049B59F2D519E09,
 				3F00B039530AA7115C4B9594,
 				87A21AE1935545C7873FA27A,
 				B216C6BED0EA87C7608B586D,
@@ -343,6 +353,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9137B070508E46D5C9599607,
+				866D3CBEB5016D2F78C64AAA,
 				4C801B8BEA11AA1A39DC81E0,
 				B9B215B642AD1581E66BE00A,
 				0BC3DC0B1B432021D30302B0,

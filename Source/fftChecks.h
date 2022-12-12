@@ -33,10 +33,11 @@
 
 #include "cmp_plot.h"
 
+#include "controlPanelDocWin.h"
+
 using namespace std;
 
-
-
+class controlPanelDocWin;
 //[/Headers]
 
 
@@ -49,9 +50,7 @@ using namespace std;
 	Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class fftChecks  : public juce::Component,
-                   public juce::TextEditor::Listener,
-                   public juce::Button::Listener
+class fftChecks  : public juce::Component
 {
 public:
     //==============================================================================
@@ -60,6 +59,7 @@ public:
 
     //==============================================================================
     //[UserMethods]     -- You can add your own custom methods in this section.
+
 	template <typename T>
 	struct Generator
 	{
@@ -137,35 +137,81 @@ public:
 		}
 	};
 
+	Generator<uint64_t> plotCoRoutine();
+
+	Generator<uint64_t> gen = plotCoRoutine();
 
 	/** Called when the user presses the return key. */
-	void textEditorReturnKeyPressed(juce::TextEditor&) override;
+	static void textEditorReturnKeyPressed(juce::TextEditor&);
 	/** Called when the text editor loses focus. */
-	void textEditorFocusLost(juce::TextEditor&) override;
+	static void textEditorFocusLost(juce::TextEditor&);
 
-    //[/UserMethods]
+
+	double get_maxTime() { return maxTime; };
+	void set_maxTime(double maxTimeVal) { maxTime = maxTimeVal; };
+
+	double get_maxFreq() { return maxFreq; };
+	void set_maxFreq(double maxFreqVal) { maxFreq = maxFreqVal; };
+
+	double get_signalSinFreq() { return signalSinFreq; };
+	void set_signalSinFreq(double signalSinFreqVal) { signalSinFreq = signalSinFreqVal; };
+
+	double get_carrierSinFreq() { return carrierSinFreq; };
+	void set_carrierSinFreq(double carrierSinFreqVal) { carrierSinFreq = carrierSinFreqVal; };
+
+	double get_NTime() { return NTime; };
+	void set_NTime(double NTimeVal) { NTime = NTimeVal; };
+
+	double get_Ts() { return Ts; };
+	void set_Ts(double TsVal) { Ts = TsVal; };
+
+	double get_NFreq() { return NFreq; };
+	void set_NFreq(double NFreqVal) { NFreq = NFreqVal; };
+
+	double get_deltaFreq() { return deltaFreq; };
+	void set_deltaFreq(double deltaFreqVal) { deltaFreq = deltaFreqVal; };
+
+	double get_signalSinFreqDeltaRad() { return signalSinFreqDeltaRad; };
+	void set_signalSinFreqDeltaRad(double signalSinFreqDeltaRadVal)
+	{
+		signalSinFreqDeltaRad = signalSinFreqDeltaRadVal;
+	};
+
+	double get_twoPi() { return twoPi; };
+	void set_twoPi(double twoPiVal) { twoPi = twoPiVal; };
+
+	double get_carrierSinFreqDeltaRad() { return carrierSinFreqDeltaRad; };
+	void set_carrierSinFreqDeltaRad(double carrierSinFreqDeltaRadVal)
+	{
+		carrierSinFreqDeltaRad = carrierSinFreqDeltaRadVal;
+	};
+
+	double get_N() { return N; };
+	void set_N(double NVal) { N = NVal; };
+
+	double get_Fs() { return Fs; };
+	void set_Fs(double FsVal) { Fs = FsVal; };
+
+	double get_fftOrder() { return fftOrder; };
+	void set_fftOrder(double fftOrderVal) { fftOrder = fftOrderVal; };
+
+	void updatefftOrderValues();
+	void updateFsValues();
+
+	bool get_allIn1ToggleButtonToggleState() { return allIn1ToggleButtonToggleState; };
+	void set_allIn1ToggleButtonToggleState(double allIn1ToggleButtonToggleStateVal)
+	{
+		allIn1ToggleButtonToggleState = allIn1ToggleButtonToggleStateVal;
+	};
+	//[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
-    void buttonClicked (juce::Button* buttonThatWasClicked) override;
 
 
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-
-	void handleTextEditorKeyChgs(juce::TextEditor& textEditorWithReturn);
-
-	void updateTimeValues();
-	void updateFreqValues();
-	void updateCarrierFreqValues();
-	void updateSignalFreqValues();
-	void setDefaults();
-	void displayDefaults();
-
-	Generator<uint64_t> plotCoRoutine();
-
-	Generator<uint64_t> gen = plotCoRoutine();
 
 	void doSine();
 	void doSineTime();
@@ -197,8 +243,12 @@ private:
 	void resizePlotWindow();
 	void deletePlots();
 
+
+	int fftOrder = 11;
+	int Fs = 48000;
+
 	unique_ptr<juce::dsp::FFT> forwardFFT =
-		make_unique<juce::dsp::FFT>(fftOrderAtStart);
+		make_unique<juce::dsp::FFT>(fftOrder);
 
 	// Declare plot object.
 	shared_ptr<cmp::Plot> m_plotTimeSignal;
@@ -207,16 +257,10 @@ private:
 	shared_ptr<cmp::Plot> m_plotFFT;
 	vector< shared_ptr<cmp::Plot> > allPlots;
 
-	static constexpr double twoPi = (double)2.0f * (double)(numbers::pi);
-
-	enum
-	{
-		fftOrderAtStart = 11
-		, Fs = 48000
-	};
+	double twoPi = (double)2.0f * (double)(numbers::pi);
 
 	int N = forwardFFT->getSize(); // No of points in fft
-	static constexpr double Ts = (double)1.0f / (double)Fs;
+	double Ts = (double)1.0f / (double)Fs;
 	double maxTime = (double)N * Ts;
 	int NTime = (int)(maxTime / Ts);
 
@@ -241,32 +285,15 @@ private:
 	double signalSinFreqDeltaRad =
 		signalSinFreq * twoPi * Ts;
 
+	bool allIn1ToggleButtonToggleState = true;
+
+
+
+	unique_ptr<controlPanelDocWin> p_controlPanelDocWin;
+
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::TextButton> contButton;
-    std::unique_ptr<juce::ToggleButton> _2i2_toggleButton;
-    std::unique_ptr<juce::TextEditor> maxTimeTextEditor;
-    std::unique_ptr<juce::TextEditor> maxFreqTextEditor;
-    std::unique_ptr<juce::Label> maxFreqLabel;
-    std::unique_ptr<juce::Label> maxTimeLabel;
-    std::unique_ptr<juce::Label> NFreqLabel;
-    std::unique_ptr<juce::Label> NFreqValueLabel;
-    std::unique_ptr<juce::Label> NTimeLabel;
-    std::unique_ptr<juce::Label> NTimeValueLabel;
-    std::unique_ptr<juce::TextButton> defaultsTextButton;
-    std::unique_ptr<juce::Label> signalFreqLabel;
-    std::unique_ptr<juce::TextEditor> signalFreqTextEditor;
-    std::unique_ptr<juce::Label> carrierFreqLabel;
-    std::unique_ptr<juce::TextEditor> carrierFreqTextEditor;
-    std::unique_ptr<juce::Label> NLabel;
-    std::unique_ptr<juce::Label> NValueLabel;
-    std::unique_ptr<juce::Label> TsLabel;
-    std::unique_ptr<juce::Label> TsValueLabel;
-    std::unique_ptr<juce::Label> FsLabel;
-    std::unique_ptr<juce::Label> FsValueLabel;
-    std::unique_ptr<juce::Label> FFTOrderLabel;
-    std::unique_ptr<juce::Label> FFTOrderValueLabel;
 
 
     //==============================================================================

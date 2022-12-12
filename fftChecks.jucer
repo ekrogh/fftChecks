@@ -5,6 +5,13 @@
               cppLanguageStandard="20">
   <MAINGROUP id="xPHzKJ" name="fftChecks">
     <GROUP id="{52CCD5B3-CACC-89FA-93C0-923BD71A466A}" name="Source">
+      <FILE id="TS2mc0" name="controlPanelDocWin.cpp" compile="1" resource="0"
+            file="Source/controlPanelDocWin.cpp"/>
+      <FILE id="rYRl0v" name="controlPanelDocWin.h" compile="0" resource="0"
+            file="Source/controlPanelDocWin.h"/>
+      <FILE id="VXSHG6" name="controlPanel.cpp" compile="1" resource="0"
+            file="Source/controlPanel.cpp"/>
+      <FILE id="K7OLUT" name="controlPanel.h" compile="0" resource="0" file="Source/controlPanel.h"/>
       <FILE id="zoBX9y" name="cmp_datamodels.h" compile="0" resource="0"
             file="Source/cmp_datamodels.h"/>
       <FILE id="uT329t" name="cmp_downsampler.cpp" compile="1" resource="0"

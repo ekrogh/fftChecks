@@ -72,6 +72,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/controlPanelDocWin_d77414f4.o \
+  $(JUCE_OBJDIR)/controlPanel_3df8c790.o \
   $(JUCE_OBJDIR)/cmp_downsampler_b298a5ae.o \
   $(JUCE_OBJDIR)/cmp_frame_c970acb5.o \
   $(JUCE_OBJDIR)/cmp_graph_line_68546547.o \
@@ -107,6 +109,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/controlPanelDocWin_d77414f4.o: ../../Source/controlPanelDocWin.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling controlPanelDocWin.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/controlPanel_3df8c790.o: ../../Source/controlPanel.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling controlPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/cmp_downsampler_b298a5ae.o: ../../Source/cmp_downsampler.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)

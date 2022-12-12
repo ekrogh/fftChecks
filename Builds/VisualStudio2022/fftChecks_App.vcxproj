@@ -141,6 +141,8 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\controlPanelDocWin.cpp"/>
+    <ClCompile Include="..\..\Source\controlPanel.cpp"/>
     <ClCompile Include="..\..\Source\cmp_downsampler.cpp"/>
     <ClCompile Include="..\..\Source\cmp_frame.cpp"/>
     <ClCompile Include="..\..\Source\cmp_graph_line.cpp"/>
@@ -1799,6 +1801,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\controlPanelDocWin.h"/>
+    <ClInclude Include="..\..\Source\controlPanel.h"/>
     <ClInclude Include="..\..\Source\cmp_datamodels.h"/>
     <ClInclude Include="..\..\Source\cmp_downsampler.h"/>
     <ClInclude Include="..\..\Source\cmp_frame.h"/>
