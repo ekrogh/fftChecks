@@ -149,59 +149,59 @@ public:
 	static void textEditorFocusLost(juce::TextEditor&);
 
 
-	double get_maxTime() { return maxTime; };
-	void set_maxTime(double maxTimeVal) { maxTime = maxTimeVal; };
+	long double get_maxTime() { return maxTime; };
+	void set_maxTime(long double maxTimeVal) { maxTime = maxTimeVal; };
 
-	double get_maxFreq() { return maxFreq; };
-	void set_maxFreq(double maxFreqVal) { maxFreq = maxFreqVal; };
+	long double get_maxFreq() { return maxFreq; };
+	void set_maxFreq(long double maxFreqVal) { maxFreq = maxFreqVal; };
 
-	double get_signalSinFreq() { return signalSinFreq; };
-	void set_signalSinFreq(double signalSinFreqVal) { signalSinFreq = signalSinFreqVal; };
+	long double get_signalSinFreq() { return signalSinFreq; };
+	void set_signalSinFreq(long double signalSinFreqVal) { signalSinFreq = signalSinFreqVal; };
 
-	double get_carrierSinFreq() { return carrierSinFreq; };
-	void set_carrierSinFreq(double carrierSinFreqVal) { carrierSinFreq = carrierSinFreqVal; };
+	long double get_carrierSinFreq() { return carrierSinFreq; };
+	void set_carrierSinFreq(long double carrierSinFreqVal) { carrierSinFreq = carrierSinFreqVal; };
 
-	double get_NTime() { return NTime; };
-	void set_NTime(double NTimeVal) { NTime = NTimeVal; };
+	long double get_NTime() { return NTime; };
+	void set_NTime(long double NTimeVal) { NTime = NTimeVal; };
 
-	double get_Ts() { return Ts; };
-	void set_Ts(double TsVal) { Ts = TsVal; };
+	long double get_Ts() { return Ts; };
+	void set_Ts(long double TsVal) { Ts = TsVal; };
 
-	double get_NFreq() { return NFreq; };
-	void set_NFreq(double NFreqVal) { NFreq = NFreqVal; };
+	long double get_NFreq() { return NFreq; };
+	void set_NFreq(long double NFreqVal) { NFreq = NFreqVal; };
 
-	double get_deltaFreq() { return deltaFreq; };
-	void set_deltaFreq(double deltaFreqVal) { deltaFreq = deltaFreqVal; };
+	long double get_deltaFreq() { return deltaFreq; };
+	void set_deltaFreq(long double deltaFreqVal) { deltaFreq = deltaFreqVal; };
 
-	double get_signalSinFreqDeltaRad() { return signalSinFreqDeltaRad; };
-	void set_signalSinFreqDeltaRad(double signalSinFreqDeltaRadVal)
+	long double get_signalSinFreqDeltaRad() { return signalSinFreqDeltaRad; };
+	void set_signalSinFreqDeltaRad(long double signalSinFreqDeltaRadVal)
 	{
 		signalSinFreqDeltaRad = signalSinFreqDeltaRadVal;
 	};
 
-	double get_twoPi() { return twoPi; };
-	void set_twoPi(double twoPiVal) { twoPi = twoPiVal; };
+	long double get_twoPi() { return twoPi; };
+	void set_twoPi(long double twoPiVal) { twoPi = twoPiVal; };
 
-	double get_carrierSinFreqDeltaRad() { return carrierSinFreqDeltaRad; };
-	void set_carrierSinFreqDeltaRad(double carrierSinFreqDeltaRadVal)
+	long double get_carrierSinFreqDeltaRad() { return carrierSinFreqDeltaRad; };
+	void set_carrierSinFreqDeltaRad(long double carrierSinFreqDeltaRadVal)
 	{
 		carrierSinFreqDeltaRad = carrierSinFreqDeltaRadVal;
 	};
 
-	double get_N() { return N; };
-	void set_N(double NVal) { N = NVal; };
+	long double get_N() { return N; };
+	void set_N(long double NVal) { N = NVal; };
 
-	double get_Fs() { return Fs; };
-	void set_Fs(double FsVal) { Fs = FsVal; };
+	long double get_Fs() { return Fs; };
+	void set_Fs(long double FsVal) { Fs = FsVal; };
 
-	double get_fftOrder() { return fftOrder; };
-	void set_fftOrder(double fftOrderVal) { fftOrder = fftOrderVal; };
+	long double get_fftOrder() { return fftOrder; };
+	void set_fftOrder(long double fftOrderVal) { fftOrder = fftOrderVal; };
 
 	void updatefftOrderValues();
 	void updateFsValues();
 
 	bool get_allIn1ToggleButtonToggleState() { return allIn1ToggleButtonToggleState; };
-	void set_allIn1ToggleButtonToggleState(double allIn1ToggleButtonToggleStateVal)
+	void set_allIn1ToggleButtonToggleState(long double allIn1ToggleButtonToggleStateVal)
 	{
 		allIn1ToggleButtonToggleState = allIn1ToggleButtonToggleStateVal;
 	};
@@ -255,15 +255,15 @@ private:
 	shared_ptr<cmp::Plot> m_plotFFT;
 	vector< shared_ptr<cmp::Plot> > allPlots;
 
-	double twoPi = (double)2.0f * (double)(numbers::pi);
+	long double twoPi = (long double)2.0f * (long double)(numbers::pi);
 
 	int N = forwardFFT->getSize(); // No of points in fft
-	double Ts = (double)1.0f / (double)Fs;
-	double maxTime = (double)N * Ts;
+	long double Ts = (long double)1.0f / (long double)Fs;
+	long double maxTime = (long double)N * Ts;
 	int NTime = (int)(maxTime / Ts);
 
-	double deltaFreq = ((double)Fs / ((double)N - (double)1));
-	double maxFreq = (double)(Fs >> 1);
+	long double deltaFreq = ((long double)Fs / ((long double)N - (long double)1));
+	long double maxFreq = (long double)(Fs >> 1);
 	int NFreq = (int)(maxFreq / deltaFreq);
 
 
@@ -274,13 +274,13 @@ private:
 	vector<float> x_ticksFFT;
 
 	// Carrier
-	double carrierSinFreq =
-		(static_cast<double>(Fs) / static_cast<double>(3));
-	double carrierSinFreqDeltaRad =
+	long double carrierSinFreq =
+		(static_cast<long double>(Fs) / static_cast<long double>(3));
+	long double carrierSinFreqDeltaRad =
 		carrierSinFreq * twoPi * Ts;
 	// Signal
-	double signalSinFreq = 400.0f;
-	double signalSinFreqDeltaRad =
+	long double signalSinFreq = 400.0f;
+	long double signalSinFreqDeltaRad =
 		signalSinFreq * twoPi * Ts;
 
 	bool allIn1ToggleButtonToggleState = true;

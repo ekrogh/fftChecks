@@ -573,9 +573,15 @@ void controlPanel::updateCarrierFreqValues()
 
 void controlPanel::setDefaults()
 {
+    pFFTChecks->set_fftOrder(11);
+    updatefftOrderValues();
+
+    pFFTChecks->set_Fs(48000);
+    updateFsValues();
+
     pFFTChecks->set_maxTime
     (
-        (double)(pFFTChecks->get_N())
+        (long double)(pFFTChecks->get_N())
         * pFFTChecks->get_Ts()
     );
 
@@ -586,12 +592,12 @@ void controlPanel::setDefaults()
 
     pFFTChecks->set_deltaFreq
     (
-        (double)(pFFTChecks->get_Fs()) / ((double)(pFFTChecks->get_N()) - (double)1)
+        (long double)(pFFTChecks->get_Fs()) / ((long double)(pFFTChecks->get_N()) - (long double)1)
     );
 
     pFFTChecks->set_maxFreq
     (
-        (double)((int)(pFFTChecks->get_Fs()) >> 1)
+        (long double)((int)(pFFTChecks->get_Fs()) >> 1)
     );
 
     pFFTChecks->set_NFreq
@@ -601,7 +607,7 @@ void controlPanel::setDefaults()
 
     pFFTChecks->set_carrierSinFreq
     (
-        pFFTChecks->get_Fs() / static_cast<double>(3)
+        pFFTChecks->get_Fs() / static_cast<long double>(3)
     );
 
     pFFTChecks->set_carrierSinFreqDeltaRad
@@ -671,33 +677,33 @@ BEGIN_JUCER_METADATA
               scrollbars="1" caret="1" popupmenu="1"/>
   <LABEL name="maxFreqLabel" id="47e631ed27d9284e" memberName="maxFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="175 93 53 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="max freq" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="max freq" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="maxTimeLabel" id="8b211e6878ea108a" memberName="maxTimeLabel"
          virtualName="" explicitFocusOrder="0" pos="0 93 70 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="max time" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="max time" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqLabel" id="8269d5268144c2c3" memberName="NFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="130 24 80 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="NFreq" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="NFreq" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqValueLabel" id="87041ef7e2c8a83f" memberName="NFreqValueLabel"
          virtualName="" explicitFocusOrder="0" pos="189 24 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="NFreq val&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         editablelong doubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeLabel" id="9344a5060b2bb5ab" memberName="NTimeLabel"
          virtualName="" explicitFocusOrder="0" pos="0 24 51 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="NTime" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="NTime" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeValueLabel" id="108bfc80744eb74a" memberName="NTimeValueLabel"
          virtualName="" explicitFocusOrder="0" pos="54 24 80 24" edTextCol="ff000000"
          edBkgCol="0" labelText="NTime val&#10;" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         editablelong doubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="defaultsTextButton" id="e1fa1deda629935b" memberName="defaultsTextButton"
               virtualName="" explicitFocusOrder="0" pos="8 216 72 24" buttonText="Defaults"
@@ -705,7 +711,7 @@ BEGIN_JUCER_METADATA
   <LABEL name="signalFreqLabel" id="668450732d3c0888" memberName="signalFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="0 124 70 24" edTextCol="ff000000"
          edBkgCol="0" labelText="signal freq" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         editablelong doubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="signalFreqTextEditor" id="2fdcec6ac9445576" memberName="signalFreqTextEditor"
               virtualName="" explicitFocusOrder="5" pos="72 123 95 24" tooltip="signal freq"
@@ -714,7 +720,7 @@ BEGIN_JUCER_METADATA
   <LABEL name="carrierFreqLabel" id="c12ced105cda4573" memberName="carrierFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="175 124 70 24" edTextCol="ff000000"
          edBkgCol="0" labelText="carrier freq" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         editablelong doubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="carrierFreqTextEditor" id="e57cfdfa22e82311" memberName="carrierFreqTextEditor"
               virtualName="" explicitFocusOrder="6" pos="244 124 95 24" tooltip="carrier freq"
@@ -722,32 +728,32 @@ BEGIN_JUCER_METADATA
               readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
   <LABEL name="NLabel" id="40e6abcc03fa6b5d" memberName="NLabel" virtualName=""
          explicitFocusOrder="0" pos="0 0 31 24" edTextCol="ff000000" edBkgCol="0"
-         labelText="N" editableSingleClick="0" editableDoubleClick="0"
+         labelText="N" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NValueLabel" id="5ab3e1029e95a04e" memberName="NValueLabel"
          virtualName="" explicitFocusOrder="0" pos="54 0 80 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="N value" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="N value" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="TsLabel" id="6cc132acc14ebea9" memberName="TsLabel" virtualName=""
          explicitFocusOrder="0" pos="130 0 80 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Ts" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Ts" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="TsValueLabel" id="f7bc0c1332c0edec" memberName="TsValueLabel"
          virtualName="" explicitFocusOrder="0" pos="189 0 63 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Ts value" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Ts value" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="FsLabel" id="82146407bdd1a63a" memberName="FsLabel" virtualName=""
          explicitFocusOrder="0" pos="175 65 31 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Fs" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Fs" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="FFTOrderLabel" id="84558b9a0d701046" memberName="FFTOrderLabel"
          virtualName="" explicitFocusOrder="0" pos="0 65 70 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="FFT Order" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="FFT Order" editableSingleClick="0" editablelong doubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="fftOrderTextEditor" id="e8633d879d3ce5fa" memberName="fftOrderTextEditor"
@@ -764,7 +770,7 @@ BEGIN_JUCER_METADATA
   <LABEL name="sourceTypeLabel" id="d3b82b3935ed45cf" memberName="sourceTypeLabel"
          virtualName="" explicitFocusOrder="0" pos="0 176 70 24" edTextCol="ff000000"
          edBkgCol="0" labelText="source type" editableSingleClick="0"
-         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         editablelong doubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
