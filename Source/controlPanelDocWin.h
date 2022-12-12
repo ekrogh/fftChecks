@@ -40,7 +40,7 @@ class controlPanelDocWin  : public juce::DocumentWindow
 {
 public:
     //==============================================================================
-    controlPanelDocWin (juce::String name, fftChecks* pFFTChks);
+    controlPanelDocWin (juce::String name, shared_ptr<fftChecks> pFFTChks);
     ~controlPanelDocWin() override;
 
     //==============================================================================
@@ -61,7 +61,7 @@ public:
 
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
-    unique_ptr<controlPanel> p_controlPanel;
+    shared_ptr<controlPanel> p_controlPanel;
     //[/UserVariables]
 
     //==============================================================================

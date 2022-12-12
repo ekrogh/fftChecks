@@ -31,9 +31,9 @@
 
 //==============================================================================
 fftChecks::fftChecks ()
+
 {
     //[Constructor_pre] You can add your own custom stuff here..
-	p_controlPanelDocWin = make_unique<controlPanelDocWin>("Control Panel", this);
     //[/Constructor_pre]
 
 
@@ -51,7 +51,7 @@ fftChecks::~fftChecks()
 {
     //[Destructor_pre]. You can add your own custom destruction code here..
 	//p_controlPanelDocWin.reset();
-	//std::free(fftbfr);
+	std::free(fftbfr);
     //[/Destructor_pre]
 
 

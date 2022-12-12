@@ -62,7 +62,11 @@ public:
 			: DocumentWindow(name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour(juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons)
 		{
 			setUsingNativeTitleBar(true);
-			setContentOwned(new fftChecks(), true);
+
+			p_fftChecks = make_shared<fftChecks>();
+			setContentOwned(p_fftChecks.get(), true);
+
+			p_controlPanelDocWin = make_shared<controlPanelDocWin>("Control Panel", p_fftChecks);
 
 #if JUCE_IOS || JUCE_ANDROID
 			setFullScreen(true);
@@ -70,6 +74,7 @@ public:
 			setResizable(true, true);
 			centreWithSize(getWidth(), getHeight());
 #endif
+			toFront(false);
 
 			setVisible(true);
 		}
@@ -88,6 +93,9 @@ public:
 		   you really have to override any DocumentWindow methods, make sure your
 		   subclass also calls the superclass's method.
 		*/
+
+		shared_ptr<fftChecks> p_fftChecks;
+		shared_ptr<controlPanelDocWin> p_controlPanelDocWin;
 
 	private:
 		JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(MainWindow)

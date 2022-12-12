@@ -29,7 +29,7 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-controlPanel::controlPanel (fftChecks* pFFTChks)
+controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     : pFFTChecks(pFFTChks)
 {
     //[Constructor_pre] You can add your own custom stuff here..
@@ -606,7 +606,7 @@ BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="controlPanel" componentName=""
                  parentClasses="public juce::Component, public juce::TextEditor::Listener"
-                 constructorParams="fftChecks* pFFTChks" variableInitialisers="pFFTChecks(pFFTChks)"
+                 constructorParams="shared_ptr&lt;fftChecks&gt; pFFTChks" variableInitialisers="pFFTChecks(pFFTChks)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="350" initialHeight="225">
   <BACKGROUND backgroundColour="ff505050"/>

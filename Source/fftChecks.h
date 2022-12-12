@@ -50,7 +50,8 @@ class controlPanelDocWin;
 	Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class fftChecks  : public juce::Component
+class fftChecks
+	: public juce::Component
 {
 public:
     //==============================================================================
@@ -289,7 +290,6 @@ private:
 
 
 
-	unique_ptr<controlPanelDocWin> p_controlPanelDocWin;
 
     //[/UserVariables]
 

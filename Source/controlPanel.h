@@ -43,7 +43,7 @@ class controlPanel  : public juce::Component,
 {
 public:
     //==============================================================================
-    controlPanel (fftChecks* pFFTChks);
+    controlPanel (shared_ptr<fftChecks> pFFTChks);
     ~controlPanel() override;
 
     //==============================================================================

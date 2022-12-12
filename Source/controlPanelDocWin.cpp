@@ -27,14 +27,14 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-controlPanelDocWin::controlPanelDocWin (juce::String name, fftChecks* pFFTChks)
+controlPanelDocWin::controlPanelDocWin (juce::String name, shared_ptr<fftChecks> pFFTChks)
     : DocumentWindow (name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons)
 {
     //[Constructor_pre] You can add your own custom stuff here..
     setUsingNativeTitleBar(true);
     //p_controlPanel = make_shared<controlPanel>(pFFTChks);
     //setContentOwned(new controlPanel(pFFTChks), true);
-    p_controlPanel = make_unique<controlPanel>(pFFTChks);
+    p_controlPanel = make_shared<controlPanel>(pFFTChks);
     setContentOwned(p_controlPanel.get(), true);
     //[/Constructor_pre]
 
@@ -50,11 +50,14 @@ controlPanelDocWin::controlPanelDocWin (juce::String name, fftChecks* pFFTChks)
 
 
     //[Constructor] You can add your own custom stuff here..
-    //centreWithSize(getWidth(), getHeight());
+    centreWithSize(getWidth(), getHeight());
+    auto bnds = getBounds();
+    bnds.setX(0);
+    setBounds(bnds);
 #endif
 
     setVisible(true);
-    toFront(true);
+    toFront(false);
     //[/Constructor]
 }
 
@@ -106,7 +109,7 @@ void controlPanelDocWin::resized()
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="controlPanelDocWin" componentName=""
-                 parentClasses="public juce::DocumentWindow" constructorParams="juce::String name, fftChecks* pFFTChks"
+                 parentClasses="public juce::DocumentWindow" constructorParams="juce::String name, shared_ptr&lt;fftChecks&gt; pFFTChks"
                  variableInitialisers="DocumentWindow (name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
                  fixedSize="0" initialWidth="350" initialHeight="225">
