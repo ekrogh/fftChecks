@@ -45,7 +45,7 @@ controlPanelDocWin::controlPanelDocWin (juce::String name, shared_ptr<fftChecks>
 #else
     //[/UserPreSize]
 
-    setSize (350, 225);
+    setSize (350, 250);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -111,7 +111,7 @@ BEGIN_JUCER_METADATA
                  parentClasses="public juce::DocumentWindow" constructorParams="juce::String name, shared_ptr&lt;fftChecks&gt; pFFTChks"
                  variableInitialisers="DocumentWindow (name, juce::Desktop::getInstance().getDefaultLookAndFeel().findColour (juce::ResizableWindow::backgroundColourId), DocumentWindow::allButtons)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="350" initialHeight="225">
+                 fixedSize="0" initialWidth="350" initialHeight="250">
   <BACKGROUND backgroundColour="ff505050"/>
 </JUCER_COMPONENT>
 

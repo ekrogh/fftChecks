@@ -39,7 +39,8 @@ using namespace std;
 */
 class controlPanel  : public juce::Component,
                       public juce::TextEditor::Listener,
-                      public juce::Button::Listener
+                      public juce::Button::Listener,
+                      public juce::ComboBox::Listener
 {
 public:
     //==============================================================================
@@ -59,6 +60,7 @@ public:
     void paint (juce::Graphics& g) override;
     void resized() override;
     void buttonClicked (juce::Button* buttonThatWasClicked) override;
+    void comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged) override;
 
 
 
@@ -101,6 +103,8 @@ private:
     std::unique_ptr<juce::Label> FFTOrderLabel;
     std::unique_ptr<juce::TextEditor> fftOrderTextEditor;
     std::unique_ptr<juce::TextEditor> FsTextEditor;
+    std::unique_ptr<juce::ComboBox> sourceTypeComboBox;
+    std::unique_ptr<juce::Label> sourceTypeLabel;
 
 
     //==============================================================================

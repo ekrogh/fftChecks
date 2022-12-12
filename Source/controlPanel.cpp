@@ -41,7 +41,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     contButton->setButtonText (TRANS("Continue"));
     contButton->addListener (this);
 
-    contButton->setBounds (152, 178, 72, 24);
+    contButton->setBounds (267, 178, 72, 24);
 
     _2i2_toggleButton.reset (new juce::ToggleButton ("2i2_toggleButton"));
     addAndMakeVisible (_2i2_toggleButton.get());
@@ -49,7 +49,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     _2i2_toggleButton->addListener (this);
     _2i2_toggleButton->setToggleState (true, juce::dontSendNotification);
 
-    _2i2_toggleButton->setBounds (88, 178, 59, 24);
+    _2i2_toggleButton->setBounds (184, 176, 59, 24);
 
     maxTimeTextEditor.reset (new juce::TextEditor ("maxTimeTextEditor"));
     addAndMakeVisible (maxTimeTextEditor.get());
@@ -102,7 +102,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     maxTimeLabel->setBounds (0, 93, 70, 24);
 
     NFreqLabel.reset (new juce::Label ("NFreqLabel",
-                                       TRANS("NFreq:")));
+                                       TRANS("NFreq")));
     addAndMakeVisible (NFreqLabel.get());
     NFreqLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     NFreqLabel->setJustificationType (juce::Justification::centredLeft);
@@ -124,7 +124,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     NFreqValueLabel->setBounds (189, 24, 80, 24);
 
     NTimeLabel.reset (new juce::Label ("NTimeLabel",
-                                       TRANS("NTime:")));
+                                       TRANS("NTime")));
     addAndMakeVisible (NTimeLabel.get());
     NTimeLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     NTimeLabel->setJustificationType (juce::Justification::centredLeft);
@@ -150,7 +150,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     defaultsTextButton->setButtonText (TRANS("Defaults"));
     defaultsTextButton->addListener (this);
 
-    defaultsTextButton->setBounds (8, 178, 72, 24);
+    defaultsTextButton->setBounds (8, 216, 72, 24);
 
     signalFreqLabel.reset (new juce::Label ("signalFreqLabel",
                                             TRANS("signal freq")));
@@ -203,7 +203,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     carrierFreqTextEditor->setBounds (244, 124, 95, 24);
 
     NLabel.reset (new juce::Label ("NLabel",
-                                   TRANS("N:")));
+                                   TRANS("N")));
     addAndMakeVisible (NLabel.get());
     NLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     NLabel->setJustificationType (juce::Justification::centredLeft);
@@ -225,7 +225,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     NValueLabel->setBounds (54, 0, 80, 24);
 
     TsLabel.reset (new juce::Label ("TsLabel",
-                                    TRANS("Ts:")));
+                                    TRANS("Ts")));
     addAndMakeVisible (TsLabel.get());
     TsLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     TsLabel->setJustificationType (juce::Justification::centredLeft);
@@ -247,7 +247,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     TsValueLabel->setBounds (189, 0, 63, 24);
 
     FsLabel.reset (new juce::Label ("FsLabel",
-                                    TRANS("Fs:")));
+                                    TRANS("Fs")));
     addAndMakeVisible (FsLabel.get());
     FsLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     FsLabel->setJustificationType (juce::Justification::centredLeft);
@@ -294,11 +294,32 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
 
     FsTextEditor->setBounds (244, 65, 95, 24);
 
+    sourceTypeComboBox.reset (new juce::ComboBox ("sourceTypeComboBox"));
+    addAndMakeVisible (sourceTypeComboBox.get());
+    sourceTypeComboBox->setEditableText (false);
+    sourceTypeComboBox->setJustificationType (juce::Justification::centredLeft);
+    sourceTypeComboBox->setTextWhenNothingSelected (juce::String());
+    sourceTypeComboBox->setTextWhenNoChoicesAvailable (TRANS("(no choices)"));
+    sourceTypeComboBox->addListener (this);
+
+    sourceTypeComboBox->setBounds (72, 176, 95, 24);
+
+    sourceTypeLabel.reset (new juce::Label ("sourceTypeLabel",
+                                            TRANS("source type")));
+    addAndMakeVisible (sourceTypeLabel.get());
+    sourceTypeLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
+    sourceTypeLabel->setJustificationType (juce::Justification::centredLeft);
+    sourceTypeLabel->setEditable (false, false, false);
+    sourceTypeLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
+    sourceTypeLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
+
+    sourceTypeLabel->setBounds (0, 176, 70, 24);
+
 
     //[UserPreSize]
     //[/UserPreSize]
 
-    setSize (350, 225);
+    setSize (350, 250);
 
 
     //[Constructor] You can add your own custom stuff here..
@@ -354,6 +375,8 @@ controlPanel::~controlPanel()
     FFTOrderLabel = nullptr;
     fftOrderTextEditor = nullptr;
     FsTextEditor = nullptr;
+    sourceTypeComboBox = nullptr;
+    sourceTypeLabel = nullptr;
 
 
     //[Destructor]. You can add your own custom destruction code here..
@@ -423,6 +446,21 @@ void controlPanel::buttonClicked (juce::Button* buttonThatWasClicked)
 
     //[UserbuttonClicked_Post]
     //[/UserbuttonClicked_Post]
+}
+
+void controlPanel::comboBoxChanged (juce::ComboBox* comboBoxThatHasChanged)
+{
+    //[UsercomboBoxChanged_Pre]
+    //[/UsercomboBoxChanged_Pre]
+
+    if (comboBoxThatHasChanged == sourceTypeComboBox.get())
+    {
+        //[UserComboBoxCode_sourceTypeComboBox] -- add your combo box handling code here..
+        //[/UserComboBoxCode_sourceTypeComboBox]
+    }
+
+    //[UsercomboBoxChanged_Post]
+    //[/UsercomboBoxChanged_Post]
 }
 
 
@@ -609,13 +647,13 @@ BEGIN_JUCER_METADATA
                  parentClasses="public juce::Component, public juce::TextEditor::Listener"
                  constructorParams="shared_ptr&lt;fftChecks&gt; pFFTChks" variableInitialisers="pFFTChecks(pFFTChks)"
                  snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-                 fixedSize="0" initialWidth="350" initialHeight="225">
+                 fixedSize="0" initialWidth="350" initialHeight="250">
   <BACKGROUND backgroundColour="ff505050"/>
   <TEXTBUTTON name="contButton" id="6bbdd155c2eb5000" memberName="contButton"
-              virtualName="" explicitFocusOrder="7" pos="152 178 72 24" buttonText="Continue"
+              virtualName="" explicitFocusOrder="7" pos="267 178 72 24" buttonText="Continue"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <TOGGLEBUTTON name="2i2_toggleButton" id="686966a11665c450" memberName="_2i2_toggleButton"
-                virtualName="" explicitFocusOrder="0" pos="88 178 59 24" buttonText="2 i 1"
+                virtualName="" explicitFocusOrder="0" pos="184 176 59 24" buttonText="2 i 1"
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="1"/>
   <TEXTEDITOR name="maxTimeTextEditor" id="6e6d4251a2a6d380" memberName="maxTimeTextEditor"
               virtualName="" explicitFocusOrder="3" pos="72 93 95 24" tooltip="max time"
@@ -637,7 +675,7 @@ BEGIN_JUCER_METADATA
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqLabel" id="8269d5268144c2c3" memberName="NFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="130 24 80 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="NFreq:" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="NFreq" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NFreqValueLabel" id="87041ef7e2c8a83f" memberName="NFreqValueLabel"
@@ -647,7 +685,7 @@ BEGIN_JUCER_METADATA
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeLabel" id="9344a5060b2bb5ab" memberName="NTimeLabel"
          virtualName="" explicitFocusOrder="0" pos="0 24 51 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="NTime:" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="NTime" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NTimeValueLabel" id="108bfc80744eb74a" memberName="NTimeValueLabel"
@@ -656,7 +694,7 @@ BEGIN_JUCER_METADATA
          editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTBUTTON name="defaultsTextButton" id="e1fa1deda629935b" memberName="defaultsTextButton"
-              virtualName="" explicitFocusOrder="0" pos="8 178 72 24" buttonText="Defaults"
+              virtualName="" explicitFocusOrder="0" pos="8 216 72 24" buttonText="Defaults"
               connectedEdges="0" needsCallback="1" radioGroupId="0"/>
   <LABEL name="signalFreqLabel" id="668450732d3c0888" memberName="signalFreqLabel"
          virtualName="" explicitFocusOrder="0" pos="0 124 70 24" edTextCol="ff000000"
@@ -678,7 +716,7 @@ BEGIN_JUCER_METADATA
               readonly="0" scrollbars="1" caret="1" popupmenu="1"/>
   <LABEL name="NLabel" id="40e6abcc03fa6b5d" memberName="NLabel" virtualName=""
          explicitFocusOrder="0" pos="0 0 31 24" edTextCol="ff000000" edBkgCol="0"
-         labelText="N:" editableSingleClick="0" editableDoubleClick="0"
+         labelText="N" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="NValueLabel" id="5ab3e1029e95a04e" memberName="NValueLabel"
@@ -688,7 +726,7 @@ BEGIN_JUCER_METADATA
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="TsLabel" id="6cc132acc14ebea9" memberName="TsLabel" virtualName=""
          explicitFocusOrder="0" pos="130 0 80 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Ts:" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Ts" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="TsValueLabel" id="f7bc0c1332c0edec" memberName="TsValueLabel"
@@ -698,7 +736,7 @@ BEGIN_JUCER_METADATA
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="FsLabel" id="82146407bdd1a63a" memberName="FsLabel" virtualName=""
          explicitFocusOrder="0" pos="175 65 31 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="Fs:" editableSingleClick="0" editableDoubleClick="0"
+         edBkgCol="0" labelText="Fs" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="FFTOrderLabel" id="84558b9a0d701046" memberName="FFTOrderLabel"
@@ -714,6 +752,14 @@ BEGIN_JUCER_METADATA
               virtualName="" explicitFocusOrder="2" pos="244 65 95 24" initialText="Fs"
               multiline="0" retKeyStartsLine="0" readonly="0" scrollbars="1"
               caret="1" popupmenu="1"/>
+  <COMBOBOX name="sourceTypeComboBox" id="c19416213d612558" memberName="sourceTypeComboBox"
+            virtualName="" explicitFocusOrder="0" pos="72 176 95 24" editable="0"
+            layout="33" items="" textWhenNonSelected="" textWhenNoItems="(no choices)"/>
+  <LABEL name="sourceTypeLabel" id="d3b82b3935ed45cf" memberName="sourceTypeLabel"
+         virtualName="" explicitFocusOrder="0" pos="0 176 70 24" edTextCol="ff000000"
+         edBkgCol="0" labelText="source type" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
 </JUCER_COMPONENT>
 
 END_JUCER_METADATA
