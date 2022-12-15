@@ -203,7 +203,10 @@ public:
 	void updatefftOrderValues();
 	void updateFsValues();
 
-	bool get_allIn1ToggleButtonToggleState() { return allIn1ToggleButtonToggleState; };
+	bool get_allIn1ToggleButtonToggleState()
+	{
+		return allIn1ToggleButtonToggleState;
+	};
 	void set_allIn1ToggleButtonToggleState(double allIn1ToggleButtonToggleStateVal)
 	{
 		allIn1ToggleButtonToggleState = allIn1ToggleButtonToggleStateVal;
@@ -213,10 +216,46 @@ public:
 	void set_sourceType(int sourceTypeVal) { sourceType = sourceTypeVal; };
 
 	int get_modulationIndex() { return modulationIndex; };
-	void set_modulationIndex(int modulationIndexVal) { modulationIndex = modulationIndexVal; };
+	void set_modulationIndex(int modulationIndexVal)
+	{
+		modulationIndex = modulationIndexVal;
+	};
 
 	int get_carrierAmplitude() { return carrierAmplitude; };
-	void set_carrierAmplitude(int carrierAmplitudeVal) { carrierAmplitude = carrierAmplitudeVal; };
+	void set_carrierAmplitude(int carrierAmplitudeVal)
+	{
+		carrierAmplitude = carrierAmplitudeVal;
+	};
+
+	int get_show_signal_plot() { return show_signal_plot; };
+	void set_show_signal_plot(int show_signal_plotVal)
+	{
+		show_signal_plot = show_signal_plotVal;
+	};
+
+	int get_show_carrier_plot() { return show_carrier_plot; };
+	void set_show_carrier_plot(int show_carrier_plotVal)
+	{
+		show_carrier_plot = show_carrier_plotVal;
+	};
+
+	int get_show_modulated_plot() { return show_modulated_plot; };
+	void set_show_modulated_plot(int show_modulated_plotVal)
+	{
+		show_modulated_plot = show_modulated_plotVal;
+	};
+
+	int get_show_inSame_plot() { return show_inSame_plot; };
+	void set_show_inSame_plot(int show_inSame_plotVal)
+	{
+		show_inSame_plot = show_inSame_plotVal;
+	};
+
+	int get_show_FFT_plot() { return show_FFT_plot; };
+	void set_show_FFT_plot(int show_FFT_plotVal)
+	{
+		show_FFT_plot = show_FFT_plotVal;
+	};
 	//[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -298,8 +337,14 @@ private:
 
 	bool allIn1ToggleButtonToggleState = true;
 
-
 	int sourceType = sinSource;
+
+	bool show_signal_plot = true;
+	bool show_carrier_plot = true;
+	bool show_modulated_plot = true;
+	bool show_inSame_plot = true;
+
+	bool show_FFT_plot = true;
 
     //[/UserVariables]
 
