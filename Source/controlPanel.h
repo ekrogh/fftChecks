@@ -81,8 +81,6 @@ private:
     //[/UserVariables]
 
     //==============================================================================
-    std::unique_ptr<juce::TextButton> contButton;
-    std::unique_ptr<juce::ToggleButton> _2i2_toggleButton;
     std::unique_ptr<juce::TextEditor> maxTimeTextEditor;
     std::unique_ptr<juce::TextEditor> maxFreqTextEditor;
     std::unique_ptr<juce::Label> maxFreqLabel;
@@ -91,7 +89,6 @@ private:
     std::unique_ptr<juce::Label> NFreqValueLabel;
     std::unique_ptr<juce::Label> NTimeLabel;
     std::unique_ptr<juce::Label> NTimeValueLabel;
-    std::unique_ptr<juce::TextButton> defaultsTextButton;
     std::unique_ptr<juce::Label> signalFreqLabel;
     std::unique_ptr<juce::TextEditor> signalFreqTextEditor;
     std::unique_ptr<juce::Label> carrierFreqLabel;
@@ -104,8 +101,15 @@ private:
     std::unique_ptr<juce::Label> FFTOrderLabel;
     std::unique_ptr<juce::TextEditor> fftOrderTextEditor;
     std::unique_ptr<juce::TextEditor> FsTextEditor;
+    std::unique_ptr<juce::TextButton> contButton;
+    std::unique_ptr<juce::ToggleButton> _2i2_toggleButton;
+    std::unique_ptr<juce::TextButton> defaultsTextButton;
     std::unique_ptr<juce::ComboBox> sourceTypeComboBox;
     std::unique_ptr<juce::Label> sourceTypeLabel;
+    std::unique_ptr<juce::Label> modulationIndxLabel;
+    std::unique_ptr<juce::TextEditor> modulationIndexTextEditor;
+    std::unique_ptr<juce::Label> carrierAmplitudeLabel;
+    std::unique_ptr<juce::TextEditor> carrierAmplitudeTextEditor;
 
 
     //==============================================================================

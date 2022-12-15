@@ -155,7 +155,6 @@ fftChecks::plotCoRoutine()
 		}
 
 		deletePlots();
-		co_yield 9;
 	}
 }
 
@@ -215,18 +214,16 @@ void fftChecks::doFMTime()
 {
 	initNewPlot(plotTimeFM);
 
-	fillYFMSignalSin();
-	auto y_FMSignalSin = vector<float>(fftbfr, fftbfr + NTime);
 	// FM signal
 	fillYFM();
 	fillXTime();
 
 	// Plot signal
-	y_data = vector<float>(fftbfr, fftbfr + NTime);
-	auto minYmaxY = ranges::minmax_element(y_data);
-	m_plotTimeFM->yLim(*minYmaxY.min, *minYmaxY.max);
+	//y_data = vector<float>(fftbfr, fftbfr + NTime);
+	//auto minYmaxY = ranges::minmax_element(y_data);
+	//m_plotTimeFM->yLim(*minYmaxY.min, *minYmaxY.max);
 	m_plotTimeFM->setTitle("FM Time domain");
-	m_plotTimeFM->plot({ y_data, y_FMSignalSin }, { x_ticksTime });
+	m_plotTimeFM->plot({ y_data, y_FMSignalSinPhase, y_FMSignalSin, y_FMPhase }, { x_ticksTime, x_ticksTime, x_ticksTime, x_ticksTime });
 	m_plotTimeFM->gridON(true, false);
 }
 
@@ -311,9 +308,9 @@ void fftChecks::makeYTickLabels()
 
 void fftChecks::fillYSignalSin()
 {
-	long double curPhaseSignalSinFreq = 0.0f;
-	long double hannWinDlta = (long double)(numbers::pi) / (long double)(N - 1);
-	long double curPhaseHannWin = 0.0f;
+	double curPhaseSignalSinFreq = 0.0f;
+	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
+	double curPhaseHannWin = 0.0f;
 
 	for (int i = 0; i < N; i++)
 	{
@@ -331,9 +328,9 @@ void fftChecks::fillYSignalSin()
 
 void fftChecks::fillYCarrierSin()
 {
-	long double curPhaseCarrierSinFreq = 0.0f;
-	long double hannWinDlta = (long double)(numbers::pi) / (long double)(N - 1);
-	long double curPhaseHannWin = 0.0f;
+	double curPhaseCarrierSinFreq = 0.0f;
+	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
+	double curPhaseHannWin = 0.0f;
 
 	for (int i = 0; i < N; i++)
 	{
@@ -351,14 +348,14 @@ void fftChecks::fillYCarrierSin()
 
 void fftChecks::fillYFMSignalSin()
 {
-	long double curPhaseSignalSinFreq = 0.0f;
-	long double hannWinDlta = (long double)(numbers::pi) / (long double)(N - 1);
-	long double curPhaseHannWin = 0.0f;
+	double curPhaseSignalSinFreq = 0.0f;
+	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
+	double curPhaseHannWin = 0.0f;
 
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] =
-			(float)(((sin(curPhaseSignalSinFreq) / (long double)2.0f) + (long double)0.5f)
+			(float)(((sin(curPhaseSignalSinFreq) / (double)2.0f) + (double)0.5f)
 				* pow(sin(curPhaseHannWin), 2));
 
 		curPhaseSignalSinFreq =
@@ -371,44 +368,31 @@ void fftChecks::fillYFMSignalSin()
 
 void fftChecks::fillYFM()
 {
-	long double curSignalSin = 0.0f;
-	long double curPhaseSignalSinFreq = 0.0f;
-	long double curPhaseCarrierSinFreq = 0.0f;
-	long double curCarrierSin = 0.0f;
-	long double hannWinDlta = (long double)(numbers::pi) / (long double)(N - 1);
-	long double curPhaseHannWin = 0.0f;
-	long double curHannWinSin = 0.0f;
-	long double curFMPhase = 0.0f;
-	long double curFM = 0.0f;
+	double curSignalSin = 0.0f;
+	double curPhaseSignalSinFreq = 0.0f;
+	double curPhaseCarrierSinFreq = 0.0f;
+	double curCarrierSin = 0.0f;
+	double hannWinDlta  = (double)(numbers::pi) / (double)(N - 1);
+	double curPhaseHannWin = 0.0f;
+	double curHannWinSin = 0.0f;
+	double curFMPhase = 0.0f;
+	double curFM = 0.0f;
 	float curWinndFM = 0.0f;
+
+	y_FMSignalSinPhase.clear();
+	y_FMSignalSin.clear();
+	y_FMPhase.clear();
+	y_data.clear();
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] = curWinndFM;
+		y_FMSignalSinPhase.push_back((float)fmod(signalSinFreqDeltaRad * (double)i, twoPi));
+		y_FMSignalSin.push_back((float)sin(fmod(signalSinFreqDeltaRad * (double)i, twoPi)));
+		y_FMPhase.push_back((float)fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi));
+		y_data.push_back((float)(carrierAmplitude * cos(fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi))));
 
-		curPhaseSignalSinFreq =
-			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
-		curSignalSin =
-			(sin(curPhaseSignalSinFreq) / (long double)2.0f) + (long double)0.5f;
+		fftbfr[i] = (float)(sin(fmod(hannWinDlta * (double)i, twoPi)) * (carrierAmplitude * cos(fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi))));
 
-		curPhaseCarrierSinFreq =
-			curPhaseCarrierSinFreq + carrierSinFreqDeltaRad;
-		//fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
-		//curCarrierSin =
-		//	sin(curPhaseCarrierSinFreq);
-
-		curFMPhase =
-			fmod(curPhaseCarrierSinFreq * curSignalSin, twoPi);
-		curFM =
-			sin(curFMPhase);
-
-		curPhaseHannWin =
-			fmod((curPhaseHannWin + hannWinDlta), twoPi);
-		curHannWinSin =
-			sin(curPhaseHannWin);
-
-		curWinndFM =
-			(float)(curFM * curHannWinSin);
 	}
 }
 
@@ -499,9 +483,9 @@ void fftChecks::updatefftOrderValues()
 {
 	forwardFFT = make_unique<juce::dsp::FFT>(fftOrder);
 	N = forwardFFT->getSize(); // No of points in fft
-	maxTime = (long double)N * Ts;
+	maxTime = (double)N * Ts;
 	NTime = (int)(maxTime / Ts);
-	deltaFreq = ((long double)Fs / ((long double)N - (long double)1));
+	deltaFreq = ((double)Fs / ((double)N - (double)1));
 	NFreq = (int)(maxFreq / deltaFreq);
 	free(fftbfr);
 	fftbfr = (float*)calloc(N * 2, sizeof(float));
@@ -509,11 +493,11 @@ void fftChecks::updatefftOrderValues()
 
 void fftChecks::updateFsValues()
 {
-	Ts = (long double)1.0f / (long double)Fs;
-	maxTime = (long double)N * Ts;
+	Ts = (double)1.0f / (double)Fs;
+	maxTime = (double)N * Ts;
 	NTime = (int)(maxTime / Ts);
-	deltaFreq = ((long double)Fs / ((long double)N - (long double)1));
-	maxFreq = (long double)(Fs >> 1);
+	deltaFreq = ((double)Fs / ((double)N - (double)1));
+	maxFreq = (double)(Fs >> 1);
 	NFreq = (int)(maxFreq / deltaFreq);
 }
 
