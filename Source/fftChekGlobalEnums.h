@@ -21,6 +21,6 @@ enum plotType
 {
 	plotTimeSignal
 	, plotTimeCarrier
-	, plotTimeFM
+	, plotTimeModulated
 	, plotFFT
 };

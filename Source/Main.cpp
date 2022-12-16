@@ -79,6 +79,11 @@ public:
 			setVisible(true);
 		}
 
+
+		static void eksCloseButtonPressed()
+		{
+		}
+
 		void closeButtonPressed() override
 		{
 			// This is called when the user tries to close this window. Here, we'll just

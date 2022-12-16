@@ -47,7 +47,7 @@ public:
     //[UserMethods]     -- You can add your own custom methods in this section.
     void closeButtonPressed() override
     {
-        //setVisible(false);
+        juce::JUCEApplicationBase::quit();
     }
     //[/UserMethods]
 

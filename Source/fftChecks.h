@@ -298,7 +298,7 @@ private:
 	// Declare plot object.
 	shared_ptr<cmp::Plot> m_plotTimeSignal;
 	shared_ptr<cmp::Plot> m_plotTimeCarrier;
-	shared_ptr<cmp::Plot> m_plotTimeFM;
+	shared_ptr<cmp::Plot> m_plotTimeModulated;
 	shared_ptr<cmp::Plot> m_plotFFT;
 	vector< shared_ptr<cmp::Plot> > allPlots;
 
@@ -315,10 +315,10 @@ private:
 
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
-	vector<float> y_data;
-	vector<float> y_FMSignalSinPhase;
-	vector<float> y_FMSignalSin;
-	vector<float> y_FMPhase;
+	vector<float> y_modulated;
+	vector<float> y_SignalSinPhase;
+	vector<float> y_SignalSin;
+	vector<float> y_ModulatedPhase;
 	vector<string> yTickLabels;
 	vector<float> x_ticksTime;
 	vector<float> x_ticksFFT;
