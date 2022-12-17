@@ -227,22 +227,22 @@ public:
 		carrierAmplitude = carrierAmplitudeVal;
 	};
 
-	int get_show_signal_plot() { return show_signal_plot; };
-	void set_show_signal_plot(int show_signal_plotVal)
+	int get_plot_signal() { return plot_signal; };
+	void set_plot_signal(int plot_signalVal)
 	{
-		show_signal_plot = show_signal_plotVal;
+		plot_signal = plot_signalVal;
 	};
 
-	int get_show_carrier_plot() { return show_carrier_plot; };
-	void set_show_carrier_plot(int show_carrier_plotVal)
+	int get_plot_carrier() { return plot_carrier; };
+	void set_plot_carrier(int plot_carrierVal)
 	{
-		show_carrier_plot = show_carrier_plotVal;
+		plot_carrier = plot_carrierVal;
 	};
 
-	int get_show_modulated_plot() { return show_modulated_plot; };
-	void set_show_modulated_plot(int show_modulated_plotVal)
+	int get_plot_modulated() { return plot_modulated; };
+	void set_plot_modulated(int plot_modulatedVal)
 	{
-		show_modulated_plot = show_modulated_plotVal;
+		plot_modulated = plot_modulatedVal;
 	};
 
 	int get_show_inSame_plot() { return show_inSame_plot; };
@@ -251,10 +251,10 @@ public:
 		show_inSame_plot = show_inSame_plotVal;
 	};
 
-	int get_show_FFT_plot() { return show_FFT_plot; };
-	void set_show_FFT_plot(int show_FFT_plotVal)
+	int get_plot_FFT() { return plot_FFT; };
+	void set_plot_FFT(int plot_FFTVal)
 	{
-		show_FFT_plot = show_FFT_plotVal;
+		plot_FFT = plot_FFTVal;
 	};
 	//[/UserMethods]
 
@@ -339,12 +339,13 @@ private:
 
 	int sourceType = sinSource;
 
-	bool show_signal_plot = true;
-	bool show_carrier_plot = true;
-	bool show_modulated_plot = true;
+	bool plot_signal = true;
+	bool plot_carrier = true;
+	bool plot_modulated = true;
+	bool plot_FFT = true;
+
 	bool show_inSame_plot = true;
 
-	bool show_FFT_plot = true;
 
     //[/UserVariables]
 

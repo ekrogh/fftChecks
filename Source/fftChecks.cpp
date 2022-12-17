@@ -170,19 +170,19 @@ void fftChecks::doFM()
 {
 	deletePlots();
 
-	if (show_signal_plot)
+	if (plot_signal)
 	{
 		doFMSignalTime();
 	}
-	if (show_carrier_plot)
+	if (plot_carrier)
 	{
 		doFMCarrierTime();
 	}
-	if (show_modulated_plot)
+	if (plot_modulated)
 	{
 		doFMTime();
 	}
-	if (show_FFT_plot)
+	if (plot_FFT)
 	{
 		doFMFFT();
 	}
@@ -420,13 +420,13 @@ void fftChecks::initNewPlot(plotType toDo)
 	{
 		if (allPlots.size() == 0)
 		{
-			if (show_signal_plot || show_carrier_plot || show_modulated_plot)
+			if (plot_signal || plot_carrier || plot_modulated)
 			{
 				m_plotTimeSignal = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotTimeSignal);
 				addAndMakeVisible(m_plotTimeSignal.get());
 			}
-			if (show_FFT_plot)
+			if (plot_FFT)
 			{
 				m_plotFFT = make_shared<cmp::Plot>();
 				allPlots.push_back(m_plotFFT);
