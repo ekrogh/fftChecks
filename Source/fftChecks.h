@@ -159,10 +159,16 @@ public:
 	void set_maxFreq(double maxFreqVal) { maxFreq = maxFreqVal; };
 
 	double get_signalSinFreq() { return signalSinFreq; };
-	void set_signalSinFreq(double signalSinFreqVal) { signalSinFreq = signalSinFreqVal; };
+	void set_signalSinFreq(double signalSinFreqVal)
+	{
+		signalSinFreq = signalSinFreqVal;
+	};
 
 	double get_carrierSinFreq() { return carrierSinFreq; };
-	void set_carrierSinFreq(double carrierSinFreqVal) { carrierSinFreq = carrierSinFreqVal; };
+	void set_carrierSinFreq(double carrierSinFreqVal)
+	{
+		carrierSinFreq = carrierSinFreqVal;
+	};
 
 	double get_NTime() { return NTime; };
 	void set_NTime(double NTimeVal) { NTime = NTimeVal; };
@@ -233,10 +239,34 @@ public:
 		plot_signal = plot_signalVal;
 	};
 
+	int get_signal_in_individual_plot() { return signal_in_individual_plot; };
+	void set_signal_in_individual_plot(int signal_in_individual_plotVal)
+	{
+		signal_in_individual_plot = signal_in_individual_plotVal;
+	};
+
+	int get_signal_in_combined_plot() { return signal_in_combined_plot; };
+	void set_signal_in_combined_plot(int signal_in_combined_plotVal)
+	{
+		signal_in_combined_plot = signal_in_combined_plotVal;
+	};
+
 	int get_plot_carrier() { return plot_carrier; };
 	void set_plot_carrier(int plot_carrierVal)
 	{
 		plot_carrier = plot_carrierVal;
+	};
+
+	int get_carrier_in_individual_plot() { return carrier_in_individual_plot; };
+	void set_carrier_in_individual_plot(int carrier_in_individual_plotVal)
+	{
+		carrier_in_individual_plot = carrier_in_individual_plotVal;
+	};
+
+	int get_carrier_in_combined_plot() { return carrier_in_combined_plot; };
+	void set_carrier_in_combined_plot(int carrier_in_combined_plotVal)
+	{
+		carrier_in_combined_plot = carrier_in_combined_plotVal;
 	};
 
 	int get_plot_modulated() { return plot_modulated; };
@@ -245,10 +275,16 @@ public:
 		plot_modulated = plot_modulatedVal;
 	};
 
-	int get_show_inSame_plot() { return show_inSame_plot; };
-	void set_show_inSame_plot(int show_inSame_plotVal)
+	int get_modulated_in_individual_plot() { return modulated_in_individual_plot; };
+	void set_modulated_in_individual_plot(int modulated_in_individual_plotVal)
 	{
-		show_inSame_plot = show_inSame_plotVal;
+		modulated_in_individual_plot = modulated_in_individual_plotVal;
+	};
+
+	int get_modulated_in_combined_plot() { return modulated_in_combined_plot; };
+	void set_modulated_in_combined_plot(int modulated_in_combined_plotVal)
+	{
+		modulated_in_combined_plot = modulated_in_combined_plotVal;
 	};
 
 	int get_plot_FFT() { return plot_FFT; };
@@ -256,6 +292,19 @@ public:
 	{
 		plot_FFT = plot_FFTVal;
 	};
+
+	int get_FFT_in_individual_plot() { return FFT_in_individual_plot; };
+	void set_FFT_in_individual_plot(int FFT_in_individual_plotVal)
+	{
+		FFT_in_individual_plot = FFT_in_individual_plotVal;
+	};
+
+	int get_FFT_in_combined_plot() { return FFT_in_combined_plot; };
+	void set_FFT_in_combined_plot(int FFT_in_combined_plotVal)
+	{
+		FFT_in_combined_plot = FFT_in_combined_plotVal;
+	};
+
 	//[/UserMethods]
 
     void paint (juce::Graphics& g) override;
@@ -339,12 +388,23 @@ private:
 
 	int sourceType = sinSource;
 
-	bool plot_signal = true;
-	bool plot_carrier = true;
-	bool plot_modulated = true;
-	bool plot_FFT = true;
+	
+	bool plot_signal = false;
+	bool signal_in_individual_plot = false;
+	bool signal_in_combined_plot = false;
+	
+	bool plot_carrier = false;
+	bool carrier_in_individual_plot = false;
+	bool carrier_in_combined_plot = false;
+	
+	bool plot_modulated = false;
+	bool modulated_in_individual_plot = false;
+	bool modulated_in_combined_plot = false;
+	
+	bool plot_FFT = false;
+	bool FFT_in_individual_plot = false;
+	bool FFT_in_combined_plot = false;
 
-	bool show_inSame_plot = true;
 
 
     //[/UserVariables]

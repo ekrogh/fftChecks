@@ -416,7 +416,7 @@ void fftChecks::initNewPlot(plotType toDo)
 		deletePlots();
 	}
 
-	if (show_inSame_plot)
+	if (signal_in_combined_plot)
 	{
 		if (allPlots.size() == 0)
 		{

@@ -114,17 +114,17 @@ private:
     std::unique_ptr<juce::ToggleButton> carrierToggleButton;
     std::unique_ptr<juce::ToggleButton> FFTToggleButton;
     std::unique_ptr<juce::ToggleButton> modulatedSignalToggleButton;
-    std::unique_ptr<juce::ToggleButton> signalInSamePlotToggleButton;
+    std::unique_ptr<juce::ToggleButton> signalInCombinedPlotToggleButton;
     std::unique_ptr<juce::Label> toPlotLabel;
-    std::unique_ptr<juce::Label> inSamePlotLabel;
-    std::unique_ptr<juce::ToggleButton> carrierInSamePlotToggleButton;
-    std::unique_ptr<juce::ToggleButton> nodulatedInSamePlotToggleButton;
-    std::unique_ptr<juce::ToggleButton> FFTInSamePlotToggleButton;
+    std::unique_ptr<juce::Label> inCombinedPlotLabel;
+    std::unique_ptr<juce::ToggleButton> carrierInCombinedPlotToggleButton;
+    std::unique_ptr<juce::ToggleButton> modulatedInCombinedPlotToggleButton;
+    std::unique_ptr<juce::ToggleButton> FFTInCombinedPlotToggleButton;
     std::unique_ptr<juce::ToggleButton> signalInIndividualPlotToggleButton;
     std::unique_ptr<juce::Label> individualPlotLabel;
     std::unique_ptr<juce::ToggleButton> carrierInIndividualPlotToggleButton;
-    std::unique_ptr<juce::ToggleButton> nodulatedIncarrierInIndiPlotToggleButton;
-    std::unique_ptr<juce::ToggleButton> FFTInnodulatedIncarrierIPlotToggleButton;
+    std::unique_ptr<juce::ToggleButton> modulatedInIndividualPlotToggleButton;
+    std::unique_ptr<juce::ToggleButton> FFTInIndividualPlotToggleButton;
 
 
     //==============================================================================
