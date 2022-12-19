@@ -121,26 +121,26 @@ fftChecks::plotCoRoutine()
 			{
 				case sinSource:
 				{
-					doSineTime();
+					doSineTimeFillPlotData();
 					co_yield 3;
 
-					doSineFFT();
+					doSineFFTFillPlotData();
 					co_yield 4;
 
 					break;
 				}
 				case FMSource:
 				{
-					doFMSignalTime();
+					doFMSignalTimeFillPlotData();
 					co_yield 5;
 
-					doFMCarrierTime();
+					doFMCarrierTimeFillPlotData();
 					co_yield 6;
 
-					doFMTime();
+					doFMTimeFillPlotData();
 					co_yield 7;
 
-					doFMFFT();
+					doFMFFTFillPlotData();
 					co_yield 8;
 
 					break;
@@ -162,131 +162,150 @@ void fftChecks::doSine()
 {
 	deletePlots();
 
-	doSineTime();
-	doSineFFT();
+	doSineTimeFillPlotData();
+	doSineFFTFillPlotData();
+
+	showPlots();
 }
 
 void fftChecks::doFM()
 {
 	deletePlots();
 
-	if (plot_signal)
-	{
-		doFMSignalTime();
-	}
-	if (plot_carrier)
-	{
-		doFMCarrierTime();
-	}
-	if (plot_modulated)
-	{
-		doFMTime();
-	}
-	if (plot_FFT)
-	{
-		doFMFFT();
-	}
+	doFMSignalTimeFillPlotData();
+	doFMCarrierTimeFillPlotData();
+	doFMTimeFillPlotData();
+	doFMFFTFillPlotData();
+
+	showPlots();
 }
 
-void fftChecks::doFMSignalTime()
+void fftChecks::doFMSignalTimeFillPlotData()
 {
-	initNewPlot(plotTimeSignal);
-
 	// FM signal
-	fillYFMSignalSin();
+	fillYSignalSin();
 	fillXTime();
 
-	// Plot signal
-	y_modulated = vector<float>(fftbfr, fftbfr + NTime);
-	auto minYmaxY = ranges::minmax_element(y_modulated);
-	m_plotTimeSignal->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotTimeSignal->setTitle("FM Signal Time domain");
-	m_plotTimeSignal->plot({ y_modulated }, { x_ticksTime });
-	m_plotTimeSignal->gridON(true, false);
+	if (plot_signal)
+	{
+		if (signal_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+		if (signal_in_combined_plot)
+		{
+			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_combinedPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("FM Signal Time domain");
+	}
 }
 
-void fftChecks::doFMCarrierTime()
+void fftChecks::doFMCarrierTimeFillPlotData()
 {
-	initNewPlot(plotTimeCarrier);
-
 	// FM signal
 	fillYCarrierSin();
 	fillXTime();
 
-	// Plot signal
-	y_modulated = vector<float>(fftbfr, fftbfr + NTime);
-	auto minYmaxY = ranges::minmax_element(y_modulated);
-	m_plotTimeCarrier->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotTimeCarrier->setTitle("FM Carrier Time domain");
-	m_plotTimeCarrier->plot({ y_modulated }, { x_ticksTime });
-	m_plotTimeCarrier->gridON(true, false);
+	if (plot_carrier)
+	{
+		if (carrier_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+		if (carrier_in_combined_plot)
+		{
+			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_combinedPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("FM Carrier Time domain");
+	}
 }
 
-void fftChecks::doFMTime()
+void fftChecks::doFMTimeFillPlotData()
 {
-	initNewPlot(plotTimeModulated);
-
 	// FM signal
 	fillYFM();
 	fillXTime();
 
-	// Plot signal
-	//y_modulated = vector<float>(fftbfr, fftbfr + NTime);
-	//auto minYmaxY = ranges::minmax_element(y_modulated);
-	//m_plotTimeModulated->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotTimeModulated->setTitle("FM Time domain");
-	m_plotTimeModulated->plot({ y_modulated, y_SignalSinPhase, y_SignalSin, y_ModulatedPhase }, { x_ticksTime, x_ticksTime, x_ticksTime, x_ticksTime });
-	m_plotTimeModulated->gridON(true, false);
+	if (plot_modulated)
+	{
+		if (modulated_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+		if (modulated_in_combined_plot)
+		{
+			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_combinedPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("FM Time domain");
+	}
 }
 
-void fftChecks::doFMFFT()
+void fftChecks::doFMFFTFillPlotData()
 {
-	initNewPlot(plotFFT);
-
 	//FFT
 	fillYFM();
 	fillXFrequency();
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
-	// Plot FFT
-	y_modulated = vector<float>(fftbfr, fftbfr + NFreq);
-	auto minYmaxY = ranges::minmax_element(y_modulated);
-	m_plotFFT->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotFFT->setTitle("FM Freq domain");
-	m_plotFFT->plot({ y_modulated }, { x_ticksFFT });
-	m_plotFFT->gridON(true, false);
+	if (plot_FFT)
+	{
+		if (modulated_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("FM Freq domain");
+	}
 }
 
-void fftChecks::doSineTime()
+void fftChecks::doSineTimeFillPlotData()
 {
-	initNewPlot(plotTimeSignal);
-
 	fillYSignalSin();
 	fillXTime();
 
-	y_modulated = vector<float>(fftbfr, fftbfr + NTime);
-	auto minYmaxY = ranges::minmax_element(y_modulated);
-	m_plotTimeSignal->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotTimeSignal->setTitle("Sin Time domain");
-	m_plotTimeSignal->plot({ y_modulated }, { x_ticksTime });
-	m_plotTimeSignal->gridON(true, false);
+	if (plot_signal)
+	{
+		if (signal_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+		if (signal_in_combined_plot)
+		{
+			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_combinedPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("Sin Time domain");
+	}
 }
 
-void fftChecks::doSineFFT()
+void fftChecks::doSineFFTFillPlotData()
 {
-	initNewPlot(plotFFT);
-
 	fillYSignalSin();
 	fillXFrequency();
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
-	// Plot FFT
-	y_modulated = vector<float>(fftbfr, fftbfr + NFreq);
-	auto minYmaxY = ranges::minmax_element(y_modulated);
-	m_plotFFT->yLim(*minYmaxY.min, *minYmaxY.max);
-	m_plotFFT->setTitle("Sin Freq domain");
-	m_plotFFT->plot({ y_modulated }, { x_ticksFFT });
-	m_plotFFT->gridON(true, false);
+	if (plot_signal)
+	{
+		if (FFT_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+		}
+
+		titlePlots.push_back("Sin Freq domain");
+	}
 }
 
 
@@ -306,7 +325,7 @@ void fftChecks::fillXTime()
 	ranges::generate(x_ticksTime, [&n, this]() { return (float)(Ts * n++); });
 }
 
-void fftChecks::makeYTickLabels()
+void fftChecks::makeYTickLabels(vector<float>& y_modulated)
 {
 	auto [minY, maxY] = ranges::minmax_element(y_modulated);
 
@@ -323,6 +342,8 @@ void fftChecks::fillYSignalSin()
 	double curPhaseSignalSinFreq = 0.0f;
 	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
 	double curPhaseHannWin = 0.0f;
+
+	std::memset(fftbfr, 0, N * 2 * sizeof(float));
 
 	for (int i = 0; i < N; i++)
 	{
@@ -344,6 +365,8 @@ void fftChecks::fillYCarrierSin()
 	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
 	double curPhaseHannWin = 0.0f;
 
+	std::memset(fftbfr, 0, N * 2 * sizeof(float));
+
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] =
@@ -358,53 +381,51 @@ void fftChecks::fillYCarrierSin()
 	}
 }
 
-void fftChecks::fillYFMSignalSin()
-{
-	double curPhaseSignalSinFreq = 0.0f;
-	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
-	double curPhaseHannWin = 0.0f;
-
-	for (int i = 0; i < N; i++)
-	{
-		fftbfr[i] =
-			(float)(((sin(curPhaseSignalSinFreq) / (double)2.0f) + (double)0.5f)
-				* pow(sin(curPhaseHannWin), 2));
-
-		curPhaseSignalSinFreq =
-			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
-
-		curPhaseHannWin =
-			fmod((curPhaseHannWin + hannWinDlta), twoPi);
-	}
-}
-
 void fftChecks::fillYFM()
 {
 	double curSignalSin = 0.0f;
 	double curPhaseSignalSinFreq = 0.0f;
-	double curPhaseCarrierSinFreq = 0.0f;
+	double curPhaseCarrier = 0.0f;
 	double curCarrierSin = 0.0f;
 	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
 	double curPhaseHannWin = 0.0f;
 	double curHannWinSin = 0.0f;
 	double curFMPhase = 0.0f;
 	double curFM = 0.0f;
-	float curWinndFM = 0.0f;
 
-	y_SignalSinPhase.clear();
-	y_SignalSin.clear();
-	y_ModulatedPhase.clear();
-	y_modulated.clear();
+	std::memset(fftbfr, 0, N * 2 * sizeof(float));
 
 	for (int i = 0; i < N; i++)
 	{
-		y_SignalSinPhase.push_back((float)fmod(signalSinFreqDeltaRad * (double)i, twoPi));
-		y_SignalSin.push_back((float)sin(fmod(signalSinFreqDeltaRad * (double)i, twoPi)));
-		y_ModulatedPhase.push_back((float)fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi));
-		y_modulated.push_back((float)(carrierAmplitude * cos(fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi))));
+		fftbfr[i] =
+			(float)(curHannWinSin * carrierAmplitude * cos(curFMPhase));
 
-		fftbfr[i] = (float)(sin(fmod(hannWinDlta * (double)i, twoPi)) * (carrierAmplitude * cos(fmod(carrierSinFreqDeltaRad * (double)i + modulationIndex * sin(signalSinFreqDeltaRad * (double)i), twoPi))));
+		curPhaseSignalSinFreq =
+			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
+		curSignalSin =
+			sin(curPhaseSignalSinFreq);
 
+		curPhaseCarrier =
+			curPhaseCarrier + carrierSinFreqDeltaRad;
+
+		curFMPhase =
+			fmod((curPhaseCarrier + modulationIndex * curSignalSin), twoPi);
+
+		curPhaseHannWin =
+			fmod((curPhaseHannWin + hannWinDlta), twoPi);
+		curHannWinSin =
+			pow(std::sin(curPhaseHannWin), 2);
+
+	}
+}
+
+void fftChecks::showPlots()
+{
+	if (allIn1ToggleButtonToggleState)
+	{
+	}
+	else
+	{
 	}
 }
 
@@ -507,10 +528,12 @@ void fftChecks::deletePlots()
 		m_plotTimeModulated.reset();
 		m_plotFFT.reset();
 
-		y_modulated.clear();
-		y_SignalSinPhase.clear();
-		y_SignalSin.clear();
-		y_ModulatedPhase.clear();
+		y_combinedPlots.clear();
+		x_combinedPlots.clear();
+		y_individualPlots.clear();
+		x_individualPlots.clear();
+		titlePlots.clear();
+
 		yTickLabels.clear();
 		x_ticksTime.clear();
 		x_ticksFFT.clear();

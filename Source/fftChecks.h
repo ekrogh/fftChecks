@@ -324,25 +324,25 @@ private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
 	void doSine();
-	void doSineTime();
-	void doSineFFT();
+	void doSineTimeFillPlotData();
+	void doSineFFTFillPlotData();
 	void doFM();
-	void doFMSignalTime();
-	void doFMCarrierTime();
-	void doFMTime();
-	void doFMFFT();
+	void doFMSignalTimeFillPlotData();
+	void doFMCarrierTimeFillPlotData();
+	void doFMTimeFillPlotData();
+	void doFMFFTFillPlotData();
 
 	void fillXFrequency();
 	void fillXTime();
 
 	void fillYSignalSin();
 	void fillYCarrierSin();
-	void fillYFMSignalSin();
 	void fillYFM();
-	void makeYTickLabels();
+	void makeYTickLabels(vector<float>& y_modulated);
 
 	void initNewPlot(plotType toDo);
 	void resizePlotWindow();
+	void showPlots();
 	void deletePlots();
 
 
@@ -372,13 +372,22 @@ private:
 
 
 	float* fftbfr = (float*)calloc(N * 2, sizeof(float));
-	vector<float> y_modulated;
-	vector<float> y_SignalSinPhase;
-	vector<float> y_SignalSin;
-	vector<float> y_ModulatedPhase;
+
+
+
+	vector <vector<float>> y_combinedPlots;
+	vector <vector<float>> x_combinedPlots;
+	
+	vector <vector<float>> y_individualPlots;
+	vector <vector<float>> x_individualPlots;
+
+	vector<string> titlePlots;
+
+
 	vector<string> yTickLabels;
 	vector<float> x_ticksTime;
 	vector<float> x_ticksFFT;
+
 
 	// Carrier
 	double carrierSinFreq = 2000.0f;
