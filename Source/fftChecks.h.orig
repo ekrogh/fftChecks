@@ -170,14 +170,14 @@ public:
 		carrierSinFreq = carrierSinFreqVal;
 	};
 
-	int get_NTime() { return NTime; };
-	void set_NTime(int NTimeVal) { NTime = NTimeVal; };
+	double get_NTime() { return NTime; };
+	void set_NTime(double NTimeVal) { NTime = NTimeVal; };
 
 	double get_Ts() { return Ts; };
 	void set_Ts(double TsVal) { Ts = TsVal; };
 
-	int get_NFreq() { return NFreq; };
-	void set_NFreq(int NFreqVal) { NFreq = NFreqVal; };
+	double get_NFreq() { return NFreq; };
+	void set_NFreq(double NFreqVal) { NFreq = NFreqVal; };
 
 	double get_deltaFreq() { return deltaFreq; };
 	void set_deltaFreq(double deltaFreqVal) { deltaFreq = deltaFreqVal; };
@@ -197,14 +197,14 @@ public:
 		carrierSinFreqDeltaRad = carrierSinFreqDeltaRadVal;
 	};
 
-	int get_N() { return N; };
-	void set_N(int NVal) { N = NVal; };
+	double get_N() { return N; };
+	void set_N(double NVal) { N = NVal; };
 
-	int get_Fs() { return Fs; };
-	void set_Fs(int FsVal) { Fs = FsVal; };
+	double get_Fs() { return Fs; };
+	void set_Fs(double FsVal) { Fs = FsVal; };
 
-	int get_fftOrder() { return fftOrder; };
-	void set_fftOrder(int fftOrderVal) { fftOrder = fftOrderVal; };
+	double get_fftOrder() { return fftOrder; };
+	void set_fftOrder(double fftOrderVal) { fftOrder = fftOrderVal; };
 
 	void updatefftOrderValues();
 	void updateFsValues();
@@ -213,7 +213,7 @@ public:
 	{
 		return allIn1ToggleButtonToggleState;
 	};
-	void set_allIn1ToggleButtonToggleState(bool allIn1ToggleButtonToggleStateVal)
+	void set_allIn1ToggleButtonToggleState(double allIn1ToggleButtonToggleStateVal)
 	{
 		allIn1ToggleButtonToggleState = allIn1ToggleButtonToggleStateVal;
 	};
@@ -221,96 +221,64 @@ public:
 	int get_sourceType() { return sourceType; };
 	void set_sourceType(int sourceTypeVal) { sourceType = sourceTypeVal; };
 
-	double get_modulationIndex() { return modulationIndex; };
-	void set_modulationIndex(double modulationIndexVal)
+	int get_modulationIndex() { return modulationIndex; };
+	void set_modulationIndex(int modulationIndexVal)
 	{
 		modulationIndex = modulationIndexVal;
 	};
 
-	double get_carrierAmplitude() { return carrierAmplitude; };
-	void set_carrierAmplitude(double carrierAmplitudeVal)
+	int get_carrierAmplitude() { return carrierAmplitude; };
+	void set_carrierAmplitude(int carrierAmplitudeVal)
 	{
 		carrierAmplitude = carrierAmplitudeVal;
 	};
 
-	bool get_plot_signal() { return plot_signal; };
-	void set_plot_signal(bool plot_signalVal)
-	{
-		plot_signal = plot_signalVal;
-	};
-
-	bool get_signal_in_individual_plot() { return signal_in_individual_plot; };
-	void set_signal_in_individual_plot(bool signal_in_individual_plotVal)
+	int get_signal_in_individual_plot() { return signal_in_individual_plot; };
+	void set_signal_in_individual_plot(int signal_in_individual_plotVal)
 	{
 		signal_in_individual_plot = signal_in_individual_plotVal;
-		plot_signal = signal_in_individual_plot || signal_in_combined_plot;
 	};
 
-	bool get_signal_in_combined_plot() { return signal_in_combined_plot; };
-	void set_signal_in_combined_plot(bool signal_in_combined_plotVal)
+	int get_signal_in_combined_plot() { return signal_in_combined_plot; };
+	void set_signal_in_combined_plot(int signal_in_combined_plotVal)
 	{
 		signal_in_combined_plot = signal_in_combined_plotVal;
-		plot_signal = signal_in_individual_plot || signal_in_combined_plot;
 	};
 
-	bool get_plot_carrier() { return plot_carrier; };
-	void set_plot_carrier(bool plot_carrierVal)
-	{
-		plot_carrier = plot_carrierVal;
-	};
-
-	bool get_carrier_in_individual_plot() { return carrier_in_individual_plot; };
-	void set_carrier_in_individual_plot(bool carrier_in_individual_plotVal)
+	int get_carrier_in_individual_plot() { return carrier_in_individual_plot; };
+	void set_carrier_in_individual_plot(int carrier_in_individual_plotVal)
 	{
 		carrier_in_individual_plot = carrier_in_individual_plotVal;
-		plot_carrier =  carrier_in_individual_plot || carrier_in_combined_plot;
 	};
 
-	bool get_carrier_in_combined_plot() { return carrier_in_combined_plot; };
-	void set_carrier_in_combined_plot(bool carrier_in_combined_plotVal)
+	int get_carrier_in_combined_plot() { return carrier_in_combined_plot; };
+	void set_carrier_in_combined_plot(int carrier_in_combined_plotVal)
 	{
 		carrier_in_combined_plot = carrier_in_combined_plotVal;
-		plot_carrier = carrier_in_individual_plot || carrier_in_combined_plot;
 	};
 
-	bool get_plot_modulated() { return plot_modulated; };
-	void set_plot_modulated(bool plot_modulatedVal)
-	{
-		plot_modulated = plot_modulatedVal;
-	};
-
-	bool get_modulated_in_individual_plot() { return modulated_in_individual_plot; };
-	void set_modulated_in_individual_plot(bool modulated_in_individual_plotVal)
+	int get_modulated_in_individual_plot() { return modulated_in_individual_plot; };
+	void set_modulated_in_individual_plot(int modulated_in_individual_plotVal)
 	{
 		modulated_in_individual_plot = modulated_in_individual_plotVal;
-		plot_modulated =  modulated_in_individual_plot || modulated_in_combined_plot;
 	};
 
-	bool get_modulated_in_combined_plot() { return modulated_in_combined_plot; };
-	void set_modulated_in_combined_plot(bool modulated_in_combined_plotVal)
+	int get_modulated_in_combined_plot() { return modulated_in_combined_plot; };
+	void set_modulated_in_combined_plot(int modulated_in_combined_plotVal)
 	{
 		modulated_in_combined_plot = modulated_in_combined_plotVal;
-		plot_modulated = modulated_in_individual_plot || modulated_in_combined_plot;
 	};
 
-	bool get_plot_FFT() { return plot_FFT; };
-	void set_plot_FFT(bool plot_FFTVal)
-	{
-		plot_FFT = plot_FFTVal;
-	};
-
-	bool get_FFT_in_individual_plot() { return FFT_in_individual_plot; };
-	void set_FFT_in_individual_plot(bool FFT_in_individual_plotVal)
+	int get_FFT_in_individual_plot() { return FFT_in_individual_plot; };
+	void set_FFT_in_individual_plot(int FFT_in_individual_plotVal)
 	{
 		FFT_in_individual_plot = FFT_in_individual_plotVal;
-		plot_FFT =  FFT_in_individual_plot || FFT_in_combined_plot;
 	};
 
-	bool get_FFT_in_combined_plot() { return FFT_in_combined_plot; };
-	void set_FFT_in_combined_plot(bool FFT_in_combined_plotVal)
+	int get_FFT_in_combined_plot() { return FFT_in_combined_plot; };
+	void set_FFT_in_combined_plot(int FFT_in_combined_plotVal)
 	{
 		FFT_in_combined_plot = FFT_in_combined_plotVal;
-		plot_FFT = FFT_in_individual_plot || FFT_in_combined_plot;
 	};
 
 	//[/UserMethods]
@@ -401,15 +369,12 @@ private:
 	bool signal_in_individual_plot = false;
 	bool signal_in_combined_plot = false;
 	
-	bool plot_carrier = false;
 	bool carrier_in_individual_plot = false;
 	bool carrier_in_combined_plot = false;
 	
-	bool plot_modulated = false;
 	bool modulated_in_individual_plot = false;
 	bool modulated_in_combined_plot = false;
 	
-	bool plot_FFT = false;
 	bool FFT_in_individual_plot = false;
 	bool FFT_in_combined_plot = false;
 
