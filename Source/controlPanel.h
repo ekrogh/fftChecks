@@ -110,10 +110,6 @@ private:
     std::unique_ptr<juce::TextEditor> modulationIndexTextEditor;
     std::unique_ptr<juce::Label> carrierAmplitudeLabel;
     std::unique_ptr<juce::TextEditor> carrierAmplitudeTextEditor;
-    std::unique_ptr<juce::ToggleButton> signalToggleButton;
-    std::unique_ptr<juce::ToggleButton> carrierToggleButton;
-    std::unique_ptr<juce::ToggleButton> FFTToggleButton;
-    std::unique_ptr<juce::ToggleButton> modulatedSignalToggleButton;
     std::unique_ptr<juce::ToggleButton> signalInCombinedPlotToggleButton;
     std::unique_ptr<juce::Label> toPlotLabel;
     std::unique_ptr<juce::Label> inCombinedPlotLabel;
@@ -125,6 +121,10 @@ private:
     std::unique_ptr<juce::ToggleButton> carrierInIndividualPlotToggleButton;
     std::unique_ptr<juce::ToggleButton> modulatedInIndividualPlotToggleButton;
     std::unique_ptr<juce::ToggleButton> FFTInIndividualPlotToggleButton;
+    std::unique_ptr<juce::Label> signalPlotLabel;
+    std::unique_ptr<juce::Label> carrierPlotLabel;
+    std::unique_ptr<juce::Label> modulatedPlotLabel;
+    std::unique_ptr<juce::Label> FFTPlotLabel;
 
 
     //==============================================================================

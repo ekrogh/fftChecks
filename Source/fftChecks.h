@@ -233,12 +233,6 @@ public:
 		carrierAmplitude = carrierAmplitudeVal;
 	};
 
-	int get_plot_signal() { return plot_signal; };
-	void set_plot_signal(int plot_signalVal)
-	{
-		plot_signal = plot_signalVal;
-	};
-
 	int get_signal_in_individual_plot() { return signal_in_individual_plot; };
 	void set_signal_in_individual_plot(int signal_in_individual_plotVal)
 	{
@@ -249,12 +243,6 @@ public:
 	void set_signal_in_combined_plot(int signal_in_combined_plotVal)
 	{
 		signal_in_combined_plot = signal_in_combined_plotVal;
-	};
-
-	int get_plot_carrier() { return plot_carrier; };
-	void set_plot_carrier(int plot_carrierVal)
-	{
-		plot_carrier = plot_carrierVal;
 	};
 
 	int get_carrier_in_individual_plot() { return carrier_in_individual_plot; };
@@ -269,12 +257,6 @@ public:
 		carrier_in_combined_plot = carrier_in_combined_plotVal;
 	};
 
-	int get_plot_modulated() { return plot_modulated; };
-	void set_plot_modulated(int plot_modulatedVal)
-	{
-		plot_modulated = plot_modulatedVal;
-	};
-
 	int get_modulated_in_individual_plot() { return modulated_in_individual_plot; };
 	void set_modulated_in_individual_plot(int modulated_in_individual_plotVal)
 	{
@@ -285,12 +267,6 @@ public:
 	void set_modulated_in_combined_plot(int modulated_in_combined_plotVal)
 	{
 		modulated_in_combined_plot = modulated_in_combined_plotVal;
-	};
-
-	int get_plot_FFT() { return plot_FFT; };
-	void set_plot_FFT(int plot_FFTVal)
-	{
-		plot_FFT = plot_FFTVal;
 	};
 
 	int get_FFT_in_individual_plot() { return FFT_in_individual_plot; };
@@ -389,19 +365,15 @@ private:
 	int sourceType = sinSource;
 
 	
-	bool plot_signal = false;
 	bool signal_in_individual_plot = false;
 	bool signal_in_combined_plot = false;
 	
-	bool plot_carrier = false;
 	bool carrier_in_individual_plot = false;
 	bool carrier_in_combined_plot = false;
 	
-	bool plot_modulated = false;
 	bool modulated_in_individual_plot = false;
 	bool modulated_in_combined_plot = false;
 	
-	bool plot_FFT = false;
 	bool FFT_in_individual_plot = false;
 	bool FFT_in_combined_plot = false;
 
