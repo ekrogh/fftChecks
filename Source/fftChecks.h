@@ -339,6 +339,7 @@ private:
 	void fillYSignalSin();
 	void fillYCarrierSin();
 	void fillYFM();
+	void hannWinn(float* fftBfrToWin);
 	void makeYTickLabels(vector<float>& y_modulated);
 
 	void resizePlotWindow();
@@ -377,12 +378,13 @@ private:
 	vector <vector<float>> y_individualPlots;
 	vector <vector<float>> x_individualPlots;
 
-	vector<string> titlePlots;
-
+	vector<string> titlePlotsIndividual;
+	vector<string> titlePlotsCombined;
 
 	vector<string> yTickLabels;
 	vector<float> x_ticksTime;
 	vector<float> x_ticksFFT;
+
 
 
 	// Carrier

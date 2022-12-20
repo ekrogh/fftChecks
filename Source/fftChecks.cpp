@@ -119,7 +119,16 @@ fftChecks::plotCoRoutine()
 				addAndMakeVisible(m_combinedPlots.get());
 				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
 				m_combinedPlots->gridON(true, false);
-				m_combinedPlots->setTitle("Time domain");
+
+				string theTitle = "";
+				string theSeperator = "";
+				for (auto thisTitle : titlePlotsCombined)
+				{
+					theTitle += theSeperator + thisTitle;
+					theSeperator = "  and  ";
+				}
+				m_combinedPlots->setTitle(theTitle);
+				
 				allPlots.push_back(m_combinedPlots);
 			}
 			if (y_individualPlots.size() != 0)
@@ -131,7 +140,7 @@ fftChecks::plotCoRoutine()
 					addAndMakeVisible(m_individualPlot.get());
 					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
 					m_individualPlot->gridON(true, false);
-					m_individualPlot->setTitle(titlePlots[idx++]);
+					m_individualPlot->setTitle(titlePlotsIndividual[idx++]);
 					allPlots.push_back(m_individualPlot);
 				}
 			}
@@ -152,8 +161,19 @@ fftChecks::plotCoRoutine()
 				addAndMakeVisible(m_combinedPlots.get());
 				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
 				m_combinedPlots->gridON(true, false);
-				m_combinedPlots->setTitle("Time domain");
+
+				string theTitle = "";
+				string theSeperator = "";
+				for (auto thisTitle : titlePlotsCombined)
+				{
+					theTitle += theSeperator + thisTitle;
+					theSeperator = "  and  ";
+				}
+				m_combinedPlots->setTitle(theTitle);
+
 				allPlots.push_back(m_combinedPlots);
+
+				resizePlotWindow();
 
 				co_yield 2;
 
@@ -169,8 +189,10 @@ fftChecks::plotCoRoutine()
 					addAndMakeVisible(m_individualPlot.get());
 					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
 					m_individualPlot->gridON(true, false);
-					m_individualPlot->setTitle(titlePlots[idx++]);
+					m_individualPlot->setTitle(titlePlotsIndividual[idx++]);
 					allPlots.push_back(m_individualPlot);
+
+					resizePlotWindow();
 
 					co_yield 3;
 
@@ -208,18 +230,22 @@ void fftChecks::doFMSignalTimeFillPlotData()
 
 	if (plot_signal)
 	{
+		auto sgnlStr = std::to_string(signalSinFreq);
+		auto titleTxt = "Signal (" + sgnlStr + " Hz) Time domain";
+
 		if (signal_in_individual_plot)
 		{
 			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_individualPlots.push_back(x_ticksTime);
+			titlePlotsIndividual.push_back(titleTxt);
 		}
 		if (signal_in_combined_plot)
 		{
 			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_combinedPlots.push_back(x_ticksTime);
+			titlePlotsCombined.push_back(titleTxt);
 		}
 
-		titlePlots.push_back("FM Signal Time domain");
 	}
 }
 
@@ -231,18 +257,21 @@ void fftChecks::doFMCarrierTimeFillPlotData()
 
 	if (plot_carrier)
 	{
+		auto crrrStr = std::to_string(carrierSinFreq);
+		auto titleTxt = "Carrier (" + crrrStr + " Hz) Time domain";
+
 		if (carrier_in_individual_plot)
 		{
 			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_individualPlots.push_back(x_ticksTime);
+			titlePlotsIndividual.push_back(titleTxt);
 		}
 		if (carrier_in_combined_plot)
 		{
 			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_combinedPlots.push_back(x_ticksTime);
+			titlePlotsCombined.push_back(titleTxt);
 		}
-
-		titlePlots.push_back("FM Carrier Time domain");
 	}
 }
 
@@ -258,14 +287,14 @@ void fftChecks::doFMTimeFillPlotData()
 		{
 			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_individualPlots.push_back(x_ticksTime);
+			titlePlotsIndividual.push_back("Modulated Time domain");
 		}
 		if (modulated_in_combined_plot)
 		{
 			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_combinedPlots.push_back(x_ticksTime);
+			titlePlotsCombined.push_back("Modulated Time domain");
 		}
-
-		titlePlots.push_back("FM Time domain");
 	}
 }
 
@@ -274,17 +303,18 @@ void fftChecks::doFMFFTFillPlotData()
 	//FFT
 	fillYFM();
 	fillXFrequency();
+	
+	hannWinn(fftbfr);
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
 	if (plot_FFT)
 	{
-		if (modulated_in_individual_plot)
+		if (FFT_in_individual_plot)
 		{
-			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
-			x_individualPlots.push_back(x_ticksTime);
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NFreq));
+			x_individualPlots.push_back(x_ticksFFT);
+			titlePlotsIndividual.push_back("FFT Modulated");
 		}
-
-		titlePlots.push_back("FM Freq domain");
 	}
 }
 
@@ -295,18 +325,21 @@ void fftChecks::doSineTimeFillPlotData()
 
 	if (plot_signal)
 	{
+		auto sgnlStr = std::to_string(signalSinFreq);
+		auto titleTxt = "Sin (" + sgnlStr + " Hz) Time domain";
+
 		if (signal_in_individual_plot)
 		{
 			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_individualPlots.push_back(x_ticksTime);
+			titlePlotsIndividual.push_back(titleTxt);
 		}
 		if (signal_in_combined_plot)
 		{
 			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
 			x_combinedPlots.push_back(x_ticksTime);
+			titlePlotsCombined.push_back(titleTxt);
 		}
-
-		titlePlots.push_back("Sin Time domain");
 	}
 }
 
@@ -314,17 +347,18 @@ void fftChecks::doSineFFTFillPlotData()
 {
 	fillYSignalSin();
 	fillXFrequency();
+
+	hannWinn(fftbfr);
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
-	if (plot_signal)
+	if (plot_FFT)
 	{
 		if (FFT_in_individual_plot)
 		{
-			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
-			x_individualPlots.push_back(x_ticksTime);
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NFreq));
+			x_individualPlots.push_back(x_ticksFFT);
+			titlePlotsIndividual.push_back("FFT Sin");
 		}
-
-		titlePlots.push_back("Sin Freq domain");
 	}
 }
 
@@ -360,44 +394,30 @@ void fftChecks::makeYTickLabels(vector<float>& y_modulated)
 void fftChecks::fillYSignalSin()
 {
 	double curPhaseSignalSinFreq = 0.0f;
-	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
-	double curPhaseHannWin = 0.0f;
 
 	std::memset(fftbfr, 0, N * 2 * sizeof(float));
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] =
-			(float)(sin(curPhaseSignalSinFreq)
-			* pow(std::sin(curPhaseHannWin), 2));
+		fftbfr[i] = (float)sin(curPhaseSignalSinFreq);
 
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
-
-		curPhaseHannWin =
-			fmod((curPhaseHannWin + hannWinDlta), twoPi);
 	}
 }
 
 void fftChecks::fillYCarrierSin()
 {
 	double curPhaseCarrierSinFreq = 0.0f;
-	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
-	double curPhaseHannWin = 0.0f;
 
 	std::memset(fftbfr, 0, N * 2 * sizeof(float));
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] =
-			(float)sin(curPhaseCarrierSinFreq)
-				* pow(std::sin(curPhaseHannWin), 2);
+		fftbfr[i] = (float)sin(curPhaseCarrierSinFreq);
 
 		curPhaseCarrierSinFreq =
 			fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
-
-		curPhaseHannWin =
-			fmod((curPhaseHannWin + hannWinDlta), twoPi);
 	}
 }
 
@@ -406,9 +426,6 @@ void fftChecks::fillYFM()
 	double curSignalSin = 0.0f;
 	double curPhaseSignalSinFreq = 0.0f;
 	double curPhaseCarrier = 0.0f;
-	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
-	double curPhaseHannWin = 0.0f;
-	double curHannWinSin = 0.0f;
 	double curFMPhase = 0.0f;
 
 	std::memset(fftbfr, 0, N * 2 * sizeof(float));
@@ -416,7 +433,7 @@ void fftChecks::fillYFM()
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] =
-			(float)(curHannWinSin * carrierAmplitude * cos(curFMPhase));
+			(float)(carrierAmplitude * cos(curFMPhase));
 
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
@@ -429,11 +446,20 @@ void fftChecks::fillYFM()
 		curFMPhase =
 			fmod((curPhaseCarrier + modulationIndex * curSignalSin), twoPi);
 
+	}
+}
+
+void fftChecks::hannWinn(float* fftBfrToWin)
+{
+	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
+	double curPhaseHannWin = 0.0f;
+
+	for (int i = 0; i < N; i++)
+	{
+		fftBfrToWin[i] *= (float)pow(std::sin(curPhaseHannWin), 2);
+
 		curPhaseHannWin =
 			fmod((curPhaseHannWin + hannWinDlta), twoPi);
-		curHannWinSin =
-			pow(std::sin(curPhaseHannWin), 2);
-
 	}
 }
 
@@ -470,7 +496,8 @@ void fftChecks::deleteAllPlots()
 		x_combinedPlots.clear();
 		y_individualPlots.clear();
 		x_individualPlots.clear();
-		titlePlots.clear();
+		titlePlotsIndividual.clear();
+		titlePlotsCombined.clear();
 
 		yTickLabels.clear();
 		x_ticksTime.clear();

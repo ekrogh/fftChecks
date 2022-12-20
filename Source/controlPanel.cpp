@@ -462,7 +462,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     signalPlotLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     signalPlotLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    signalPlotLabel->setBounds (0, 255, 95, 24);
+    signalPlotLabel->setBounds (0, 255, 72, 24);
 
     carrierPlotLabel.reset (new juce::Label ("carrierPlotLabel",
                                              TRANS("carrier")));
@@ -473,7 +473,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     carrierPlotLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     carrierPlotLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    carrierPlotLabel->setBounds (0, 285, 95, 24);
+    carrierPlotLabel->setBounds (0, 285, 72, 24);
 
     modulatedPlotLabel.reset (new juce::Label ("modulatedPlotLabel",
                                                TRANS("modulated")));
@@ -484,7 +484,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     modulatedPlotLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     modulatedPlotLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    modulatedPlotLabel->setBounds (0, 315, 95, 24);
+    modulatedPlotLabel->setBounds (0, 315, 72, 24);
 
     FFTPlotLabel.reset (new juce::Label ("FFTPlotLabel",
                                          TRANS("FFT")));
@@ -495,7 +495,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     FFTPlotLabel->setColour (juce::TextEditor::textColourId, juce::Colours::black);
     FFTPlotLabel->setColour (juce::TextEditor::backgroundColourId, juce::Colour (0x00000000));
 
-    FFTPlotLabel->setBounds (0, 345, 95, 24);
+    FFTPlotLabel->setBounds (0, 345, 72, 24);
 
 
     //[UserPreSize]
@@ -1172,22 +1172,22 @@ BEGIN_JUCER_METADATA
                 pos="173 344 32 24" tooltip="FFT in individual plot" buttonText=""
                 connectedEdges="0" needsCallback="1" radioGroupId="0" state="0"/>
   <LABEL name="signalPlotLabel" id="5eeb704e8de6a557" memberName="signalPlotLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 255 95 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="0 255 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="signal" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="carrierPlotLabel" id="fc60e68daeb5ef26" memberName="carrierPlotLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 285 95 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="0 285 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="carrier" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="modulatedPlotLabel" id="8d7cc5dcd1b0b91e" memberName="modulatedPlotLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 315 95 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="0 315 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="modulated" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="FFTPlotLabel" id="b6334fa71b5771cb" memberName="FFTPlotLabel"
-         virtualName="" explicitFocusOrder="0" pos="0 345 95 24" edTextCol="ff000000"
+         virtualName="" explicitFocusOrder="0" pos="0 345 72 24" edTextCol="ff000000"
          edBkgCol="0" labelText="FFT" editableSingleClick="0" editableDoubleClick="0"
          focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
          kerning="0.0" bold="0" italic="0" justification="33"/>
