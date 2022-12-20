@@ -115,7 +115,6 @@ private:
     std::unique_ptr<juce::Label> inCombinedPlotLabel;
     std::unique_ptr<juce::ToggleButton> carrierInCombinedPlotToggleButton;
     std::unique_ptr<juce::ToggleButton> modulatedInCombinedPlotToggleButton;
-    std::unique_ptr<juce::ToggleButton> FFTInCombinedPlotToggleButton;
     std::unique_ptr<juce::ToggleButton> signalInIndividualPlotToggleButton;
     std::unique_ptr<juce::Label> individualPlotLabel;
     std::unique_ptr<juce::ToggleButton> carrierInIndividualPlotToggleButton;

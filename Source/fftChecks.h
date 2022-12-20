@@ -124,6 +124,7 @@ public:
 		}
 
 	private:
+
 		bool full_ = false;
 
 		void fill()
@@ -323,10 +324,10 @@ public:
 private:
     //[UserVariables]   -- You can add your own custom variables in this section.
 
-	void doSine();
+	void doFillSine();
 	void doSineTimeFillPlotData();
 	void doSineFFTFillPlotData();
-	void doFM();
+	void doFillFM();
 	void doFMSignalTimeFillPlotData();
 	void doFMCarrierTimeFillPlotData();
 	void doFMTimeFillPlotData();
@@ -340,10 +341,9 @@ private:
 	void fillYFM();
 	void makeYTickLabels(vector<float>& y_modulated);
 
-	void initNewPlot(plotType toDo);
 	void resizePlotWindow();
-	void showPlots();
-	void deletePlots();
+	void deleteAllPlots();
+	void removeAllPlots();
 
 
 	int fftOrder = 11;
@@ -353,11 +353,7 @@ private:
 		make_unique<juce::dsp::FFT>(fftOrder);
 
 	// Declare plot object.
-	shared_ptr<cmp::Plot> m_plotTimeSignal;
-	shared_ptr<cmp::Plot> m_plotTimeCarrier;
-	shared_ptr<cmp::Plot> m_plotTimeModulated;
-	shared_ptr<cmp::Plot> m_plotFFT;
-	vector< shared_ptr<cmp::Plot> > allPlots;
+	vector<shared_ptr<cmp::Plot> > allPlots;
 
 	double twoPi = (double)2.0f * (double)(numbers::pi);
 

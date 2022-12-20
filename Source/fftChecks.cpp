@@ -90,94 +90,114 @@ fftChecks::plotCoRoutine()
 {
 	while (true)
 	{
+		switch (sourceType)
+		{
+			case sinSource:
+			{
+				doFillSine();
+				break;
+			}
+			case FMSource:
+			{
+				doFillFM();
+				break;
+			}
+			case AMSource:
+			{
+				break;
+			}
+			default:
+				break;
+		}
+
 		if (allIn1ToggleButtonToggleState)
 		{
-			switch (sourceType)
+
+			if (y_combinedPlots.size() != 0)
 			{
-				case sinSource:
-				{
-					doSine();
-					co_yield 1;
-					break;
-				}
-				case FMSource:
-				{
-					doFM();
-					co_yield 2;
-					break;
-				}
-				case AMSource:
-				{
-					break;
-				}
-				default:
-					break;
+				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
+				addAndMakeVisible(m_combinedPlots.get());
+				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
+				m_combinedPlots->gridON(true, false);
+				m_combinedPlots->setTitle("Time domain");
+				allPlots.push_back(m_combinedPlots);
 			}
+			if (y_individualPlots.size() != 0)
+			{
+				auto idx = 0;
+				for (auto y_values : y_individualPlots)
+				{
+					shared_ptr<cmp::Plot> m_individualPlot = make_shared<cmp::Plot>();
+					addAndMakeVisible(m_individualPlot.get());
+					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
+					m_individualPlot->gridON(true, false);
+					m_individualPlot->setTitle(titlePlots[idx++]);
+					allPlots.push_back(m_individualPlot);
+				}
+			}
+
+			if (allPlots.size() != 0)
+			{
+				resizePlotWindow();
+			}
+			
+			co_yield 1;
 
 		}
 		else
 		{
-			switch (sourceType)
+			if (y_combinedPlots.size() != 0)
 			{
-				case sinSource:
+				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
+				addAndMakeVisible(m_combinedPlots.get());
+				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
+				m_combinedPlots->gridON(true, false);
+				m_combinedPlots->setTitle("Time domain");
+				allPlots.push_back(m_combinedPlots);
+
+				co_yield 2;
+
+			}
+			if (y_individualPlots.size() != 0)
+			{
+				auto idx = 0;
+				for (auto y_values : y_individualPlots)
 				{
-					doSineTimeFillPlotData();
+					removeAllPlots();
+
+					shared_ptr<cmp::Plot> m_individualPlot = make_shared<cmp::Plot>();
+					addAndMakeVisible(m_individualPlot.get());
+					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
+					m_individualPlot->gridON(true, false);
+					m_individualPlot->setTitle(titlePlots[idx++]);
+					allPlots.push_back(m_individualPlot);
+
 					co_yield 3;
 
-					doSineFFTFillPlotData();
-					co_yield 4;
-
-					break;
 				}
-				case FMSource:
-				{
-					doFMSignalTimeFillPlotData();
-					co_yield 5;
-
-					doFMCarrierTimeFillPlotData();
-					co_yield 6;
-
-					doFMTimeFillPlotData();
-					co_yield 7;
-
-					doFMFFTFillPlotData();
-					co_yield 8;
-
-					break;
-				}
-				case AMSource:
-				{
-					break;
-				}
-				default:
-					break;
 			}
 		}
 
-		deletePlots();
+		deleteAllPlots();
 	}
 }
 
-void fftChecks::doSine()
+void fftChecks::doFillSine()
 {
-	deletePlots();
+	deleteAllPlots();
 
 	doSineTimeFillPlotData();
 	doSineFFTFillPlotData();
-
-	showPlots();
 }
 
-void fftChecks::doFM()
+void fftChecks::doFillFM()
 {
-	deletePlots();
+	deleteAllPlots();
 
 	doFMSignalTimeFillPlotData();
 	doFMCarrierTimeFillPlotData();
 	doFMTimeFillPlotData();
 	doFMFFTFillPlotData();
-
-	showPlots();
 }
 
 void fftChecks::doFMSignalTimeFillPlotData()
@@ -348,8 +368,8 @@ void fftChecks::fillYSignalSin()
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] =
-			(float)sin(curPhaseSignalSinFreq)
-			* pow(std::sin(curPhaseHannWin), 2);
+			(float)(sin(curPhaseSignalSinFreq)
+			* pow(std::sin(curPhaseHannWin), 2));
 
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
@@ -371,7 +391,7 @@ void fftChecks::fillYCarrierSin()
 	{
 		fftbfr[i] =
 			(float)sin(curPhaseCarrierSinFreq)
-			* pow(std::sin(curPhaseHannWin), 2);
+				* pow(std::sin(curPhaseHannWin), 2);
 
 		curPhaseCarrierSinFreq =
 			fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
@@ -386,12 +406,10 @@ void fftChecks::fillYFM()
 	double curSignalSin = 0.0f;
 	double curPhaseSignalSinFreq = 0.0f;
 	double curPhaseCarrier = 0.0f;
-	double curCarrierSin = 0.0f;
 	double hannWinDlta = (double)(numbers::pi) / (double)(N - 1);
 	double curPhaseHannWin = 0.0f;
 	double curHannWinSin = 0.0f;
 	double curFMPhase = 0.0f;
-	double curFM = 0.0f;
 
 	std::memset(fftbfr, 0, N * 2 * sizeof(float));
 
@@ -419,114 +437,34 @@ void fftChecks::fillYFM()
 	}
 }
 
-void fftChecks::showPlots()
-{
-	if (allIn1ToggleButtonToggleState)
-	{
-	}
-	else
-	{
-	}
-}
-
-void fftChecks::initNewPlot(plotType toDo)
-{
-
-	if (!allIn1ToggleButtonToggleState)
-	{
-		deletePlots();
-	}
-
-	if (signal_in_combined_plot)
-	{
-		if (allPlots.size() == 0)
-		{
-			if (plot_signal || plot_carrier || plot_modulated)
-			{
-				m_plotTimeSignal = make_shared<cmp::Plot>();
-				allPlots.push_back(m_plotTimeSignal);
-				addAndMakeVisible(m_plotTimeSignal.get());
-			}
-			if (plot_FFT)
-			{
-				m_plotFFT = make_shared<cmp::Plot>();
-				allPlots.push_back(m_plotFFT);
-				addAndMakeVisible(m_plotFFT.get());
-			}
-		}
-	}
-
-	switch (toDo)
-	{
-		case plotTimeSignal:
-		{
-			m_plotTimeSignal = make_shared<cmp::Plot>();
-			allPlots.push_back(m_plotTimeSignal);
-			addAndMakeVisible(m_plotTimeSignal.get());
-			break;
-		}
-		case plotTimeCarrier:
-		{
-			m_plotTimeCarrier = make_shared<cmp::Plot>();
-			allPlots.push_back(m_plotTimeCarrier);
-			addAndMakeVisible(m_plotTimeCarrier.get());
-			break;
-		}
-		case plotTimeModulated:
-		{
-			m_plotTimeModulated = make_shared<cmp::Plot>();
-			allPlots.push_back(m_plotTimeModulated);
-			addAndMakeVisible(m_plotTimeModulated.get());
-			break;
-		}
-		case plotFFT:
-		{
-			m_plotFFT = make_shared<cmp::Plot>();
-			allPlots.push_back(m_plotFFT);
-			addAndMakeVisible(m_plotFFT.get());
-			break;
-		}
-		default:
-		{
-			break;
-		}
-	}
-	resizePlotWindow();
-}
-
 void fftChecks::resizePlotWindow()
 {
-	auto noPlotsActive = allPlots.size();
+	int noPlotsActive = (int)(allPlots.size());
 	auto bnds = getBounds();
 
 	auto heights = bnds.getHeight() / noPlotsActive;
 
 	bnds.setHeight(heights);
 
-	for (size_t i = 0; i < noPlotsActive; i++)
+	for (auto thisPlot : allPlots)
 	{
-		allPlots[i]->setBounds(bnds);
+		thisPlot->setBounds(bnds);
 		bnds.setY(bnds.getY() + heights);
 	}
 }
 
-void fftChecks::deletePlots()
+void fftChecks::deleteAllPlots()
 {
 	auto noPlotsActive = allPlots.size();
 
 	if (noPlotsActive != 0)
 	{
-		for (size_t i = 0; i < noPlotsActive; i++)
+		for (auto thisPlot : allPlots)
 		{
-			removeMouseListener(allPlots[i].get());
-			removeChildComponent(allPlots[i].get());
+			removeMouseListener(thisPlot.get());
+			removeChildComponent(thisPlot.get());
 		}
 		allPlots.clear();
-
-		m_plotTimeSignal.reset();
-		m_plotTimeCarrier.reset();
-		m_plotTimeModulated.reset();
-		m_plotFFT.reset();
 
 		y_combinedPlots.clear();
 		x_combinedPlots.clear();
@@ -538,6 +476,21 @@ void fftChecks::deletePlots()
 		x_ticksTime.clear();
 		x_ticksFFT.clear();
 
+	}
+}
+
+void fftChecks::removeAllPlots()
+{
+	auto noPlotsActive = allPlots.size();
+
+	if (noPlotsActive != 0)
+	{
+		for (auto thisPlot : allPlots)
+		{
+			removeMouseListener(thisPlot.get());
+			removeChildComponent(thisPlot.get());
+		}
+		allPlots.clear();
 	}
 }
 
