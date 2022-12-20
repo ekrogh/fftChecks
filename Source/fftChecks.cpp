@@ -355,9 +355,17 @@ void fftChecks::doSineFFTFillPlotData()
 	{
 		if (FFT_in_individual_plot)
 		{
-			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NFreq));
+			auto toPlot = vector<float>(fftbfr, fftbfr + NFreq);
+			auto result = ranges::max_element(toPlot);
+			auto idxMax = ranges::distance(toPlot.begin(), result);
+			auto freqAtMax = deltaFreq * (double)idxMax;
+
+			auto strFreqAtMax = std::to_string(freqAtMax);
+			auto theTitle = "FFT (max at " + strFreqAtMax + " Hz) Sin";
+
+			y_individualPlots.push_back(toPlot);
 			x_individualPlots.push_back(x_ticksFFT);
-			titlePlotsIndividual.push_back("FFT Sin");
+			titlePlotsIndividual.push_back(theTitle);
 		}
 	}
 }
@@ -526,8 +534,6 @@ void fftChecks::updatefftOrderValues()
 {
 	forwardFFT = make_unique<juce::dsp::FFT>(fftOrder);
 	N = forwardFFT->getSize(); // No of points in fft
-	maxTime = (double)N * Ts;
-	NTime = (int)(maxTime / Ts);
 	deltaFreq = ((double)Fs / ((double)N - (double)1));
 	NFreq = (int)(maxFreq / deltaFreq);
 	free(fftbfr);
@@ -537,11 +543,14 @@ void fftChecks::updatefftOrderValues()
 void fftChecks::updateFsValues()
 {
 	Ts = (double)1.0f / (double)Fs;
-	maxTime = (double)N * Ts;
-	NTime = (int)(maxTime / Ts);
 	deltaFreq = ((double)Fs / ((double)N - (double)1));
-	maxFreq = (double)(Fs >> 1);
+	NTime = (int)(maxTime / Ts);
 	NFreq = (int)(maxFreq / deltaFreq);
+
+	signalSinFreqDeltaRad =
+		signalSinFreq * twoPi * Ts; 
+	carrierSinFreqDeltaRad =
+		carrierSinFreq * twoPi * Ts;
 }
 
 //[/MiscUserCode]
