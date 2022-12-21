@@ -77,6 +77,7 @@ void fftChecks::resized()
 	//[/UserPreResize]
 
 	//[UserResized] Add your own custom resize handling here..
+	resizePlots();
 	//[/UserResized]
 }
 
@@ -112,25 +113,6 @@ fftChecks::plotCoRoutine()
 
 		if (allIn1ToggleButtonToggleState)
 		{
-
-			if (y_combinedPlots.size() != 0)
-			{
-				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
-				addAndMakeVisible(m_combinedPlots.get());
-				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
-				m_combinedPlots->gridON(true, false);
-
-				string theTitle = "";
-				string theSeperator = "";
-				for (auto thisTitle : titlePlotsCombined)
-				{
-					theTitle += theSeperator + thisTitle;
-					theSeperator = "  and  ";
-				}
-				m_combinedPlots->setTitle(theTitle);
-				
-				allPlots.push_back(m_combinedPlots);
-			}
 			if (y_individualPlots.size() != 0)
 			{
 				auto idx = 0;
@@ -144,17 +126,6 @@ fftChecks::plotCoRoutine()
 					allPlots.push_back(m_individualPlot);
 				}
 			}
-
-			if (allPlots.size() != 0)
-			{
-				resizePlotWindow();
-			}
-			
-			co_yield 1;
-
-		}
-		else
-		{
 			if (y_combinedPlots.size() != 0)
 			{
 				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
@@ -172,12 +143,18 @@ fftChecks::plotCoRoutine()
 				m_combinedPlots->setTitle(theTitle);
 
 				allPlots.push_back(m_combinedPlots);
-
-				resizePlotWindow();
-
-				co_yield 2;
-
 			}
+
+			if (allPlots.size() != 0)
+			{
+				resizePlots();
+			}
+			
+			co_yield 1;
+
+		}
+		else
+		{
 			if (y_individualPlots.size() != 0)
 			{
 				auto idx = 0;
@@ -192,11 +169,34 @@ fftChecks::plotCoRoutine()
 					m_individualPlot->setTitle(titlePlotsIndividual[idx++]);
 					allPlots.push_back(m_individualPlot);
 
-					resizePlotWindow();
+					resizePlots();
 
 					co_yield 3;
 
 				}
+			}
+			if (y_combinedPlots.size() != 0)
+			{
+				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
+				addAndMakeVisible(m_combinedPlots.get());
+				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
+				m_combinedPlots->gridON(true, false);
+
+				string theTitle = "";
+				string theSeperator = "";
+				for (auto thisTitle : titlePlotsCombined)
+				{
+					theTitle += theSeperator + thisTitle;
+					theSeperator = "  and  ";
+				}
+				m_combinedPlots->setTitle(theTitle);
+
+				allPlots.push_back(m_combinedPlots);
+
+				resizePlots();
+
+				co_yield 2;
+
 			}
 		}
 
@@ -311,9 +311,18 @@ void fftChecks::doFMFFTFillPlotData()
 	{
 		if (FFT_in_individual_plot)
 		{
-			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NFreq));
+			auto toPlot = vector<float>(fftbfr, fftbfr + NFreq);
+
+			auto result = ranges::max_element(toPlot);
+			auto idxMax = ranges::distance(toPlot.begin(), result);
+			auto freqAtMax = deltaFreq * (double)idxMax;
+
+			auto strFreqAtMax = std::to_string(freqAtMax);
+			auto theTitle = "FFT (max at " + strFreqAtMax + " Hz) Modulated";
+
+			y_individualPlots.push_back(toPlot);
 			x_individualPlots.push_back(x_ticksFFT);
-			titlePlotsIndividual.push_back("FFT Modulated");
+			titlePlotsIndividual.push_back(theTitle);
 		}
 	}
 }
@@ -345,8 +354,8 @@ void fftChecks::doSineTimeFillPlotData()
 
 void fftChecks::doSineFFTFillPlotData()
 {
-	fillYSignalSin();
 	fillXFrequency();
+	fillYSignalSin();
 
 	hannWinn(fftbfr);
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
@@ -356,6 +365,7 @@ void fftChecks::doSineFFTFillPlotData()
 		if (FFT_in_individual_plot)
 		{
 			auto toPlot = vector<float>(fftbfr, fftbfr + NFreq);
+
 			auto result = ranges::max_element(toPlot);
 			auto idxMax = ranges::distance(toPlot.begin(), result);
 			auto freqAtMax = deltaFreq * (double)idxMax;
@@ -471,19 +481,23 @@ void fftChecks::hannWinn(float* fftBfrToWin)
 	}
 }
 
-void fftChecks::resizePlotWindow()
+void fftChecks::resizePlots()
 {
 	int noPlotsActive = (int)(allPlots.size());
-	auto bnds = getBounds();
 
-	auto heights = bnds.getHeight() / noPlotsActive;
-
-	bnds.setHeight(heights);
-
-	for (auto thisPlot : allPlots)
+	if (noPlotsActive > 0)
 	{
-		thisPlot->setBounds(bnds);
-		bnds.setY(bnds.getY() + heights);
+		auto bnds = getBounds();
+
+		auto heights = bnds.getHeight() / noPlotsActive;
+
+		bnds.setHeight(heights);
+
+		for (auto thisPlot : allPlots)
+		{
+			thisPlot->setBounds(bnds);
+			bnds.setY(bnds.getY() + heights);
+		}
 	}
 }
 

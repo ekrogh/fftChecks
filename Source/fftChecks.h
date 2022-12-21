@@ -342,7 +342,7 @@ private:
 	void hannWinn(float* fftBfrToWin);
 	void makeYTickLabels(vector<float>& y_modulated);
 
-	void resizePlotWindow();
+	void resizePlots();
 	void deleteAllPlots();
 	void removeAllPlots();
 
