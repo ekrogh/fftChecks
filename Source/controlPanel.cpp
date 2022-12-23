@@ -637,24 +637,7 @@ void controlPanel::buttonClicked (juce::Button* buttonThatWasClicked)
     if (buttonThatWasClicked == contButton.get())
     {
         //[UserButtonCode_contButton] -- add your button handler code here..
-		try
-		{
-			if (pFFTChecks->gen)
-			{
-				pFFTChecks->gen();
-			}
-
-			//for (int j = 0; gen; j++)
-			//	std::cout << "fib(" << j << ")=" << gen() << '\n';
-		}
-		catch (const std::exception& ex)
-		{
-			std::cerr << "Exception: " << ex.what() << '\n';
-		}
-		catch (...)
-		{
-			std::cerr << "Unknown exception.\n";
-		}
+		doContButtonPresse();
         //[/UserButtonCode_contButton]
     }
     else if (buttonThatWasClicked == _2i2_toggleButton.get())
@@ -927,54 +910,77 @@ void controlPanel::displayAll()
 	carrierAmplitudeTextEditor->setText(to_string(pFFTChecks->get_carrierAmplitude()), false);
 	modulationIndexTextEditor->setText(to_string(pFFTChecks->get_modulationIndex()), false);
 	_2i2_toggleButton->setToggleState
-    (
-        pFFTChecks->get_allIn1ToggleButtonToggleState()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_allIn1ToggleButtonToggleState()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	signalInCombinedPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_signal_in_combined_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_signal_in_combined_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	signalInIndividualPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_signal_in_individual_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_signal_in_individual_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	carrierInCombinedPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_carrier_in_combined_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_carrier_in_combined_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	carrierInIndividualPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_carrier_in_individual_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_carrier_in_individual_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	modulatedInCombinedPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_modulated_in_combined_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_modulated_in_combined_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	modulatedInIndividualPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_modulated_in_individual_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_modulated_in_individual_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 	FFTInIndividualPlotToggleButton->setToggleState
-    (
-        pFFTChecks->get_FFT_in_individual_plot()
-        , juce::NotificationType::dontSendNotification
-    );
+	(
+		pFFTChecks->get_FFT_in_individual_plot()
+		, juce::NotificationType::dontSendNotification
+	);
 
 }
+
+void controlPanel::doContButtonPresse()
+{
+	try
+	{
+		if (pFFTChecks->gen)
+		{
+			pFFTChecks->gen();
+		}
+
+		//for (int j = 0; gen; j++)
+		//	std::cout << "fib(" << j << ")=" << gen() << '\n';
+	}
+	catch (const std::exception& ex)
+	{
+		std::cerr << "Exception: " << ex.what() << '\n';
+	}
+	catch (...)
+	{
+		std::cerr << "Unknown exception.\n";
+	}
+}
+
 //[/MiscUserCode]
 
 

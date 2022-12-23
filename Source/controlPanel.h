@@ -76,6 +76,7 @@ private:
     void updateFsValues();
     void setDefaults();
     void displayAll();
+    void doContButtonPresse();
 
     shared_ptr<fftChecks> pFFTChecks;
     //[/UserVariables]
