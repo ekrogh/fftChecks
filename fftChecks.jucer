@@ -2,7 +2,7 @@
 
 <JUCERPROJECT id="OqA993" name="fftChecks" projectType="guiapp" useAppConfig="0"
               addUsingNamespaceToJuceHeader="0" displaySplashScreen="1" jucerFormatVersion="1"
-              cppLanguageStandard="20">
+              cppLanguageStandard="latest">
   <MAINGROUP id="xPHzKJ" name="fftChecks">
     <GROUP id="{52CCD5B3-CACC-89FA-93C0-923BD71A466A}" name="Source">
       <FILE id="VGP6Pb" name="fftChekGlobalEnums.h" compile="0" resource="0"
