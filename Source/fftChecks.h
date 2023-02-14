@@ -328,10 +328,13 @@ private:
 	void doSineTimeFillPlotData();
 	void doSineFFTFillPlotData();
 	void doFillFM();
-	void doFMSignalTimeFillPlotData();
-	void doFMCarrierTimeFillPlotData();
+	void doFillAM();
+	void doSignalTimeFillPlotData();
+	void doCarrierTimeFillPlotData();
 	void doFMTimeFillPlotData();
+	void doAMTimeFillPlotData();
 	void doFMFFTFillPlotData();
+	void doAMFFTFillPlotData();
 
 	void fillXFrequency();
 	void fillXTime();
@@ -339,6 +342,7 @@ private:
 	void fillYSignalSin();
 	void fillYCarrierSin();
 	void fillYFM();
+	void fillYAM();
 	void hannWinn(float* fftBfrToWin);
 	void makeYTickLabels(vector<float>& y_modulated);
 

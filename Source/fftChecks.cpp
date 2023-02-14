@@ -105,6 +105,7 @@ fftChecks::plotCoRoutine()
 			}
 			case AMSource:
 			{
+				doFillAM();
 				break;
 			}
 			default:
@@ -216,13 +217,23 @@ void fftChecks::doFillFM()
 {
 	deleteAllPlots();
 
-	doFMSignalTimeFillPlotData();
-	doFMCarrierTimeFillPlotData();
+	doSignalTimeFillPlotData();
+	doCarrierTimeFillPlotData();
 	doFMTimeFillPlotData();
 	doFMFFTFillPlotData();
 }
 
-void fftChecks::doFMSignalTimeFillPlotData()
+void fftChecks::doFillAM()
+{
+	deleteAllPlots();
+
+	doSignalTimeFillPlotData();
+	doCarrierTimeFillPlotData();
+	doAMTimeFillPlotData();
+	doAMFFTFillPlotData();
+}
+
+void fftChecks::doSignalTimeFillPlotData()
 {
 	// FM signal
 	fillYSignalSin();
@@ -249,7 +260,7 @@ void fftChecks::doFMSignalTimeFillPlotData()
 	}
 }
 
-void fftChecks::doFMCarrierTimeFillPlotData()
+void fftChecks::doCarrierTimeFillPlotData()
 {
 	// FM signal
 	fillYCarrierSin();
@@ -304,6 +315,58 @@ void fftChecks::doFMFFTFillPlotData()
 	fillYFM();
 	fillXFrequency();
 	
+	hannWinn(fftbfr);
+	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
+
+	if (plot_FFT)
+	{
+		if (FFT_in_individual_plot)
+		{
+			auto toPlot = vector<float>(fftbfr, fftbfr + NFreq);
+
+			auto result = ranges::max_element(toPlot);
+			auto idxMax = ranges::distance(toPlot.begin(), result);
+			auto freqAtMax = deltaFreq * (double)idxMax;
+
+			auto strFreqAtMax = std::to_string(freqAtMax);
+			auto theTitle = "FFT (max at " + strFreqAtMax + " Hz) Modulated";
+
+			y_individualPlots.push_back(toPlot);
+			x_individualPlots.push_back(x_ticksFFT);
+			titlePlotsIndividual.push_back(theTitle);
+		}
+	}
+}
+
+void fftChecks::doAMTimeFillPlotData()
+{
+	// FM signal
+	fillYAM();
+	fillXTime();
+
+	if (plot_modulated)
+	{
+		if (modulated_in_individual_plot)
+		{
+			y_individualPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_individualPlots.push_back(x_ticksTime);
+			titlePlotsIndividual.push_back("Modulated Time domain");
+		}
+		if (modulated_in_combined_plot)
+		{
+			y_combinedPlots.push_back(vector<float>(fftbfr, fftbfr + NTime));
+			x_combinedPlots.push_back(x_ticksTime);
+			titlePlotsCombined.push_back("Modulated Time domain");
+		}
+	}
+}
+
+void fftChecks::doAMFFTFillPlotData()
+{
+	//FFT
+	fillYAM();
+	fillXFrequency();
+
 	hannWinn(fftbfr);
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
@@ -463,6 +526,33 @@ void fftChecks::fillYFM()
 
 		curFMPhase =
 			fmod((curPhaseCarrier + modulationIndex * curSignalSin), twoPi);
+
+	}
+}
+
+void fftChecks::fillYAM()
+{
+	double curSignalSin = 0.0f;
+	double curPhaseSignalSinFreq = 0.0f;
+	double curPhaseCarrier = 0.0f;
+	double curCarrierSin = 0.0f;
+
+	std::memset(fftbfr, 0, N * 2 * sizeof(float));
+
+	for (int i = 0; i < N; i++)
+	{
+		fftbfr[i] =
+			(float)(carrierAmplitude * curCarrierSin * modulationIndex * curSignalSin);
+
+		curPhaseSignalSinFreq =
+			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
+		curSignalSin =
+			sin(curPhaseSignalSinFreq);
+
+		curPhaseCarrier =
+			fmod((curPhaseCarrier + carrierSinFreqDeltaRad), twoPi);
+		curCarrierSin =
+			sin(curPhaseCarrier);
 
 	}
 }
