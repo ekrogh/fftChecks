@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.3
+  Created with Projucer version: 7.0.5
 
   ------------------------------------------------------------------------------
 
@@ -52,8 +52,7 @@ class controlPanelDocWin;
 	Describe your class and how it works here!
                                                                     //[/Comments]
 */
-class fftChecks
-	: public juce::Component
+class fftChecks  : public juce::Component
 {
 public:
     //==============================================================================
@@ -222,10 +221,10 @@ public:
 	int get_sourceType() { return sourceType; };
 	void set_sourceType(int sourceTypeVal) { sourceType = sourceTypeVal; };
 
-	double get_modulationIndex() { return modulationIndex; };
+	double get_modulationIndex() { return signalAmplitude; };
 	void set_modulationIndex(double modulationIndexVal)
 	{
-		modulationIndex = modulationIndexVal;
+		signalAmplitude = modulationIndexVal;
 	};
 
 	double get_carrierAmplitude() { return carrierAmplitude; };
@@ -314,7 +313,7 @@ public:
 		plot_FFT = FFT_in_individual_plot || FFT_in_combined_plot;
 	};
 
-	//[/UserMethods]
+    //[/UserMethods]
 
     void paint (juce::Graphics& g) override;
     void resized() override;
@@ -378,7 +377,7 @@ private:
 
 	vector <vector<float>> y_combinedPlots;
 	vector <vector<float>> x_combinedPlots;
-	
+
 	vector <vector<float>> y_individualPlots;
 	vector <vector<float>> x_individualPlots;
 
@@ -401,25 +400,25 @@ private:
 		signalSinFreq * twoPi * Ts;
 
 	double carrierAmplitude = 1.0f;
-	double modulationIndex = 2.0f;
+	double signalAmplitude = 2.0f;
 
 	bool allIn1ToggleButtonToggleState = true;
 
 	int sourceType = sinSource;
 
-	
+
 	bool plot_signal = false;
 	bool signal_in_individual_plot = false;
 	bool signal_in_combined_plot = false;
-	
+
 	bool plot_carrier = false;
 	bool carrier_in_individual_plot = false;
 	bool carrier_in_combined_plot = false;
-	
+
 	bool plot_modulated = false;
 	bool modulated_in_individual_plot = false;
 	bool modulated_in_combined_plot = false;
-	
+
 	bool plot_FFT = false;
 	bool FFT_in_individual_plot = false;
 	bool FFT_in_combined_plot = false;

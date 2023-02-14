@@ -20,7 +20,7 @@
           <Add option="-D_DEBUG=&quot;1&quot;"/>
           <Add option="-DJUCE_DISPLAY_SPLASH_SCREEN=&quot;1&quot;"/>
           <Add option="-DJUCE_USE_DARK_SPLASH_SCREEN=&quot;1&quot;"/>
-          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70003&quot;"/>
+          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70005&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_basics=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_formats=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_core=&quot;1&quot;"/>
@@ -76,7 +76,7 @@
           <Add option="-DNDEBUG=&quot;1&quot;"/>
           <Add option="-DJUCE_DISPLAY_SPLASH_SCREEN=&quot;1&quot;"/>
           <Add option="-DJUCE_USE_DARK_SPLASH_SCREEN=&quot;1&quot;"/>
-          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70003&quot;"/>
+          <Add option="-DJUCE_PROJUCER_VERSION=&quot;0x70005&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_basics=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_audio_formats=&quot;1&quot;"/>
           <Add option="-DJUCE_MODULE_AVAILABLE_juce_core=&quot;1&quot;"/>
@@ -298,6 +298,12 @@
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
     </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/audio_play_head/juce_AudioPlayHead.cpp">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/audio_play_head/juce_AudioPlayHead.h">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
@@ -401,6 +407,12 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/midi/ump/juce_UMPFactory.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/midi/ump/juce_UMPIterator.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
@@ -737,6 +749,12 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_MixerAudioSource.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_audio_basics/sources/juce_PositionableAudioSource.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
@@ -3455,6 +3473,12 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/app_properties/juce_PropertiesFile.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_data_structures/undomanager/juce_UndoableAction.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>
@@ -6694,6 +6718,12 @@
       <Option compile="0"/>
       <Option link="0"/>
     </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/native/x11/juce_linux_ScopedWindowAssociation.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_gui_basics/native/x11/juce_linux_X11_DragAndDrop.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
@@ -7589,6 +7619,12 @@
       <Option link="0"/>
     </Unit>
     <Unit filename="../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_SystemTrayIconComponent.h">
+      <Option target="App | Debug"/>
+      <Option target="App | Release"/>
+      <Option compile="0"/>
+      <Option link="0"/>
+    </Unit>
+    <Unit filename="../../JuceLibraryCode/modules/juce_gui_extra/misc/juce_WebBrowserComponent.cpp">
       <Option target="App | Debug"/>
       <Option target="App | Release"/>
       <Option compile="0"/>

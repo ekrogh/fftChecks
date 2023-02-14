@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.3
+  Created with Projucer version: 7.0.5
 
   ------------------------------------------------------------------------------
 
@@ -315,7 +315,7 @@ controlPanel::controlPanel (shared_ptr<fftChecks> pFFTChks)
     sourceTypeLabel->setBounds (0, 191, 70, 24);
 
     modulationIndxLabel.reset (new juce::Label ("modulationIndxLabel",
-                                                TRANS("mod. idx.")));
+                                                TRANS("signal Amplt")));
     addAndMakeVisible (modulationIndxLabel.get());
     modulationIndxLabel->setFont (juce::Font (15.00f, juce::Font::plain).withTypefaceStyle ("Regular"));
     modulationIndxLabel->setJustificationType (juce::Justification::centredLeft);
@@ -1112,9 +1112,9 @@ BEGIN_JUCER_METADATA
          fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <LABEL name="modulationIndxLabel" id="898812a46d5c4e8e" memberName="modulationIndxLabel"
          virtualName="" explicitFocusOrder="0" pos="0 155 70 24" edTextCol="ff000000"
-         edBkgCol="0" labelText="mod. idx." editableSingleClick="0" editableDoubleClick="0"
-         focusDiscardsChanges="0" fontname="Default font" fontsize="15.0"
-         kerning="0.0" bold="0" italic="0" justification="33"/>
+         edBkgCol="0" labelText="signal Amplt" editableSingleClick="0"
+         editableDoubleClick="0" focusDiscardsChanges="0" fontname="Default font"
+         fontsize="15.0" kerning="0.0" bold="0" italic="0" justification="33"/>
   <TEXTEDITOR name="modulationIndexTextEditor" id="ced4bcd26e259e34" memberName="modulationIndexTextEditor"
               virtualName="" explicitFocusOrder="5" pos="72 154 95 24" tooltip="modulation index"
               initialText="modulation index" multiline="0" retKeyStartsLine="0"

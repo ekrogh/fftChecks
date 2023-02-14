@@ -23,26 +23,17 @@
   ==============================================================================
 */
 
-package com.rmsl.juce;
-
-import android.os.FileObserver;
-
-import java.lang.String;
-
-public final class JuceContentProviderFileObserver extends FileObserver
+namespace juce
 {
-    public JuceContentProviderFileObserver (long hostToUse, String path, int mask)
-    {
-        super (path, mask);
-        host = hostToUse;
-    }
 
-    public void onEvent (int event, String path)
-    {
-        contentSharerFileObserverEvent (host, event, path);
-    }
+#if JUCE_WEB_BROWSER || DOXYGEN
 
-    private long host;
+bool WebBrowserComponent::pageAboutToLoad ([[maybe_unused]] const String& newURL)             { return true; }
+void WebBrowserComponent::pageFinishedLoading ([[maybe_unused]] const String& url)            {}
+bool WebBrowserComponent::pageLoadHadNetworkError ([[maybe_unused]] const String& errorInfo)  { return true; }
+void WebBrowserComponent::windowCloseRequest()                                                {}
+void WebBrowserComponent::newWindowAttemptingToLoad ([[maybe_unused]] const String& newURL)   {}
 
-    private native void contentSharerFileObserverEvent (long host, int event, String path);
-}
+#endif
+
+} // namespace juce

@@ -480,7 +480,7 @@ public:
         : callback (std::move (cb)),
           shouldDeleteThis (deleteOnCompletion)
     {
-        if (currentlyFocusedPeer != nullptr)
+        if (iOSGlobals::currentlyFocusedPeer != nullptr)
         {
             UIAlertController* alert = [UIAlertController alertControllerWithTitle: juceStringToNS (opts.getTitle())
                                                                            message: juceStringToNS (opts.getMessage())
@@ -490,9 +490,9 @@ public:
             addButton (alert, opts.getButtonText (1));
             addButton (alert, opts.getButtonText (2));
 
-            [currentlyFocusedPeer->controller presentViewController: alert
-                                                           animated: YES
-                                                         completion: nil];
+            [iOSGlobals::currentlyFocusedPeer->controller presentViewController: alert
+                                                                       animated: YES
+                                                                     completion: nil];
         }
         else
         {
@@ -852,11 +852,13 @@ static BorderSize<int> getSafeAreaInsets (float masterScale)
 void Displays::findDisplays (float masterScale)
 {
     JUCE_BEGIN_IGNORE_WARNINGS_GCC_LIKE ("-Wundeclared-selector")
-    // eks 3. dec. 2022 changed
-    // keyboardShown:  to  keyboardShown
-    // keyboardHidden: to  keyboardHidden
-    static const auto keyboardShownSelector = @selector (keyboardShown);
-    static const auto keyboardHiddenSelector = @selector (keyboardHidden);
+    // eks 11. febr. 2023
+    // Chabged
+    //  static const auto keyboardShownSelector = @selector (keyboardShown:);
+    //  static const auto keyboardHiddenSelector = @selector (keyboardHidden:);
+    // to:
+    static const auto keyboardShownSelector = @selector (juceKeyboardShown:);
+    static const auto keyboardHiddenSelector = @selector (juceKeyboardHidden:);
     JUCE_END_IGNORE_WARNINGS_GCC_LIKE
 
     class OnScreenKeyboardChangeDetectorImpl

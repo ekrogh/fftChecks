@@ -7,7 +7,7 @@
   the "//[xyz]" and "//[/xyz]" sections will be retained when the file is loaded
   and re-saved.
 
-  Created with Projucer version: 7.0.3
+  Created with Projucer version: 7.0.5
 
   ------------------------------------------------------------------------------
 
@@ -30,55 +30,55 @@
 //[/MiscUserDefs]
 
 //==============================================================================
-fftChecks::fftChecks()
+fftChecks::fftChecks ()
 {
-	//[Constructor_pre] You can add your own custom stuff here..
-	//[/Constructor_pre]
+    //[Constructor_pre] You can add your own custom stuff here..
+    //[/Constructor_pre]
 
 
-	//[UserPreSize]
-	//[/UserPreSize]
+    //[UserPreSize]
+    //[/UserPreSize]
 
-	setSize(1200, 1000);
+    setSize (1200, 1000);
 
 
-	//[Constructor] You can add your own custom stuff here..
+    //[Constructor] You can add your own custom stuff here..
 	toFront(true);
-	//[/Constructor]
+    //[/Constructor]
 }
 
 fftChecks::~fftChecks()
 {
-	//[Destructor_pre]. You can add your own custom destruction code here..
+    //[Destructor_pre]. You can add your own custom destruction code here..
 	std::free(fftbfr);
-	//[/Destructor_pre]
+    //[/Destructor_pre]
 
 
 
-	//[Destructor]. You can add your own custom destruction code here..
-	//[/Destructor]
+    //[Destructor]. You can add your own custom destruction code here..
+    //[/Destructor]
 }
 
 //==============================================================================
-void fftChecks::paint(juce::Graphics& g)
+void fftChecks::paint (juce::Graphics& g)
 {
-	//[UserPrePaint] Add your own custom painting code here..
-	//[/UserPrePaint]
+    //[UserPrePaint] Add your own custom painting code here..
+    //[/UserPrePaint]
 
-	g.fillAll(juce::Colour(0xff505050));
+    g.fillAll (juce::Colour (0xff505050));
 
-	//[UserPaint] Add your own custom painting code here..
-	//[/UserPaint]
+    //[UserPaint] Add your own custom painting code here..
+    //[/UserPaint]
 }
 
 void fftChecks::resized()
 {
-	//[UserPreResize] Add your own custom resize code here..
-	//[/UserPreResize]
+    //[UserPreResize] Add your own custom resize code here..
+    //[/UserPreResize]
 
-	//[UserResized] Add your own custom resize handling here..
+    //[UserResized] Add your own custom resize handling here..
 	resizePlots();
-	//[/UserResized]
+    //[/UserResized]
 }
 
 
@@ -150,7 +150,7 @@ fftChecks::plotCoRoutine()
 			{
 				resizePlots();
 			}
-			
+
 			co_yield 1;
 
 		}
@@ -314,7 +314,7 @@ void fftChecks::doFMFFTFillPlotData()
 	//FFT
 	fillYFM();
 	fillXFrequency();
-	
+
 	hannWinn(fftbfr);
 	forwardFFT->performFrequencyOnlyForwardTransform(fftbfr, true);
 
@@ -480,7 +480,7 @@ void fftChecks::fillYSignalSin()
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] = (float)sin(curPhaseSignalSinFreq);
+		fftbfr[i] = (float)(sin(curPhaseSignalSinFreq) * signalAmplitude);
 
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
@@ -495,7 +495,7 @@ void fftChecks::fillYCarrierSin()
 
 	for (int i = 0; i < N; i++)
 	{
-		fftbfr[i] = (float)sin(curPhaseCarrierSinFreq);
+		fftbfr[i] = (float)(sin(curPhaseCarrierSinFreq) * carrierAmplitude);
 
 		curPhaseCarrierSinFreq =
 			fmod((curPhaseCarrierSinFreq + carrierSinFreqDeltaRad), twoPi);
@@ -525,7 +525,7 @@ void fftChecks::fillYFM()
 			curPhaseCarrier + carrierSinFreqDeltaRad;
 
 		curFMPhase =
-			fmod((curPhaseCarrier + modulationIndex * curSignalSin), twoPi);
+			fmod((curPhaseCarrier + signalAmplitude * curSignalSin), twoPi);
 
 	}
 }
@@ -542,7 +542,7 @@ void fftChecks::fillYAM()
 	for (int i = 0; i < N; i++)
 	{
 		fftbfr[i] =
-			(float)(carrierAmplitude * curCarrierSin * modulationIndex * curSignalSin);
+			(float)(carrierAmplitude * curCarrierSin * signalAmplitude * curSignalSin);
 
 		curPhaseSignalSinFreq =
 			fmod((curPhaseSignalSinFreq + signalSinFreqDeltaRad), twoPi);
@@ -652,7 +652,7 @@ void fftChecks::updateFsValues()
 	NFreq = (int)(maxFreq / deltaFreq);
 
 	signalSinFreqDeltaRad =
-		signalSinFreq * twoPi * Ts; 
+		signalSinFreq * twoPi * Ts;
 	carrierSinFreqDeltaRad =
 		carrierSinFreq * twoPi * Ts;
 }
@@ -664,15 +664,15 @@ void fftChecks::updateFsValues()
 #if 0
 /*  -- Projucer information section --
 
-	This is where the Projucer stores the metadata that describe this GUI layout, so
-	make changes in here at your peril!
+    This is where the Projucer stores the metadata that describe this GUI layout, so
+    make changes in here at your peril!
 
 BEGIN_JUCER_METADATA
 
 <JUCER_COMPONENT documentType="Component" className="fftChecks" componentName=""
-				 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
-				 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
-				 fixedSize="0" initialWidth="1200" initialHeight="1000">
+                 parentClasses="public juce::Component" constructorParams="" variableInitialisers=""
+                 snapPixels="8" snapActive="1" snapShown="1" overlayOpacity="0.330"
+                 fixedSize="0" initialWidth="1200" initialHeight="1000">
   <BACKGROUND backgroundColour="ff505050"/>
 </JUCER_COMPONENT>
 
