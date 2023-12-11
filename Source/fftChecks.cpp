@@ -122,7 +122,7 @@ fftChecks::plotCoRoutine()
 					shared_ptr<cmp::Plot> m_individualPlot = make_shared<cmp::Plot>();
 					addAndMakeVisible(m_individualPlot.get());
 					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
-					m_individualPlot->gridON(true, false);
+					m_individualPlot->setGridType(cmp::GridType::grid);
 					m_individualPlot->setTitle(titlePlotsIndividual[idx++]);
 					allPlots.push_back(m_individualPlot);
 				}
@@ -132,7 +132,7 @@ fftChecks::plotCoRoutine()
 				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
 				addAndMakeVisible(m_combinedPlots.get());
 				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
-				m_combinedPlots->gridON(true, false);
+				m_combinedPlots->setGridType(cmp::GridType::grid);
 
 				string theTitle = "";
 				string theSeperator = "";
@@ -166,7 +166,7 @@ fftChecks::plotCoRoutine()
 					shared_ptr<cmp::Plot> m_individualPlot = make_shared<cmp::Plot>();
 					addAndMakeVisible(m_individualPlot.get());
 					m_individualPlot->plot({ y_values }, { x_individualPlots[idx] });
-					m_individualPlot->gridON(true, false);
+					m_individualPlot->setGridType(cmp::GridType::grid);
 					m_individualPlot->setTitle(titlePlotsIndividual[idx++]);
 					allPlots.push_back(m_individualPlot);
 
@@ -181,7 +181,7 @@ fftChecks::plotCoRoutine()
 				shared_ptr<cmp::Plot> m_combinedPlots = make_shared<cmp::Plot>();
 				addAndMakeVisible(m_combinedPlots.get());
 				m_combinedPlots->plot(y_combinedPlots, x_combinedPlots);
-				m_combinedPlots->gridON(true, false);
+				m_combinedPlots->setGridType(cmp::GridType::grid);
 
 				string theTitle = "";
 				string theSeperator = "";

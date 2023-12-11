@@ -7,121 +7,17 @@
 
 #include "cmp_lookandfeel.h"
 
+#include <cmath>
 #include <stdexcept>
 #include <string>
 #include <vector>
 
+#include "cmp_datamodels.h"
 #include "cmp_graph_line.h"
 #include "cmp_grid.h"
 #include "cmp_label.h"
-
-/*============================================================================*/
-
-static const std::string getNextCustomLabel(
-    std::vector<std::string>::reverse_iterator& custom_labels_it,
-    const std::vector<std::string>::reverse_iterator& rend) {
-  const auto retval = custom_labels_it++;
-
-  if (retval != rend) {
-    const auto val = *(retval);
-
-    return val;
-  }
-
-  throw std::out_of_range("custom_labels_it is out of range.");
-}
-
-static std::vector<float> getLinearTicks(
-    const std::size_t num_ticks, const cmp::Lim_f lim,
-    const std::vector<float> previous_ticks) {
-  std::vector<float> ticks(num_ticks);
-
-  const auto diff = (lim.max - lim.min) / float(num_ticks);
-  cmp::iota_delta(ticks.begin(), ticks.end(), lim.min + diff / 2.0f, diff);
-
-  return ticks;
-};
-
-static std::pair<float, float> getFirstAndEndFromPreviousTicks(
-    const std::vector<float>& previous_ticks, const cmp::Lim_f lim) {
-  auto start_value = 0.0f;
-  {
-    auto it = previous_ticks.begin();
-    for (; it != previous_ticks.end(); ++it) {
-      if (*it > lim.min) {
-        if (it != previous_ticks.begin() && (it - 1) != previous_ticks.end()) {
-          start_value = *(it - 1);
-        } else {
-          start_value = *it;
-        }
-        break;
-      }
-    }
-  }
-
-  auto end_value = 0.0f;
-  {
-    auto it = previous_ticks.rbegin();
-    for (; it != previous_ticks.rend(); ++it) {
-      if (*it < lim.max) {
-        if (it != previous_ticks.rbegin() &&
-            (it - 1) != previous_ticks.rend()) {
-          end_value = *(it - 1);
-        } else {
-          end_value = *it;
-        }
-        break;
-      }
-    }
-  }
-
-  return {start_value, end_value};
-}
-
-static std::vector<float> getLogarithmicTicks(
-    const std::size_t num_ticks_per_power, const cmp::Lim_f lim,
-    const std::vector<float>& previous_ticks) {
-  if (!lim) return {};
-
-  const auto min_power = log10(lim.min);
-  const auto max_power = log10(lim.max);
-
-  const auto min_power_floor = std::floor(min_power);
-  const auto max_power_ceil = std::ceil(max_power);
-
-  std::vector<float> ticks;
-
-  if (std::abs(max_power - min_power) < 1.0f && !previous_ticks.empty()) {
-    ticks.resize(num_ticks_per_power);
-
-    const auto [start_value, end_value] =
-        getFirstAndEndFromPreviousTicks(previous_ticks, lim);
-
-    auto delta = (end_value - start_value) / num_ticks_per_power;
-    cmp::iota_delta(ticks.begin(), ticks.end(), lim.min, delta);
-
-    return ticks;
-  }
-
-  for (float curr_power = min_power_floor; curr_power < max_power_ceil;
-       ++curr_power) {
-    const auto curr_pos_base = pow(10.f, curr_power);
-
-    const auto delta =
-        pow(10.f, curr_power + 1.f) / static_cast<float>(num_ticks_per_power);
-
-    for (float i = 0; i < num_ticks_per_power; ++i) {
-      const auto tick =
-          floor((curr_pos_base + i * delta) / curr_pos_base) * curr_pos_base;
-
-      ticks.push_back(tick);
-    }
-  }
-
-  return ticks;
-};
-
-/*============================================================================*/
+#include "cmp_utils.h"
+#include "juce_core/system/juce_PlatformDefs.h"
 
 namespace cmp {
 
@@ -137,19 +33,18 @@ const std::pair<int, int> getMaxGridLabelWidth(const cmp::Plot* plot) noexcept {
 
 /*============================================================================*/
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::PlotLookAndFeelDefault() {
+PlotLookAndFeel::PlotLookAndFeel() {
   setDefaultPlotColours();
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t,
-                            y_scaling_t>::setDefaultPlotColours() noexcept {
+void PlotLookAndFeel::setDefaultPlotColours() noexcept {
   setColour(Plot::background_colour, juce::Colour(0xff2C3E50));
   setColour(Plot::frame_colour, juce::Colour(0xffcacfd2));
   setColour(Plot::zoom_frame_colour, juce::Colour(0xff99A3A4));
 
-  setColour(Plot::grid_colour, juce::Colour(0xff99A3A4));
+  setColour(Plot::grid_colour, juce::Colour(0x7F99A3A4));
+  setColour(Plot::transluent_grid_colour, juce::Colour(0x4099A3A4));
+
   setColour(Plot::x_grid_label_colour, juce::Colour(0xffaab7b8));
   setColour(Plot::y_grid_label_colour, juce::Colour(0xffaab7b8));
 
@@ -174,38 +69,32 @@ void PlotLookAndFeelDefault<x_scaling_t,
   setColour(Plot::trace_point_frame_colour, juce::Colour(0xff566573));
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawBackground(
-    juce::Graphics& g, const juce::Rectangle<int>& bound) {
+void PlotLookAndFeel::overridePlotColours() noexcept {}
+
+void PlotLookAndFeel::drawBackground(juce::Graphics& g,
+                                     const juce::Rectangle<int>& bound) {
   g.setColour(findColour(Plot::background_colour));
 
   g.fillRect(bound);
 };
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Colour
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::findAndGetColourFromId(
+juce::Colour PlotLookAndFeel::findAndGetColourFromId(
     const int colour_id) const noexcept {
   return findColour(colour_id);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Rectangle<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getPlotBounds(
+juce::Rectangle<int> PlotLookAndFeel::getPlotBounds(
     juce::Rectangle<int> bounds) const noexcept {
   return juce::Rectangle<int>(0, 0, bounds.getWidth(), bounds.getHeight());
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
 std::pair<juce::Rectangle<int>, juce::Rectangle<int>>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceAndZoomButtonBounds(
+PlotLookAndFeel::getTraceAndZoomButtonBounds(
     juce::Rectangle<int> graph_bounds) const noexcept {
   return {juce::Rectangle<int>(), juce::Rectangle<int>()};
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Rectangle<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getGraphBounds(
+juce::Rectangle<int> PlotLookAndFeel::getGraphBounds(
     const juce::Rectangle<int> bounds,
     const juce::Component* const plot_comp) const noexcept {
   const auto estimated_grid_label_width = getGridLabelFont().getStringWidth(
@@ -220,10 +109,16 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getGraphBounds(
 
     auto right = 0;
     auto left = getMargin();
-    auto top = getGridLabelFont().getHeight() / 2;
+    auto top = getMargin() + getMarginSmall();
+
+    const auto is_x_axis_label_below_graph = isXAxisLabelsBelowGraph();
     auto bottom =
-        bounds.getHeight() - (getGridLabelFont().getHeight() + getMargin() +
-                              getXGridLabelDistanceFromGraphBound());
+        is_x_axis_label_below_graph
+            ? bounds.getHeight() -
+                  (getGridLabelFont().getHeight() + getMargin() +
+                   getXGridLabelDistanceFromGraphBound())
+            : bounds.getHeight() -
+                  (getMargin() + getXGridLabelDistanceFromGraphBound());
 
     if (is_labels_set.x_label) {
       bottom -= (getXYTitleFont().getHeight() + getMargin());
@@ -234,7 +129,7 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getGraphBounds(
     }
 
     if (is_labels_set.title_label) {
-      top = getXYTitleFont().getHeight() + 2 * getMargin();
+      top += getXYTitleFont().getHeight() + getMargin();
     }
 
     if (y_grid_label_width) {
@@ -255,18 +150,15 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getGraphBounds(
     graph_bounds.setBottom(int(bottom));
   }
 
-  return std::move(graph_bounds);
+  return graph_bounds;
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-std::size_t PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
-    getMaximumAllowedCharacterGridLabel() const noexcept {
+std::size_t PlotLookAndFeel::getMaximumAllowedCharacterGridLabel()
+    const noexcept {
   return 6u;
 };
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Point<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getLegendPosition(
+juce::Point<int> PlotLookAndFeel::getLegendPosition(
     const juce::Rectangle<int>& graph_bounds,
     const juce::Rectangle<int>& legend_bounds) const noexcept {
   constexpr std::size_t margin_width = 5u;
@@ -280,9 +172,7 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getLegendPosition(
   return juce::Point<int>(int(x_pos), int(y_pos));
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Rectangle<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getLegendBounds(
+juce::Rectangle<int> PlotLookAndFeel::getLegendBounds(
     [[maybe_unused]] const juce::Rectangle<int>& graph_bounds,
     const std::vector<std::string>& label_texts) const noexcept {
   constexpr std::size_t margin_width = 5u;
@@ -307,21 +197,15 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getLegendBounds(
   return bounds_retval;
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Font PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getLegendFont()
-    const noexcept {
+juce::Font PlotLookAndFeel::getLegendFont() const noexcept {
   return juce::Font(14.0f, juce::Font::plain);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Font PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getButtonFont()
-    const noexcept {
+juce::Font PlotLookAndFeel::getButtonFont() const noexcept {
   return juce::Font(14.0f, juce::Font::plain);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-int PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getColourFromGraphID(
-    const std::size_t graph_index) const {
+int PlotLookAndFeel::getColourFromGraphID(const std::size_t graph_index) const {
   /**< Colour vector which is useful when iterating over the six graph
    * colours.*/
   static const std::vector<int> GraphColours{
@@ -335,28 +219,15 @@ int PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getColourFromGraphID(
   return GraphColours[graph_index % GraphColours.size()];
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-std::size_t PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getMargin()
-    const noexcept {
-  return 15u;
-}
+std::size_t PlotLookAndFeel::getMargin() const noexcept { return 15u; }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-std::size_t PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getMarginSmall()
-    const noexcept {
-  return 5u;
-}
+std::size_t PlotLookAndFeel::getMarginSmall() const noexcept { return 5u; }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-std::size_t PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getMarkerLength()
-    const noexcept {
-  return 20u;
-}
+std::size_t PlotLookAndFeel::getMarkerLength() const noexcept { return 20u; }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
 std::pair<juce::Rectangle<int>, juce::Rectangle<int>>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceXYLabelBounds(
-    const std::string_view x_text, const std::string_view y_text) const {
+PlotLookAndFeel::getTraceXYLabelBounds(const std::string_view x_text,
+                                       const std::string_view y_text) const {
   const auto margin = getMarginSmall();
   const auto font = getTraceFont();
 
@@ -375,9 +246,7 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceXYLabelBounds(
   return {x_label_bounds, y_label_bounds};
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Rectangle<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceLabelLocalBounds(
+juce::Rectangle<int> PlotLookAndFeel::getTraceLabelLocalBounds(
     const juce::Rectangle<int>& x_label_bounds,
     const juce::Rectangle<int>& y_label_bounds) const noexcept {
   const auto width =
@@ -388,40 +257,35 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceLabelLocalBounds(
   return retval;
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Rectangle<int> PlotLookAndFeelDefault<
-    x_scaling_t, y_scaling_t>::getTracePointLocalBounds() const noexcept {
+juce::Rectangle<int> PlotLookAndFeel::getTracePointLocalBounds()
+    const noexcept {
   return juce::Rectangle<int>(0, 0, 10, 10);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Font PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTraceFont()
-    const noexcept {
+juce::Font PlotLookAndFeel::getTraceFont() const noexcept {
   return juce::Font(14.0f, juce::Font::plain);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Point<int>
-PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTracePointPositionFrom(
+juce::Point<int> PlotLookAndFeel::getTracePointPositionFrom(
     const CommonPlotParameterView common_plot_params,
     const juce::Point<float> graph_values) const noexcept {
-  const auto [x_scale, x_offset] =
-      getXScaleAndOffset(float(common_plot_params.graph_bounds.getWidth()),
-                         common_plot_params.x_lim, getXScaling());
+  const auto [x_scale, x_offset] = getXScaleAndOffset(
+      float(common_plot_params.graph_bounds.getWidth()),
+      common_plot_params.x_lim, common_plot_params.x_scaling);
 
-  const auto [y_scale, y_offset] =
-      getYScaleAndOffset(float(common_plot_params.graph_bounds.getHeight()),
-                         common_plot_params.y_lim, getYScaling());
+  const auto [y_scale, y_offset] = getYScaleAndOffset(
+      float(common_plot_params.graph_bounds.getHeight()),
+      common_plot_params.y_lim, common_plot_params.y_scaling);
 
   float x;
   float y;
 
-  if constexpr (m_x_scaling == Scaling::linear) {
+  if (common_plot_params.x_scaling == Scaling::linear) {
     x = getXGraphValueLinear(graph_values.getX(), x_scale, x_offset);
   } else {
     x = getXGraphPointsLogarithmic(graph_values.getX(), x_scale, x_offset);
   }
-  if constexpr (m_y_scaling == Scaling::linear) {
+  if (common_plot_params.y_scaling == Scaling::linear) {
     y = getYGraphValueLinear(graph_values.getY(), y_scale, y_offset);
   } else {
     y = getYGraphPointsLogarithmic(graph_values.getY(), y_scale, y_offset);
@@ -430,9 +294,8 @@ PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getTracePointPositionFrom(
   return juce::Point<float>(x, y).toInt();
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGraphLine(
-    juce::Graphics& g, const GraphLineDataView graph_line_data) {
+void PlotLookAndFeel::drawGraphLine(juce::Graphics& g,
+                                    const GraphLineDataView graph_line_data) {
   juce::Path graph_path;
   const juce::PathStrokeType stroke_type =
       graph_line_data.graph_attribute.path_stroke_type
@@ -499,26 +362,24 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGraphLine(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGridLabels(
-    juce::Graphics& g, const LabelVector& x_axis_labels,
-    const LabelVector& y_axis_labels) {
+void PlotLookAndFeel::drawGridLabels(juce::Graphics& g,
+                                     const LabelVector& x_axis_labels,
+                                     const LabelVector& y_axis_labels) {
   g.setColour(findColour(Plot::x_grid_label_colour));
-
   g.setFont(getGridLabelFont());
   for (const auto& x_axis_text : x_axis_labels) {
     g.drawText(x_axis_text.first, x_axis_text.second,
                juce::Justification::centred);
   }
+  g.setColour(findColour(Plot::y_grid_label_colour));
   for (const auto& y_axis_text : y_axis_labels) {
     g.drawText(y_axis_text.first, y_axis_text.second,
                juce::Justification::centredRight);
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawFrame(
-    juce::Graphics& g, const juce::Rectangle<int> bounds) {
+void PlotLookAndFeel::drawFrame(juce::Graphics& g,
+                                const juce::Rectangle<int> bounds) {
   g.setColour(findColour(Plot::frame_colour));
 
   const juce::Rectangle<int> frame = {0, 0, bounds.getWidth(),
@@ -527,18 +388,20 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawFrame(
   g.drawRect(frame);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGridLine(
-    juce::Graphics& g, const GridLine& grid_line, const bool grid_on) {
-  constexpr auto margin = 8.f;
+void PlotLookAndFeel::drawGridLine(juce::Graphics& g, const GridLine& grid_line,
+                                   const GridType grid_type) {
+  const auto margin = getMarginSmall();
   const auto y_and_len = grid_line.length + grid_line.position.getY();
   const auto x_and_len = grid_line.length + grid_line.position.getX();
 
-  switch (grid_line.direction) {
+  if (grid_line.type == GridLine::Type::translucent)
+    g.setColour(findColour(Plot::transluent_grid_colour));
+  else if (grid_line.type == GridLine::Type::normal)
     g.setColour(findColour(Plot::grid_colour));
-    case GridLine::Direction::vertical:
 
-      if (grid_on) {
+  switch (grid_line.direction) {
+    case GridLine::Direction::vertical:
+      if (grid_type > GridType::none) {
         g.drawVerticalLine(int(grid_line.position.getX()),
                            float(grid_line.position.getY()), y_and_len);
       } else {
@@ -549,11 +412,9 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGridLine(
         g.drawVerticalLine(int(grid_line.position.getX()), y_and_len - margin,
                            y_and_len);
       }
-
       break;
     case GridLine::Direction::horizontal:
-
-      if (grid_on) {
+      if (grid_type > GridType::none) {
         g.drawHorizontalLine(int(grid_line.position.getY()),
                              float(grid_line.position.getX()), x_and_len);
       } else {
@@ -569,10 +430,9 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawGridLine(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawLegend(
-    juce::Graphics& g, std::vector<LegendLabel> legend_info,
-    const juce::Rectangle<int>& bounds) {
+void PlotLookAndFeel::drawLegend(juce::Graphics& g,
+                                 std::vector<LegendLabel> legend_info,
+                                 const juce::Rectangle<int>& bounds) {
   constexpr std::size_t margin_width = 5u;
   constexpr std::size_t margin_height = 5u;
   const auto font = getLegendFont();
@@ -603,18 +463,17 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawLegend(
   g.drawRect(frame);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawLegendBackground(
+void PlotLookAndFeel::drawLegendBackground(
     juce::Graphics& g, const juce::Rectangle<int>& legend_bound) {
   g.setColour(findColour(Plot::legend_background_colour));
 
   g.fillRect(legend_bound);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawSpread(
-    juce::Graphics& g, const GraphLine* first_graph,
-    const GraphLine* second_graph, const juce::Colour& spread_colour) {
+void PlotLookAndFeel::drawSpread(juce::Graphics& g,
+                                 const GraphLine* first_graph,
+                                 const GraphLine* second_graph,
+                                 const juce::Colour& spread_colour) {
   juce::Path path;
 
   if (!first_graph->getGraphPoints().empty()) {
@@ -636,10 +495,10 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawSpread(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawTraceLabel(
-    juce::Graphics& g, const cmp::Label& x_label, const cmp::Label& y_label,
-    const juce::Rectangle<int> bound) {
+void PlotLookAndFeel::drawTraceLabel(juce::Graphics& g,
+                                     const cmp::Label& x_label,
+                                     const cmp::Label& y_label,
+                                     const juce::Rectangle<int> bound) {
   drawTraceLabelBackground(g, bound);
 
   g.setColour(findColour(Plot::trace_label_colour));
@@ -651,17 +510,15 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawTraceLabel(
   g.drawRect(bound);
 };
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawTraceLabelBackground(
+void PlotLookAndFeel::drawTraceLabelBackground(
     juce::Graphics& g, const juce::Rectangle<int>& trace_label_bound) {
   g.setColour(findColour(Plot::trace_background_colour));
 
   g.fillRect(trace_label_bound);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawTracePoint(
-    juce::Graphics& g, const juce::Rectangle<int>& bounds) {
+void PlotLookAndFeel::drawTracePoint(juce::Graphics& g,
+                                     const juce::Rectangle<int>& bounds) {
   constexpr float line_thickness = 4;
 
   const auto x = float(bounds.getX() + line_thickness / 2);
@@ -675,8 +532,7 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawTracePoint(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawZoomArea(
+void PlotLookAndFeel::drawSelectionArea(
     juce::Graphics& g, juce::Point<int>& start_coordinates,
     const juce::Point<int>& end_coordinates,
     const juce::Rectangle<int>& graph_bounds) noexcept {
@@ -732,24 +588,45 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::drawZoomArea(
   g.strokePath(path, pathStrokType);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateXGraphPoints(
-    const juce::Rectangle<int>& bounds, const Lim_f& x_lim,
+void PlotLookAndFeel::updateXGraphPoints(
+    const std::vector<std::size_t>& update_only_these_indices,
+    const CommonPlotParameterView& common_plot_parameter_view,
     const std::vector<float>& x_data,
     std::vector<std::size_t>& graph_points_indices,
     GraphPoints& graph_points) noexcept {
-  const auto [x_scale, x_offset] =
-      getXScaleAndOffset(float(bounds.getWidth()), x_lim, m_x_scaling);
+  const auto [x_scale, x_offset] = getXScaleAndOffset(
+      float(common_plot_parameter_view.graph_bounds.getWidth()),
+      common_plot_parameter_view.x_lim, common_plot_parameter_view.x_scaling);
 
   graph_points.resize(graph_points_indices.size());
 
+  if (!update_only_these_indices.empty()) {
+    if (graph_points_indices.size() != x_data.size()) {
+      jassertfalse;
+      // You are trying to update only some of the graph points, but the
+      // downsampling is requies to be off. Set the downsampling to
+      // no_downsampling.
+    }
+
+    if (common_plot_parameter_view.y_scaling == Scaling::linear) {
+      for (const auto i : update_only_these_indices)
+        graph_points[i].setX(
+            getXGraphValueLinear(x_data[i], x_scale, x_offset));
+    } else if (common_plot_parameter_view.y_scaling == Scaling::logarithmic) {
+      for (const auto i : update_only_these_indices)
+        graph_points[i].setX(
+            getXGraphPointsLogarithmic(x_data[i], x_scale, x_offset));
+    }
+    return;
+  }
+
   std::size_t i{0u};
-  if constexpr (m_x_scaling == Scaling::linear) {
+  if (common_plot_parameter_view.x_scaling == Scaling::linear) {
     for (const auto i_x : graph_points_indices) {
       graph_points[i++].setX(
           getXGraphValueLinear(x_data[i_x], x_scale, x_offset));
     }
-  } else if constexpr (m_x_scaling == Scaling::logarithmic) {
+  } else if (common_plot_parameter_view.x_scaling == Scaling::logarithmic) {
     for (const auto i_x : graph_points_indices) {
       graph_points[i++].setX(
           getXGraphPointsLogarithmic(x_data[i_x], x_scale, x_offset));
@@ -757,24 +634,45 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateXGraphPoints(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateYGraphPoints(
-    const juce::Rectangle<int>& bounds, const Lim_f& y_lim,
+void PlotLookAndFeel::updateYGraphPoints(
+    const std::vector<std::size_t>& update_only_these_indices,
+    const CommonPlotParameterView& common_plot_parameter_view,
     const std::vector<float>& y_data,
     const std::vector<std::size_t>& graph_points_indices,
     GraphPoints& graph_points) noexcept {
-  const auto [y_scale, y_offset] =
-      getYScaleAndOffset(bounds.toFloat().getHeight(), y_lim, m_y_scaling);
+  const auto [y_scale, y_offset] = getYScaleAndOffset(
+      common_plot_parameter_view.graph_bounds.toFloat().getHeight(),
+      common_plot_parameter_view.y_lim, common_plot_parameter_view.y_scaling);
+
+  if (!update_only_these_indices.empty()) {
+    if (graph_points_indices.size() != y_data.size()) {
+      jassertfalse;
+      // You are trying to update only some of the graph points, but the
+      // downsampling is requies to be off. Set the downsampling to
+      // no_downsampling.
+    }
+
+    if (common_plot_parameter_view.y_scaling == Scaling::linear) {
+      for (const auto i : update_only_these_indices)
+        graph_points[i].setY(
+            getYGraphValueLinear(y_data[i], y_scale, y_offset));
+    } else if (common_plot_parameter_view.y_scaling == Scaling::logarithmic) {
+      for (const auto i : update_only_these_indices)
+        graph_points[i].setY(
+            getYGraphPointsLogarithmic(y_data[i], y_scale, y_offset));
+    }
+    return;
+  }
 
   std::size_t i = 0u;
 
-  if constexpr (m_y_scaling == Scaling::linear) {
+  if (common_plot_parameter_view.y_scaling == Scaling::linear) {
     for (const auto i_y : graph_points_indices) {
       graph_points[i].setY(
           getYGraphValueLinear(y_data[i_y], y_scale, y_offset));
       i++;
     }
-  } else if constexpr (m_y_scaling == Scaling::logarithmic) {
+  } else if (common_plot_parameter_view.y_scaling == Scaling::logarithmic) {
     for (const auto i_y : graph_points_indices) {
       graph_points[i].setY(
           getYGraphPointsLogarithmic(y_data[i_y], y_scale, y_offset));
@@ -783,17 +681,16 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateYGraphPoints(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
-    updateVerticalGridLineTicksAuto(const juce::Rectangle<int>& bounds,
-                                    const bool tiny_grids, const Lim_f x_lim,
-                                    std::vector<float>& x_ticks) noexcept {
-  static std::vector<float> previous_ticks;
-
+void PlotLookAndFeel::updateVerticalGridLineTicksAuto(
+    const juce::Rectangle<int>& bounds,
+    const CommonPlotParameterView& common_plot_parameter_view,
+    const GridType grid_type, const std::vector<float>& previous_ticks,
+    std::vector<float>& x_ticks) noexcept {
   x_ticks.clear();
 
   const auto width = bounds.getWidth();
   const auto height = bounds.getHeight();
+  const auto tiny_grids = grid_type == GridType::tiny_grid;
 
   const auto addVerticalTicksLinear = [&]() {
     std::size_t num_vertical_lines = 5u;
@@ -806,7 +703,8 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
     num_vertical_lines =
         std::size_t(tiny_grids ? num_vertical_lines * 1.5 : num_vertical_lines);
 
-    x_ticks = getLinearTicks(num_vertical_lines, x_lim, previous_ticks);
+    x_ticks = getLinearTicks_V2(
+        num_vertical_lines, common_plot_parameter_view.x_lim, previous_ticks);
   };
 
   const auto addVerticalTicksLogarithmic = [&]() {
@@ -819,29 +717,27 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
     num_ticks_per_power = std::size_t(tiny_grids ? num_ticks_per_power * 1.5
                                                  : num_ticks_per_power);
 
-    x_ticks = getLogarithmicTicks(num_ticks_per_power, x_lim, previous_ticks);
+    x_ticks = getLogarithmicTicks(
+        num_ticks_per_power, common_plot_parameter_view.x_lim, previous_ticks);
   };
 
-  if constexpr (m_x_scaling == Scaling::linear) {
+  if (common_plot_parameter_view.x_scaling == Scaling::linear) {
     addVerticalTicksLinear();
-  } else if constexpr (m_x_scaling == Scaling::logarithmic) {
+  } else if (common_plot_parameter_view.x_scaling == Scaling::logarithmic) {
     addVerticalTicksLogarithmic();
   }
-
-  previous_ticks = x_ticks;
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
-    updateHorizontalGridLineTicksAuto(const juce::Rectangle<int>& bounds,
-                                      const bool tiny_grids, const Lim_f y_lim,
-                                      std::vector<float>& y_ticks) noexcept {
-  static std::vector<float> previous_ticks;
-
+void PlotLookAndFeel::updateHorizontalGridLineTicksAuto(
+    const juce::Rectangle<int>& bounds,
+    const CommonPlotParameterView& common_plot_parameter_view,
+    const GridType grid_type, const std::vector<float>& previous_ticks,
+    std::vector<float>& y_ticks) noexcept {
   y_ticks.clear();
 
   const auto width = bounds.getWidth();
   const auto height = bounds.getHeight();
+  const auto tiny_grids = grid_type == GridType::tiny_grid;
 
   const auto addHorizontalTicksLinear = [&]() {
     std::size_t num_horizontal_lines = 3u;
@@ -853,7 +749,8 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
     num_horizontal_lines = tiny_grids ? std::size_t(num_horizontal_lines * 1.5)
                                       : num_horizontal_lines;
 
-    y_ticks = getLinearTicks(num_horizontal_lines, y_lim, previous_ticks);
+    y_ticks = getLinearTicks_V2(
+        num_horizontal_lines, common_plot_parameter_view.y_lim, previous_ticks);
   };
 
   const auto addHorizontalTicksLogarithmic = [&]() {
@@ -866,58 +763,82 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
     num_ticks_per_power = tiny_grids ? std::size_t(num_ticks_per_power * 1.5)
                                      : num_ticks_per_power;
 
-    y_ticks = getLogarithmicTicks(num_ticks_per_power, y_lim, previous_ticks);
+    y_ticks = getLogarithmicTicks(
+        num_ticks_per_power, common_plot_parameter_view.y_lim, previous_ticks);
   };
 
-  if constexpr (m_y_scaling == Scaling::linear) {
+  if (common_plot_parameter_view.y_scaling == Scaling::linear) {
     addHorizontalTicksLinear();
-  } else if constexpr (m_y_scaling == Scaling::logarithmic) {
+  } else if (common_plot_parameter_view.y_scaling == Scaling::logarithmic) {
     addHorizontalTicksLogarithmic();
   }
-
-  previous_ticks = y_ticks;
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Font PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getGridLabelFont()
-    const noexcept {
+juce::Font PlotLookAndFeel::getGridLabelFont() const noexcept {
   return juce::Font("Arial Rounded MT", 16.f, juce::Font::plain);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-int PlotLookAndFeelDefault<x_scaling_t,
-                           y_scaling_t>::getXGridLabelDistanceFromGraphBound()
-    const noexcept {
+int PlotLookAndFeel::getXGridLabelDistanceFromGraphBound() const noexcept {
   return int(getMarginSmall());
 };
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-int PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::
-    getYGridLabelDistanceFromGraphBound(
-        const int y_grid_label_width) const noexcept {
+int PlotLookAndFeel::getYGridLabelDistanceFromGraphBound(
+    const int y_grid_label_width) const noexcept {
   return y_grid_label_width + int(getMarginSmall());
 };
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-juce::Font PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getXYTitleFont()
-    const noexcept {
+juce::Font PlotLookAndFeel::getXYTitleFont() const noexcept {
   return juce::Font(20.0f, juce::Font::plain);
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-Scaling PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getXScaling()
-    const noexcept {
-  return m_x_scaling;
-};
+std::map<UserInput, UserInputAction>
+PlotLookAndFeel::getDefaultUserInputMapAction() const noexcept {
+  std::map<UserInput, UserInputAction> action_map;
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-Scaling PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::getYScaling()
-    const noexcept {
-  return m_y_scaling;
-};
+  // clang-format off
+  action_map[UserInput::left | UserInput::drag | UserInput::graph_area] =                    UserInputAction::select_area_draw;
+  action_map[UserInput::left | UserInput::drag | UserInput::start | UserInput::graph_area] = UserInputAction::select_area_start;
+  action_map[UserInput::left | UserInput::drag | UserInput::end | UserInput::graph_area] =   UserInputAction::zoom_selected_area;
+  action_map[UserInput::left | UserInput::drag | UserInput::tracepoint] =                    UserInputAction::move_tracepoint_to_closest_point;
+  action_map[UserInput::left | UserInput::drag | UserInput::legend] =                        UserInputAction::move_legend;
+  action_map[UserInput::left | UserInput::drag | UserInput::trace_label] =                   UserInputAction::move_tracepoint_label;
+  action_map[UserInput::left | UserInput::double_click | UserInput::graph_area] =            UserInputAction::create_tracepoint;
+  action_map[UserInput::left | UserInput::drag | UserInput::ctrl| UserInput::graph_area] =   UserInputAction::panning;
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateGridLabels(
+  action_map[UserInput::left | UserInput::start | UserInput::tracepoint] = UserInputAction::select_tracepoint;
+  action_map[UserInput::left | UserInput::end | UserInput::tracepoint] =   UserInputAction::deselect_tracepoint;
+
+  action_map[UserInput::right | UserInput::drag | UserInput::graph_area] = UserInputAction::zoom_reset;
+  // clang-format on
+
+  return action_map;
+}
+
+std::map<UserInput, UserInputAction>
+PlotLookAndFeel::overrideUserInputMapAction(
+    std::map<UserInput, UserInputAction> default_user_input_map_action)
+    const noexcept {
+  return default_user_input_map_action;
+}
+
+UserInputAction PlotLookAndFeel::getUserInputAction(
+    UserInput user_input) const noexcept {
+  static std::map<UserInput, UserInputAction> action_map =
+      overrideUserInputMapAction(getDefaultUserInputMapAction());
+
+  try {
+    return action_map.at(user_input);
+  } catch (const std::out_of_range& e) {
+    jassertfalse;
+    // It seems that you are trying to use a UserInput that is not
+    // defined. Please add it to the map in
+    // `overrideDefaultUserInputMapAction()`.
+  }
+
+  return UserInputAction::none;
+}
+
+void PlotLookAndFeel::updateGridLabels(
     const CommonPlotParameterView common_plot_params,
     const std::vector<GridLine>& grid_lines, StringVector& x_custom_label_ticks,
     StringVector& y_custom_label_ticks, LabelVector& x_axis_labels_out,
@@ -1007,10 +928,15 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateGridLabels(
         const auto [label_width, label_height] =
             getLabelWidthAndHeight(font, label);
 
+        const auto is_x_axis_label_below_graph = isXAxisLabelsBelowGraph();
+        const auto bound_y =
+            is_x_axis_label_below_graph
+                ? common_plot_params.graph_bounds.getBottom() +
+                      getXGridLabelDistanceFromGraphBound()
+                : common_plot_params.graph_bounds.getTopLeft().y - label_height;
+
         const auto bound =
-            juce::Rectangle<int>(int(position.x) - label_width / 2,
-                                 common_plot_params.graph_bounds.getBottom() +
-                                     getXGridLabelDistanceFromGraphBound(),
+            juce::Rectangle<int>(int(position.x) - label_width / 2, bound_y,
                                  label_width, label_height);
 
         checkInterectionWithLastLabelAndAdd(x_last_label_bound,
@@ -1039,8 +965,7 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateGridLabels(
   }
 }
 
-template <Scaling x_scaling_t, Scaling y_scaling_t>
-void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateXYTitleLabels(
+void PlotLookAndFeel::updateXYTitleLabels(
     const juce::Rectangle<int>& bounds,
     const juce::Rectangle<int>& graph_bounds, juce::Label& x_label,
     juce::Label& y_label, juce::Label& title_label) {
@@ -1091,15 +1016,17 @@ void PlotLookAndFeelDefault<x_scaling_t, y_scaling_t>::updateXYTitleLabels(
           int(getMargin()),
       x_label_width, font_height);
 
+  const auto is_x_axis_label_below_graph = isXAxisLabelsBelowGraph();
+  const auto bound_y =
+      is_x_axis_label_below_graph
+          ? graph_bounds.getY() - (title_margin + int(font.getHeight()))
+          : graph_bounds.getY() - getGridLabelFont().getHeight() * 2;
+
   title_label.setBounds(
       graph_bounds.getX() + graph_bounds.getWidth() / 2 - title_width / 2,
-      graph_bounds.getY() - (title_margin + int(font.getHeight())), title_width,
-      font_height);
+      bound_y, title_width, font_height);
 }
 
-template class PlotLookAndFeelDefault<Scaling::linear, Scaling::linear>;
-template class PlotLookAndFeelDefault<Scaling::linear, Scaling::logarithmic>;
-template class PlotLookAndFeelDefault<Scaling::logarithmic, Scaling::linear>;
-template class PlotLookAndFeelDefault<Scaling::logarithmic,
-                                      Scaling::logarithmic>;
+bool PlotLookAndFeel::isXAxisLabelsBelowGraph() const noexcept { return true; }
+
 }  // namespace cmp

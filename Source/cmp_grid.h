@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 Frans Rosencrantz
- * 
+ *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
@@ -25,27 +25,6 @@
 #include "cmp_utils.h"
 
 namespace cmp {
-// TODO: Remove this parameters stuff.
-/**
- * A Parameter struct
- * Containing parameters for grid bounds and limits of the grids.
- */
-struct GridConfigParams {
-  /**
-   * The bounds of where the grids will be drawn.
-   */
-  juce::Rectangle<int> grid_area;
-
-  /**
-   * Set to true if grid should be visable.
-   */
-  bool grid_on;
-
-  /**
-   * Set to true if tiny grids should be used.
-   */
-  bool tiny_grid_on;
-};
 
 /**
  * Grid class implementation of grid component
@@ -58,6 +37,13 @@ struct GridConfigParams {
  */
 class Grid : public juce::Component {
  public:
+  /** @brief Construct a new Grid object.
+   *
+   *  @param common_plot_parameter_view the common plot parameters.
+   */
+  Grid(const CommonPlotParameterView& common_plot_parameter_view)
+      : m_common_plot_params(&common_plot_parameter_view){};
+
   /** @brief Set the bounds of where the grids will be drawn
    *
    *  The grid area must be within the bounds of this componenet. The
@@ -68,16 +54,14 @@ class Grid : public juce::Component {
    */
   void setGridBounds(const juce::Rectangle<int>& grid_area);
 
-  /** @brief Display grids
+  /** @brief Enables grid or tiny grid
    *
-   *  Grids will be shown if grid_on is set to true. Grid labels will be shown
-   *  in either case. Default is false.
+   *  Turn on grids or tiny grids. @see GridType in cmp:datamodels.h.
    *
-   *  @param grid_on set to true to show grids
-   *  @param tiny_grid_on set to true to show tiny grids
+   *  @param grid_type typ of grid to be drawn.
    *  @return void.
    */
-  void setGridON(const bool grid_on, const bool tiny_grids_on);
+  void setGridType(const GridType grid_type);
 
   /** @brief Override the x-ticks
    *
@@ -120,10 +104,10 @@ class Grid : public juce::Component {
    *  This function updates the grid if any new parameter is set. Should be
    *  called after an parameter is set to update the grid.
    *
-   *  @param common_plot_params common graph attributes.
+   *  @param use_cached_grids if true already computed grid will be used.
    *  @return void.
    */
-  void updateGrid(const CommonPlotParameterView common_plot_params);
+  void updateGrid(const bool use_cached_grids = false);
 
   /** @brief Get the max width of the x and y-labels
    *
@@ -155,32 +139,29 @@ class Grid : public juce::Component {
    *
    *  @param x_ticks x-ticks to be populated.
    *  @param y_ticks y-ticks to be populated.
-   *  @param common_plot_params common graph attributes.
    *  @return void.
    */
   void createAutoGridTicks(std::vector<float>& x_ticks,
-                           std::vector<float>& y_ticks,
-                           const CommonPlotParameterView common_plot_params);
-
-  void createLabels(const CommonPlotParameterView common_plot_params);
-
-  void updateGridInternal(const CommonPlotParameterView common_plot_params);
-
+                           std::vector<float>& y_ticks);
+  void createLabels();
+  void updateGridInternal(const bool use_cached_grids);
   void addGridLines(const std::vector<float>& ticks,
-                    const GridLine::Direction direction,
-                    const CommonPlotParameterView common_plot_params);
+                    const GridLine::Direction direction);
+  void addTranslucentGridLines();
 
   std::vector<GridLine> m_grid_lines;
-  std::vector<float> m_custom_x_ticks, m_custom_y_ticks;
+  std::vector<float> m_custom_x_ticks, m_custom_y_ticks, m_x_prev_ticks,
+      m_y_prev_ticks;
   std::vector<std::string> m_custom_x_labels, m_custom_y_labels;
   std::size_t m_max_width_x, m_max_width_y;
   std::size_t m_num_last_x_labels, m_last_num_y_labels;
   std::size_t m_longest_x_axis_label_length_last_cb_triggerd{0};
   std::size_t m_longest_y_axis_label_length_last_cb_triggerd{0};
   std::vector<juce::Path> m_grid_path;
+  GridType m_grid_type = GridType::grid_translucent;
 
   juce::LookAndFeel* m_lookandfeel;
-  GridConfigParams m_config_params;
+  const CommonPlotParameterView* m_common_plot_params{nullptr};
 
   std::vector<std::pair<std::string, juce::Rectangle<int>>> m_y_axis_labels,
       m_x_axis_labels;

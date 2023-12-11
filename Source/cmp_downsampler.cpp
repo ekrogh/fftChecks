@@ -7,12 +7,16 @@
 
 #include "cmp_downsampler.h"
 
+#include <algorithm>
+#include <cstddef>
+
 #include "cmp_datamodels.h"
 #include "cmp_utils.h"
-#include <algorithm>
 
 namespace cmp {
-static auto computeXStartIdx(const auto x_min_lim, const auto& x_data) {
+template <class ValueType>
+static auto computeXStartIdx(const ValueType x_min_lim,
+                             const std::vector<ValueType>& x_data) {
   int start_x_index{0};
 
   // The points that are on top of each other or outside the graph area are
@@ -40,8 +44,10 @@ static auto computeXStartIdx(const auto x_min_lim, const auto& x_data) {
   return start_x_index;
 }
 
-static auto computeXEndIdx(const auto x_max_lim, const auto& x_data) {
-  std::size_t end_x_index{x_data.size() - 1};
+template <class ValueType>
+static auto computeXEndIdx(const ValueType x_max_lim,
+                           const std::vector<ValueType>& x_data) {
+  int end_x_index{int(x_data.size() - 1)};
 
   for (auto x = x_data.rbegin(); x != x_data.rend(); ++x) {
     if (*x <= x_max_lim || end_x_index == 0u) {
@@ -62,10 +68,12 @@ static auto computeXEndIdx(const auto x_max_lim, const auto& x_data) {
   return end_x_index;
 }
 
-static auto calculateXIdxsBetweenStartEnd(const auto start_x_idx,
-                                          const auto end_x_idx,
-                                          const auto common_params,
-                                          const auto& x_data, auto& x_based_ds_idxs) {
+template <class ValueType, class IndexType, class ForwardIt>
+static auto calculateXIdxsBetweenStartEnd(
+    const ForwardIt start_x_idx, const ForwardIt end_x_idx,
+    const cmp::CommonPlotParameterView common_params,
+    const std::vector<ValueType>& x_data,
+    std::vector<IndexType>& x_based_ds_idxs) {
   const auto [x_scale, x_offset] =
       getXScaleAndOffset(float(common_params.graph_bounds.getWidth()),
                          common_params.x_lim, common_params.x_scaling);
@@ -77,15 +85,15 @@ static auto calculateXIdxsBetweenStartEnd(const auto start_x_idx,
   auto last_x_diff = 0.f;
 
   if (common_params.x_scaling == Scaling::linear) {
-    for (auto i = current_index; i < end_x_idx;
-         ++i) {
+    for (auto i = current_index; i < end_x_idx; ++i) {
       const auto current_x_diff = i > 0 ? x_data[i - 1] - x_data[i] : 0.f;
 
       // If the x values suddenly go opposite, we need to add that value.
-      const auto force_add_x = (std::signbit(last_x_diff) != std::signbit(current_x_diff));
+      const auto force_add_x =
+          (std::signbit(last_x_diff) != std::signbit(current_x_diff));
       last_x_diff = current_x_diff;
 
-      if (force_add_x || (abs(last_added_x - x_data[i])) > inverse_x_scale) {
+      if (force_add_x || (std::abs(last_added_x - x_data[i])) > inverse_x_scale) {
         last_added_x = x_data[i];
         x_based_ds_idxs[graph_point_index++] = i;
       }
@@ -93,7 +101,7 @@ static auto calculateXIdxsBetweenStartEnd(const auto start_x_idx,
   } else if (common_params.x_scaling == Scaling::logarithmic) {
     for (auto x = x_data.begin() + start_x_idx; x != x_data.begin() + end_x_idx;
          ++x) {
-      if (log10(abs(*x / last_added_x)) > inverse_x_scale) {
+      if (std::log10(std::abs(*x / last_added_x)) > inverse_x_scale) {
         last_added_x = *x;
         x_based_ds_idxs[graph_point_index++] = current_index;
       }
@@ -117,24 +125,31 @@ void Downsampler<FloatType>::calculateXBasedDSIdxs(
 
   std::size_t max_x_index{x_data.size() - 1u};
 
-  // If the graph has less than 10 values we simply plot all points even if
+  // If the graph has less than 100 values we simply plot all points even if
   // they are on top of each other.
-  if (x_data.size() < 10u) {
+  if (x_data.size() < 100u) {
     std::iota(x_based_ds_idxs.begin(), x_based_ds_idxs.end(), 0u);
     return;
   }
 
-  const auto start_x_index = computeXStartIdx(x_lim.min, x_data);
-
-  const auto end_x_index = computeXEndIdx(x_lim.max, x_data);
+  constexpr auto compute_all_points = false;
+  // If the graph is zoomed in we only plots some points.
+  const auto start_x_index =
+      compute_all_points
+          ? size_t(0u)
+          : computeXStartIdx<decltype(x_lim.min)>(x_lim.min, x_data);
+  const auto end_x_index =
+      compute_all_points
+          ? x_data.size() - 1u
+          : computeXEndIdx<decltype(x_lim.max)>(x_lim.max, x_data);
 
   x_based_ds_idxs.front() = start_x_index;
 
-  const auto x_idxs_size_required = calculateXIdxsBetweenStartEnd(
-      start_x_index, end_x_index, common_params, x_data, x_based_ds_idxs);
+  const auto x_idxs_size_required =
+      calculateXIdxsBetweenStartEnd<FloatType, size_t>(
+          start_x_index, end_x_index, common_params, x_data, x_based_ds_idxs);
 
   x_based_ds_idxs.resize(x_idxs_size_required);
-
   x_based_ds_idxs.back() = end_x_index;
 }
 
@@ -148,66 +163,58 @@ void Downsampler<FloatType>::calculateXYBasedDSIdxs(
 
   xy_based_ds_idxs.resize(y_data.size());
 
-  // If the graph has less than 10 values we simply plot all points.
-  if (xy_based_ds_idxs.size() < 10u) {
+  // If the graph has less than 100 values we simply plot all points.
+  if (xy_based_ds_idxs.size() < 100u) {
     xy_based_ds_idxs = x_based_ds_idxs;
   }
 
   auto xy_i = 0u;
   auto xy_size = 0u;
 
-  for (auto i = x_based_ds_idxs.begin();; ++i) {
+  for (auto i_it = x_based_ds_idxs.begin();; ++i_it) {
     // We have reached the last x-based ds index. Let's add it.
-    if (i + 1 == x_based_ds_idxs.end()) UNLIKELY {
-        xy_based_ds_idxs[xy_i++] = *i;
-
+    if (std::next(i_it) == x_based_ds_idxs.end()) UNLIKELY {
+        xy_based_ds_idxs[xy_i++] = *i_it;
         xy_size += 1;
-
         break;
       }
 
     // Add the current x-based ds index.
-    xy_based_ds_idxs[xy_i++] = *i;
+    xy_based_ds_idxs[xy_i++] = *i_it;
 
-    // Calculated the index diff between the current and the next x-based ds
-    // index.
-    const auto index_diff = *(i + 1) - *i;
+    // Calculated how many data values there is between the current and the next
+    // x-based ds index.
+    const auto num_data_values = *std::next(i_it) - *i_it;
 
-    if (index_diff == 2u) {
-      xy_based_ds_idxs[xy_i++] = *i + 1;
-
+    if (num_data_values == 2u) {
+      xy_based_ds_idxs[xy_i++] = *std::next(i_it);
       xy_size += 2;
-    } else if (index_diff == 3u) {
-      xy_based_ds_idxs[xy_i++] = *i + 1;
-      xy_based_ds_idxs[xy_i++] = *i + 2;
-
+    } else if (num_data_values == 3u) {
+      xy_based_ds_idxs[xy_i++] = *std::next(i_it);
+      xy_based_ds_idxs[xy_i++] = *std::next(i_it, 2);
       xy_size += 3;
 
       // Let's find the min and max y-value that share the same x-pixel and get
       // their indices.
-    } else if (index_diff > 3u) {
-      auto j = *i + 1;
+    } else if (num_data_values > 3u) {
+      auto j = *std::next(i_it);
 
       auto max_val = y_data[j];
-      auto min_val = y_data[j];
+      auto min_val = max_val;
       auto max_idx = j;
       auto min_idx = j;
       auto min_last = true;
 
-      for (; j < *(i + 1); ++j) {
+      for (; j < *std::next(i_it); ++j) {
         auto y = y_data[j];
 
         if (y < min_val) {
           min_val = y;
-
           min_idx = j;
-
           min_last = true;
         } else if (y > max_val) {
           max_val = y;
-
           max_idx = j;
-
           min_last = false;
         }
       }

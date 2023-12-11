@@ -12,7 +12,7 @@
     <key>CFBundleExecutable</key>
     <string>${EXECUTABLE_NAME}</string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.fftChecks</string>
+    <string>dk.eksit.fftChecks</string>
     <key>CFBundleName</key>
     <string>fftChecks</string>
     <key>CFBundleDisplayName</key>

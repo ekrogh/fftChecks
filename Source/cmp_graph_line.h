@@ -1,6 +1,6 @@
 /**
  * Copyright (c) 2022 Frans Rosencrantz
- * 
+ *
  * This software is released under the MIT License.
  * https://opensource.org/licenses/MIT
  */
@@ -21,6 +21,8 @@
 
 #include <juce_gui_basics/juce_gui_basics.h>
 
+#include <cstddef>
+
 #include "cmp_datamodels.h"
 #include "cmp_utils.h"
 
@@ -33,30 +35,55 @@ namespace cmp {
  */
 class GraphLine : public juce::Component {
  public:
-  /**@brief Find closest point on graph from graph point.
+  /**
+   * @brief Construct a new Graph Line object.
+   * @param common_plot_parameter_view the common plot parameters.
+   */
+  GraphLine(const CommonPlotParameterView& common_plot_parameter_view)
+      : m_common_plot_params(&common_plot_parameter_view){};
+
+  /** @brief Find closest point on graph from graph point.
    *
    * @param this_graph_point the point on the graph.
    * @param check_only_distance_from_x check the absolut distance if false else
    * only the x distance.
-   * @return {closest point on graph, closest data point value}
+   * @return {closest point on graph, closest data point value, data point
+   * index}
    */
-  std::pair<juce::Point<float>, juce::Point<float>> findClosestGraphPointTo(
-      const juce::Point<float>& this_graph_point,
-      bool check_only_distance_from_x = false) const;
+  std::tuple<juce::Point<float>, juce::Point<float>, size_t>
+  findClosestGraphPointTo(const juce::Point<float>& this_graph_point,
+                          bool check_only_distance_from_x = false) const;
 
-  /**@brief Find closest data point to this data point.
+  /** @brief Find closest data point to this data point.
    *
    * @param this_data_point the data point.
    * @param check_only_distance_from_x check the absolut distance if false else
    * only the x distance.
    * @param only_visible_data_points find the nearest visible data point if
    * true.
-   * @return closest data point value to this_data_point.
+   * @return closest data point value to this_data_point and the data point
+   * index.
    */
-  juce::Point<float> findClosestDataPointTo(
+  std::pair<juce::Point<float>, size_t> findClosestDataPointTo(
       const juce::Point<float>& this_data_point,
       bool check_only_distance_from_x = false,
       bool only_visible_data_points = true) const;
+
+  /** @brief Get data point for a graph point index.
+   *
+   *  @param graph_point_index the graph point index.
+   *  @return the data point.
+   */
+  juce::Point<float> getDataPointFromGraphPointIndex(
+      size_t graph_point_index) const;
+
+  /** @brief Get data point for a graph point index.
+   *
+   *  @param data_point_index the graph point index.
+   *  @return the data point.
+   */
+  juce::Point<float> getDataPointFromDataPointIndex(
+      size_t data_point_index) const;
 
   /** @brief Get the colour of the graph.
    *
@@ -74,6 +101,14 @@ class GraphLine : public juce::Component {
    */
   void setGraphAttribute(const GraphAttribute& graph_attribute);
 
+  /** @brief Get the graph attributes.
+   *
+   *  @see GraphAttribute.
+   *
+   *  @return the graph_attributes.
+   */
+  const GraphAttribute& getGraphAttribute() const noexcept;
+
   /** @brief Set the y-values for the graph-line
    *
    *  @param y_values vector of y-values.
@@ -87,6 +122,14 @@ class GraphLine : public juce::Component {
    *  @return void.
    */
   void setXValues(const std::vector<float>& x_values);
+
+  /** @brief Set a single x/y value for the graph-line
+   *
+   *  @param juce::Point<float> the x/y value.
+   *  @param index the index of the x/y value.
+   *  @return boolean if the index is valid.
+   */
+  bool setXYValue(const juce::Point<float>& xy_value, size_t index);
 
   /** @brief Get y-values
    *
@@ -112,6 +155,14 @@ class GraphLine : public juce::Component {
    */
   const GraphPoints& getGraphPoints() const noexcept;
 
+  /* @brief Get the graph point indices
+   *
+   *  Get a const reference of the calculated graph point indices.
+   *
+   *  @return const reference of the calculated graph point indices.
+   */
+  const std::vector<size_t>& getGraphPointIndices() const noexcept;
+
   /** @brief Set the colour of graph
    *
    *  Set the colour of graph.
@@ -121,25 +172,50 @@ class GraphLine : public juce::Component {
    */
   void setColour(const juce::Colour graph_colour);
 
-  /** @brief Update the x-value in the graph points.
+  /** @brief Update the graph points indices x-value in the graph points.
    *
    *  This function updates the graph points if any new parameter is set. Should
-   *  be called after an parameter changed to update the graph.
+   *  be called after an parameter changed to update the graph. However, call
+   *  updateXYGraphPoints() if the min/max x/y-limits are move equally.
    *
-   *  @param common_plot_params common plot parameters.
+   *  @param update_only_these_indices only update these indices.
    *  @return void.
    */
-  void updateXGraphPoints(const CommonPlotParameterView common_plot_params);
+  void updateXIndicesAndGraphPoints(
+      const std::vector<size_t>& update_only_these_indices = {});
 
-  /** @brief Update the y-value in the graph points.
+  /** @brief Update the graph points indices and y-value in the graph points.
    *
    *  This function updates the graph points if any new parameter is set. Should
-   *  be called after an parameter changed to update the graph.
+   *  be called after an parameter changed to update the graph. However, call
+   *  updateXYGraphPoints() if the min/max x/y-limits are move equally.
    *
-   *  @param common_plot_params common plot parameters.
+   *  @param update_only_these_indices only update these indices.
    *  @return void.
    */
-  void updateYGraphPoints(const CommonPlotParameterView common_plot_params);
+  void updateYIndicesAndGraphPoints(
+      const std::vector<size_t>& update_only_these_indices = {});
+
+  /** @brief move graph point in graphline
+   *
+   * @param d_graph_point the delta graph point.
+   * @param graph_point_index the graph point index.
+   * @return void.
+   */
+  void moveGraphPoint(const juce::Point<float>& d_graph_point,
+                      size_t graph_point_index);
+
+  /** @brief Update the y/x-value in the graph points.
+   *
+   *  This function updates the graph points if any new parameter is set.
+   *
+   *  @note updateXIndicesAndGraphPoints() and updateYIndicesAndGraphPoints()
+   *  must have been called anytime before this function.
+   *
+   *  @param update_only_these_indices only update these indices.
+   *  @return void.
+   */
+  void updateXYGraphPoints();
 
   //==============================================================================
 
@@ -151,16 +227,17 @@ class GraphLine : public juce::Component {
   void lookAndFeelChanged() override;
 
  private:
-  void updateYGraphPointsIntern(
-      const CommonPlotParameterView common_plot_params) noexcept;
-  void updateXGraphPointsIntern(
-      const CommonPlotParameterView common_plot_params) noexcept;
+  void updateYIndicesAndGraphPointsIntern(
+      const std::vector<size_t>& update_only_these_indices);
+  void updateXIndicesAndGraphPointsIntern(
+      const std::vector<size_t>& update_only_these_indices);
 
   juce::LookAndFeel* m_lookandfeel{nullptr};
 
   std::vector<float> m_x_data, m_y_data;
   GraphPoints m_graph_points;
   std::vector<std::size_t> m_x_based_ds_indices, m_xy_based_ds_indices;
+  const CommonPlotParameterView* m_common_plot_params{nullptr};
 
   GraphAttribute m_graph_attributes;
 };
